@@ -19,11 +19,11 @@ To get started with my portfolio, simply follow these steps:
 
 1. Clone this repository to your local machine.
 2. Run `npm install` to install the required dependencies.
-3. Run `npm start` to start the development server.
+3. Run `npm run dev` to start the development server.
 4. Open your browser and navigate to `http://localhost:3000` to view the portfolio.
 
 ## Contributing 👥
 While contributions to my portfolio are not necessary, I welcome feedback and suggestions for improvement. If you have an idea for how I can make my portfolio even better, please feel free to open an issue or pull request on this repository.
 
 ## Creator ✋🌳
-My name is Joey Kubalak, I'm a web developer based in [Lackawaxen, PA, United States]. You can find more of my work on my [GitHub profile](https://github.com/TreezCode).
+My name is Joey Kubalak, I'm a web developer based in Lackawaxen, PA, United States. You can find more of my work on my [GitHub profile](https://github.com/TreezCode).
