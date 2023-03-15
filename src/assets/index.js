@@ -25,6 +25,11 @@ import meta from './company/meta.png';
 import shopify from './company/shopify.png';
 import starbucks from './company/starbucks.png';
 import tesla from './company/tesla.png';
+import ncc from './company/ncc.png';
+import du from './company/du.png';
+import lyft from './company/lyft.png';
+import strainwise from './company/strainwise.jpg';
+import livwell from './company/livwell.png';
 
 import carrent from './carrent.png';
 import jobit from './jobit.png';
@@ -59,4 +64,9 @@ export {
   carrent,
   jobit,
   tripguide,
+  ncc,
+  du,
+  lyft,
+  strainwise,
+  livwell
 };
