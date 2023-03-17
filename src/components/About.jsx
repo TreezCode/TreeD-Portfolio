@@ -2,15 +2,23 @@ import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 
 import { styles } from '../styles';
-import { services } from '../constants';
+import { services } from '../common/constants';
 import { fadeIn, textVariant } from '../utils/motion';
 // fadeIn : direction > type > delay > duration
-
 import { SectionWrapper } from '../hoc';
+
+import '../styles/custom.css';
 
 const ServiceCard = ({ index, title, icon }) => {
   return (
-    <Tilt className='xs:w-[250px] w-full'>
+    <Tilt
+      className='xs:w-[250px] w-full'
+      tiltMaxAngleX={30}
+      tiltMaxAngleY={30}
+      perspective={800}
+      transitionSpeed={1500}
+      gyroscope={true}  
+    >
       <motion.div
         variants={fadeIn('right', 'spring', 0.5 * index, 0.75)}
         className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'

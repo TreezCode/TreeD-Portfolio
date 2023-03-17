@@ -1,33 +1,30 @@
 import {
   mobile,
-  backend,
+  frontend,
   creator,
   web,
-  javascript,
-  typescript,
   html,
   css,
-  reactjs,
-  redux,
   tailwind,
-  nodejs,
-  mongodb,
-  git,
-  figma,
-  docker,
-  meta,
-  starbucks,
-  tesla,
-  shopify,
-  carrent,
-  jobit,
-  tripguide,
+  javascript,
+  nextjs,
   threejs,
+  typescript,
+  mern,
+  mongodb,
+  express,
+  reactjs,
+  nodejs,
+  redux,
+  git,
+  vscode,
   ncc,
   du,
   lyft,
   strainwise,
-  livwell,
+  treecommerce,
+  vanilla,
+  clickgame,
 } from '../assets';
 
 export const navLinks = [
@@ -56,7 +53,7 @@ const services = [
   },
   {
     title: 'Frontend Developer',
-    icon: backend,
+    icon: frontend,
   },
   {
     title: 'UI/UX Developer',
@@ -71,12 +68,12 @@ const services = [
   //   icon: express,
   // },
   // {
-  //   title: "Node.js Developer",
-  //   icon: node,
-  // },
-  // {
   //   title: "React Developer",
   //   icon: react,
+  // },
+  // {
+  //   title: "Node.js Developer",
+  //   icon: node,
   // },
 ];
 
@@ -94,53 +91,49 @@ const technologies = [
     icon: javascript,
   },
   {
-    name: 'TypeScript',
-    icon: typescript,
-  },
-  {
-    name: 'React JS',
-    icon: reactjs,
-  },
-  {
-    name: 'Redux Toolkit',
-    icon: redux,
+    name: 'Three JS',
+    icon: threejs,
   },
   {
     name: 'Tailwind CSS',
     icon: tailwind,
   },
   {
-    name: 'Node JS',
-    icon: nodejs,
+    name: 'Next JS',
+    icon: nextjs,
+  },
+  {
+    name: 'mern',
+    icon: mern,
   },
   {
     name: 'MongoDB',
     icon: mongodb,
   },
   {
-    name: 'Three JS',
-    icon: threejs,
+    name: 'Express JS',
+    icon: express,
   },
   {
-    name: 'git',
+    name: 'React JS',
+    icon: reactjs,
+  },
+  {
+    name: 'Node JS',
+    icon: nodejs,
+  },
+  {
+    name: 'Redux Toolkit',
+    icon: redux,
+  },
+  {
+    name: 'Git',
     icon: git,
   },
   {
-    name: 'figma',
-    icon: figma,
+    name: 'VS Code',
+    icon: vscode,
   },
-  {
-    name: 'docker',
-    icon: docker,
-  },
-  // {
-  //   name: 'express',
-  //   icon: express,
-  // },
-  // {
-  //   name: 'VS Code',
-  //   icon: vscode,
-  // },
 ];
 
 const experiences = [
@@ -184,7 +177,7 @@ const experiences = [
     ],
   },
   {
-    title: 'Lead Sales',
+    title: 'Lead Sales Associate',
     company_name: 'The Shelter: Strainwise',
     icon: strainwise,
     iconBg: '#E6DEDD',
@@ -196,52 +189,21 @@ const experiences = [
       'Collaborated with the management team to develop promotional strategies and enhance customer experience.',
     ],
   },
-  {
-    title: 'Sales Associate',
-    company_name: 'Livwell Enlightened Health',
-    icon: livwell,
-    iconBg: '#383E56',
-    date: 'October 2014 - November 2015',
-    points: [
-      'Developed new techniques to reduce wait time in a high-volume facility.',
-      'Applied up-selling strategies, encompassing recommendations of accessories and complementary purchases.',
-      'Provided exceptional customer service by addressing customer inquiries and concerns.',
-      'Consistently met and exceeded sales goals and targets.',
-    ],
-  },
-    // {
-  //   title: 'Full-Stack Web Developer',
-  //   company_name: 'MuziqueHub',
-  //   icon: muziquehub,
-  //   iconBg: '#383E56',
-  //   date: 'May 2019 - August 2019',
-  //   points: [
-  //     'Designed and developed a MERN stack application with Passport JS authentication.',
-  //     'Implemented API requests, user authentication, and database management.',
-  //     'Integrated search functionality to allow users to find musician information such as record label, biography, videos, and upcoming concerts.',
-  //     'Deployed the application on Github and showcased it in a live demo.',
-  //   ],
-  // },
-  // {
-  //   title: 'React.js Developer',
-  //   company_name: 'React-Click-Game',
-  //   icon: reactClickGame,
-  //   iconBg: '#E6DEDD',
-  //   date: 'June 2019 - July 2019',
-  //   points: [
-  //     'Designed and developed a web-based memory challenge game using ReactJS.',
-  //     'Implemented different levels of difficulty to enhance user experience.',
-  //     'Demonstrated proficiency in front-end development using ReactJS.',
-  //     'Optimized the game for mobile and desktop devices.',
-  //     'Deployed the application using Github’s static site hosting service, GH-Pages.',
-  //   ],
-  // },
 ];
 
 const testimonials = [
   {
     testimonial:
-      'I thought it was impossible to make a website as beautiful as our product, but Rick proved me wrong.',
+      "I was Joey's Full Stack Bootcamp Professor at DU in partnership with Trilogy Education. Joey has a lot of potential if given an opportunity. He was a pleasure to have in class. He never gave up and was always seeking to advance his knowledge in and out of the classroom. I hope that you consider him for a development position as he will provide great value to your company.",
+    name: 'Bryan Salicco',
+    designation: 'Senior Software Engineer',
+    company: 'Unified an iHeartMedia Company',
+    image:
+      'https://media.licdn.com/dms/image/C4E03AQF2XlgXvJtvxg/profile-displayphoto-shrink_200_200/0/1568088484690?e=1684368000&v=beta&t=bRjFeg6O2Mw27btboOnvckYAqVI4kEcr5XmOLeZuMLU',
+  },
+  {
+    testimonial:
+      'I thought it was impossible to make a website as beautiful as our product, but Joey proved me wrong.',
     name: 'Sara Lee',
     designation: 'CFO',
     company: 'Acme Co',
@@ -249,76 +211,48 @@ const testimonials = [
   },
   {
     testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Rick does.",
+      "I've never met a web developer who truly cares about their clients' success like Joey does.",
     name: 'Chris Brown',
     designation: 'COO',
     company: 'DEF Corp',
     image: 'https://randomuser.me/api/portraits/men/5.jpg',
   },
-  {
-    testimonial:
-      "After Rick optimized our website, our traffic increased by 50%. We can't thank them enough!",
-    name: 'Lisa Wang',
-    designation: 'CTO',
-    company: '456 Enterprises',
-    image: 'https://randomuser.me/api/portraits/women/6.jpg',
-  },
 ];
 
 const projects = [
   {
-    name: 'Car Rent',
+    name: 'Treecommerce',
     description:
-      'Web-based platform that allows users to search, book, and manage car rentals from various providers, providing a convenient and efficient solution for transportation needs.',
-    tags: [
-      {
-        name: 'react',
-        color: 'blue-text-gradient',
-      },
-      {
-        name: 'mongodb',
-        color: 'green-text-gradient',
-      },
-      {
-        name: 'tailwind',
-        color: 'pink-text-gradient',
-      },
-    ],
-    image: carrent,
-    source_code_link: 'https://github.com/',
-  },
-  {
-    name: 'Job IT',
-    description:
-      'Web application that enables users to search for job openings, view estimated salary ranges for positions, and locate available jobs based on their current location.',
-    tags: [
-      {
-        name: 'react',
-        color: 'blue-text-gradient',
-      },
-      {
-        name: 'restapi',
-        color: 'green-text-gradient',
-      },
-      {
-        name: 'scss',
-        color: 'pink-text-gradient',
-      },
-    ],
-    image: jobit,
-    source_code_link: 'https://github.com/',
-  },
-  {
-    name: 'Trip Guide',
-    description:
-      'A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.',
+      "Treecommerce is a simple, yet powerful ecommerce website built with the Next.js framework. We use Sanity for content management, Auth0 for authentication, Stripe for payments, and Vercel to deploy the site. With this stack, we're able to provide a fast, secure, and scalable ecommerce solution.",
     tags: [
       {
         name: 'nextjs',
         color: 'blue-text-gradient',
       },
       {
-        name: 'supabase',
+        name: 'sanity',
+        color: 'green-text-gradient',
+      },
+      {
+        name: 'stripe',
+        color: 'pink-text-gradient',
+      },
+    ],
+    image: treecommerce,
+    source_code_link: 'https://github.com/TreezCode/treecommerce',
+    live_demo_link: 'https://treecommerce.vercel.app/',
+  },
+  {
+    name: 'Vanilla JS Portfolio',
+    description:
+      'A static website built with Vanilla JS, which highlights my front-end web development skills and passion. The website is designed without using any JS frameworks, demonstrating my proficiency in pure JavaScript coding.',
+    tags: [
+      {
+        name: 'javascript',
+        color: 'blue-text-gradient',
+      },
+      {
+        name: 'html',
         color: 'green-text-gradient',
       },
       {
@@ -326,8 +260,31 @@ const projects = [
         color: 'pink-text-gradient',
       },
     ],
-    image: tripguide,
-    source_code_link: 'https://github.com/',
+    image: vanilla,
+    source_code_link: 'https://github.com/TreezCode/TreezCode.github.io',
+    live_demo_link: 'https://iamtreez.com/',
+  },
+  {
+    name: 'React Click Game',
+    description:
+      'Built using ReactJS and deployed on Github using GH-Pages, the React-Click-Game is a web-based memory challenge. The user must click on randomly generated images of Rick Sanchez to test their memory skills. The images will be repositioned randomly and the user must click a different image to continue playing.',
+    tags: [
+      {
+        name: 'react',
+        color: 'blue-text-gradient',
+      },
+      {
+        name: 'nodejs',
+        color: 'green-text-gradient',
+      },
+      {
+        name: 'css',
+        color: 'pink-text-gradient',
+      },
+    ],
+    image: clickgame,
+    source_code_link: 'https://github.com/TreezCode/React-Click-Game',
+    live_demo_link: 'https://iamtreez.com/React-Click-Game/',
   },
 ];
 

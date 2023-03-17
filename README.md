@@ -1,7 +1,7 @@
 # TreeD Portfolio
 
 ## Demo 🧐
-Check out my portfolio at [coming soon]('https://iamtreez.com/').
+Check out my portfolio at [coming soon](https://iamtreez.com/).
 
 ## About 📖
 This is my most recent Web Developer portfolio, built using React, Three.js, Tailwind CSS, react-three/drei, react-three/fiber, framer-motion, and other technologies. The portfolio showcases my skills and experience as a web developer, with a focus on clean design, intuitive user experience, and interactive 3D graphics.
