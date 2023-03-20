@@ -1,13 +1,13 @@
 {
   "name": "treed-portfolio",
-  "homepage": "https://iamtreez.com/TreeD-Portfolio",
+  "homepage": "https://TreezCode.github.io/TreeD-Portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "vite preview --port 8080",
     "build-css": "node-sass src/styles/custom.scss src/styles/custom.css"
   },
   "dependencies": {
