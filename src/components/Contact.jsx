@@ -98,9 +98,9 @@ const Contact = () => {
 
           <button
             type='submit'
-            className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-bold shadow-md shadow-primary rounded-xl'
+            className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-semibold shadow-md shadow-primary rounded-xl'
           >
-            {loading ? 'Sending...' : 'Sent'}
+            {loading ? 'Sending...' : 'Send'}
           </button>
         </form>
       </motion.div>

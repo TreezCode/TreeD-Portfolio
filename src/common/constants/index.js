@@ -91,19 +91,7 @@ const technologies = [
     icon: javascript,
   },
   {
-    name: 'Three JS',
-    icon: threejs,
-  },
-  {
-    name: 'Tailwind CSS',
-    icon: tailwind,
-  },
-  {
-    name: 'Next JS',
-    icon: nextjs,
-  },
-  {
-    name: 'mern',
+    name: 'MERN',
     icon: mern,
   },
   {
@@ -121,6 +109,18 @@ const technologies = [
   {
     name: 'Node JS',
     icon: nodejs,
+  },
+  {
+    name: 'Next JS',
+    icon: nextjs,
+  },
+  {
+    name: 'Three JS',
+    icon: threejs,
+  },
+  {
+    name: 'Tailwind CSS',
+    icon: tailwind,
   },
   {
     name: 'Redux Toolkit',
