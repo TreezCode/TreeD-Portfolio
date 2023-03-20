@@ -201,22 +201,22 @@ const testimonials = [
     image:
       'https://media.licdn.com/dms/image/C4E03AQF2XlgXvJtvxg/profile-displayphoto-shrink_200_200/0/1568088484690?e=1684368000&v=beta&t=bRjFeg6O2Mw27btboOnvckYAqVI4kEcr5XmOLeZuMLU',
   },
-  {
-    testimonial:
-      'I thought it was impossible to make a website as beautiful as our product, but Joey proved me wrong.',
-    name: 'Sara Lee',
-    designation: 'CFO',
-    company: 'Acme Co',
-    image: 'https://randomuser.me/api/portraits/women/4.jpg',
-  },
-  {
-    testimonial:
-      "I've never met a web developer who truly cares about their clients' success like Joey does.",
-    name: 'Chris Brown',
-    designation: 'COO',
-    company: 'DEF Corp',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg',
-  },
+  // {
+  //   testimonial:
+  //     'I thought it was impossible to make a website as beautiful as our product, but Joey proved me wrong.',
+  //   name: 'Sara Lee',
+  //   designation: 'CFO',
+  //   company: 'Acme Co',
+  //   image: 'https://randomuser.me/api/portraits/women/4.jpg',
+  // },
+  // {
+  //   testimonial:
+  //     "I've never met a web developer who truly cares about their clients' success like Joey does.",
+  //   name: 'Chris Brown',
+  //   designation: 'COO',
+  //   company: 'DEF Corp',
+  //   image: 'https://randomuser.me/api/portraits/men/5.jpg',
+  // },
 ];
 
 const projects = [
