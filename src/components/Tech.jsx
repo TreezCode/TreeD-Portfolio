@@ -1,11 +1,12 @@
 // External imports
 import { Suspense, useRef, createRef, useEffect, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import {
+  PerspectiveCamera,
   OrbitControls,
+  ScrollControls,
   Preload,
   View,
-  PerspectiveCamera,
 } from '@react-three/drei';
 import { motion } from 'framer-motion';
 // Internal imports
@@ -22,6 +23,7 @@ const Tech = () => {
   const views = useRef([]);
   const [viewsPopulated, setViewsPopulated] = useState(false);
 
+
   // Populate views ref with createRef()
   useEffect(() => {
     views.current = views.current.slice(0, technologies.length);
@@ -34,12 +36,12 @@ const Tech = () => {
   return (
     <>
       {/* Render section title and subtitle */}
-      <motion.div variants={textVariant()}>
+      <motion.div variants={textVariant()} className='mb-3'>
         <p className={styles.sectionSubText}>What tools I build with</p>
         <h2 className={styles.sectionHeadText}>Technologies</h2>
       </motion.div>
       {/* Render views container and canvas */}
-      <div ref={ref} className='tech-container mt-3'>
+      <div ref={ref} className='tech-container relative mt-3 select-none'>
         <div className='views-container flex flex-row flex-wrap justify-evenly items-center gap-10'>
           {/* Map through views array and render title and div element with ref and technology data */}
           {views.current.map((view, i) => (
@@ -49,7 +51,7 @@ const Tech = () => {
               </p>
               <div
                 ref={view}
-                className='view w-28 h-28 cursor-pointer'
+                className='view w-56 h-56 cursor-pointer'
                 data-name={technologies[i].name}
               />
             </div>
@@ -63,19 +65,21 @@ const Tech = () => {
             position: 'fixed',
             top: '0',
             left: '0',
-            width: '100vw',
-            height: '100vh',
           }}
         >
-          <Suspense fallback={<CanvasLoader />}>
-            {viewsPopulated &&
-              technologies.map((tech, i) => (
-                // console.log(views.current[i])
-                <View key={i} track={views.current[i]}>
-                  <Common />
-                  <Ball imgUrl={tech.icon} />
-                </View>
-              ))}
+          <Suspense fallback={null}>
+            <ScrollControls damping={4} pages={3}>
+              <group>
+                {viewsPopulated &&
+                  technologies.map((tech, i) => (
+                    // console.log(views.current[i])
+                    <View key={i} track={views.current[i]}>
+                      <Common />
+                      <Ball imgUrl={tech.icon} />
+                    </View>
+                  ))}
+              </group>
+            </ScrollControls>
           </Suspense>
 
           <Preload all />
@@ -91,8 +95,12 @@ function Common() {
       <ambientLight intensity={0.15} />
       <directionalLight position={[0, 0, 0.05]} />
       <pointLight position={[-10, -10, 10]} color='blue' />
-      <PerspectiveCamera makeDefault fov={40} position={[0, 0, 8]} />
-      <OrbitControls enableZoom={false} />
+      <PerspectiveCamera makeDefault position={[0, 0, 8]} />
+      <OrbitControls
+        enableZoom={false}
+        enableDamping={false}
+        enablePan={false}
+      />
     </>
   );
 }

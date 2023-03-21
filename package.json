@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "host": "vite --host",
     "preview": "vite preview --port 8080",
     "build-css": "node-sass src/styles/custom.scss src/styles/custom.css"
   },

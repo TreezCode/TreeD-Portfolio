@@ -1,6 +1,11 @@
 import { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Preload, useGLTF } from '@react-three/drei';
+import {
+  OrbitControls,
+  ScrollControls,
+  Preload,
+  useGLTF,
+} from '@react-three/drei';
 
 import CanvasLoader from '../Loader';
 
@@ -13,9 +18,10 @@ const Computers = ({ isMobile }) => {
   return (
     <mesh>
       <hemisphereLight intensity={0.15} groundColor='black' />
-      <pointLight intensity={0.75} />
+      <pointLight intensity={0.75} color='blue' />
       <spotLight
         position={[-20, 50, 10]}
+        color='purple'
         angle={0.12}
         penumbra={1}
         intensity={1}
@@ -24,9 +30,9 @@ const Computers = ({ isMobile }) => {
       />
       <primitive
         object={computer.scene}
-        scale={isMobile ? 0.65 : 0.75}
-        position={isMobile ? [0, -3, -2] : [0, -3.25, -1.5]}
-        rotation={[0, -0.2, -0.05]}
+        scale={isMobile ? 0.7 : 0.9}
+        position={isMobile ? [0, -1.5, -1.2] : [0, -2, -1.2]}
+        rotation={[0, -0.1, -0.04]}
       />
     </mesh>
   );
@@ -60,17 +66,20 @@ const ComputersCanvas = () => {
   return (
     <Canvas
       frameloop='demand'
-      shadows
-      camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
+      shadows
+      camera={{ fov: 15, position: [25, 0, 5], rotation: [0, 0, 0] }}
     >
       <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls
-          enableZoom={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-        />
-        <Computers isMobile={isMobile} />
+        <ScrollControls distance={0} damping={3}>
+          <OrbitControls
+            enableZoom={false}
+            enablePan={false}
+            maxPolarAngle={Math.PI / 2}
+            minPolarAngle={Math.PI / 2}
+          />
+          <Computers isMobile={isMobile} />
+        </ScrollControls>
       </Suspense>
 
       <Preload all />

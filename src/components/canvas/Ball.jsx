@@ -6,7 +6,7 @@ const Ball = (props) => {
   return (
     <group>
       <Float speed={1.75} rotationIntensity={1}>
-        <mesh castShadow receiveShadow scale={2.75}>
+        <mesh castShadow receiveShadow scale={2.75} dispose={true}>
           <icosahedronGeometry args={[1, 1]} />
           <meshStandardMaterial
             color='#fff8eb'
