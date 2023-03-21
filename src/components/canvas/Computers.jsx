@@ -71,7 +71,6 @@ const ComputersCanvas = () => {
       camera={{ fov: 15, position: [25, 0, 5], rotation: [0, 0, 0] }}
     >
       <Suspense fallback={<CanvasLoader />}>
-        <ScrollControls distance={0} damping={3}>
           <OrbitControls
             enableZoom={false}
             enablePan={false}
@@ -79,7 +78,6 @@ const ComputersCanvas = () => {
             minPolarAngle={Math.PI / 2}
           />
           <Computers isMobile={isMobile} />
-        </ScrollControls>
       </Suspense>
 
       <Preload all />
