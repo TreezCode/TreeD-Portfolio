@@ -36,14 +36,14 @@ const Contact = () => {
     if (fieldName === 'name') {
       return value.length >= 3
         ? ''
-        : 'At least 3 characters required for name.';
+        : 'At least 3 characters required';
     } else if (fieldName === 'email') {
       const emailRegex = /^\S+@\S+\.\S+$/;
-      return emailRegex.test(value) ? '' : 'Invalid email address.';
+      return emailRegex.test(value) ? '' : 'Invalid email address';
     } else if (fieldName === 'message') {
       return value.length >= 20
         ? ''
-        : 'At least 20 characters required for a message.';
+        : 'At least 20 characters required';
     }
   };
 
@@ -51,7 +51,7 @@ const Contact = () => {
     e.preventDefault();
 
     if (!form.name || !form.email || !form.message) {
-      setErrors({ ...errors, form: 'Missing a required field.' });
+      setErrors({ ...errors, form: 'Missing a required field' });
       return;
     }
 
