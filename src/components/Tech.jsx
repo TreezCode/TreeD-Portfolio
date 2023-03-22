@@ -5,6 +5,7 @@ import {
   PerspectiveCamera,
   OrbitControls,
   ScrollControls,
+  Scroll,
   Preload,
   View,
 } from '@react-three/drei';
@@ -22,7 +23,6 @@ const Tech = () => {
   const ref = useRef(null);
   const views = useRef([]);
   const [viewsPopulated, setViewsPopulated] = useState(false);
-
 
   // Populate views ref with createRef()
   useEffect(() => {
@@ -67,9 +67,9 @@ const Tech = () => {
             left: '0',
           }}
         >
-          <Suspense fallback={null}>
-            <ScrollControls damping={4} pages={3}>
-              <group>
+          <Suspense fallback={<CanvasLoader />} >
+            <ScrollControls damping={4} pages={0}>
+              <Scroll>
                 {viewsPopulated &&
                   technologies.map((tech, i) => (
                     // console.log(views.current[i])
@@ -78,7 +78,7 @@ const Tech = () => {
                       <Ball imgUrl={tech.icon} />
                     </View>
                   ))}
-              </group>
+              </Scroll>
             </ScrollControls>
           </Suspense>
 

@@ -21,8 +21,6 @@ const EarthCanvas = () => (
       far: 200,
       position: [-4, 3, 6],
     }}
-    frameloop='always'
-    gl={{ preserveDrawingBuffer: true }}
   >
     <Suspense fallback={<CanvasLoader />}>
       <ScrollControls distance={0} damping={3}>

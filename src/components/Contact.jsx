@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 
@@ -14,39 +14,82 @@ const Contact = () => {
     email: '',
     message: '',
   });
-
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // Set the updated form field value
     setForm({ ...form, [name]: value });
+
+    // Reset error message for the field if the value is empty
+    if (value.trim() === '') {
+      setErrors({ ...errors, [name]: '' });
+    } else {
+      const errorMessage = validateField(name, value);
+      setErrors({ ...errors, [name]: errorMessage, form: '' });
+    }
+  };
+
+  const validateField = (fieldName, value) => {
+    if (fieldName === 'name') {
+      return value.length >= 3
+        ? ''
+        : 'At least 3 characters required for name.';
+    } else if (fieldName === 'email') {
+      const emailRegex = /^\S+@\S+\.\S+$/;
+      return emailRegex.test(value) ? '' : 'Invalid email address.';
+    } else if (fieldName === 'message') {
+      return value.length >= 20
+        ? ''
+        : 'At least 20 characters required for a message.';
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    emailjs.send(
-      'service_ujtn1se',
-      'template_b8ddqur',
-      {
-        from_name: form.name,
-        to_name: 'Treez',
-        from_email: form.email,
-        to_email: 'treezcode@gmail.com',
-        message: form.message,
-      },
-      '6wn8KB8yrWm4AoYCW'
-    ).then(() => {
-      setLoading(false);
-      alert('Thank you, I will get back to you as soon as possible.')
-    }, err => {
-      setLoading(false);
-      console.log(err);
-      alert('Oops, something went wrong.')
-    })
+    if (!form.name || !form.email || !form.message) {
+      setErrors({ ...errors, form: 'Missing a required field.' });
+      return;
+    }
+
+    const hasErrors = Object.values(errors).some((error) => error !== '');
+    if (hasErrors) {
+      alert('Please fix the errors in the form');
+      return;
+    }
+
+    setLoading(true);
+    
+    emailjs
+      .send(
+        'service_ujtn1se', // service
+        'template_b8ddqur', // template
+        {
+          from_name: form.name,
+          to_name: 'Treez',
+          from_email: form.email,
+          to_email: 'treezcode@gmail.com',
+          message: form.message,
+        },
+        '6wn8KB8yrWm4AoYCW' // public
+      )
+      .then(
+        () => {
+          setLoading(false);
+          alert('Thank you, I will get back to you as soon as possible.');
+        },
+        (err) => {
+          setLoading(false);
+          console.log(err);
+          alert('Oops, something went wrong.');
+        }
+      );
   };
+
+  useEffect(() => {}, [form]);
 
   return (
     <div className='xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden'>
@@ -72,6 +115,9 @@ const Contact = () => {
               placeholder="What's your name?"
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
+            {errors.name && (
+              <span className='error text-secondary'>{errors.name}</span>
+            )}
           </label>
           <label className='flex flex-col'>
             <span className='text-white font-mediummb-4'>Your Email</span>
@@ -83,6 +129,9 @@ const Contact = () => {
               placeholder="What's your email?"
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
+            {errors.email && (
+              <span className='error text-secondary'>{errors.email}</span>
+            )}
           </label>
           <label className='flex flex-col'>
             <span className='text-white font-mediummb-4'>Your Message</span>
@@ -94,8 +143,13 @@ const Contact = () => {
               placeholder='What do you want to say?'
               className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
             />
+            {errors.message && (
+              <span className='error text-secondary'>{errors.message}</span>
+            )}
           </label>
-
+          {errors.form && (
+            <span className={`error ${styles.errorText}`}>{errors.form}</span>
+          )}
           <button
             type='submit'
             className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-semibold shadow-md shadow-primary rounded-xl'
