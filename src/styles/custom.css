@@ -1,9 +1,0 @@
-.parallax-effect-img {
-  transform-style: preserve-3d;
-  transform: perspective(1000px);
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.parallax-effect-img .inner-element {
-  transform: translateZ(40px) scale(0.95);
-}
