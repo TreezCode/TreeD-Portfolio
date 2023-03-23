@@ -10,15 +10,14 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
-      port: 3000
+      port: 3000,
+      open: true,
     },
     define: {
       'process.env': env,
     },
-    base: '',
-    root: '',
     build: {
-      outDir: '../dist',
+      outDir: './dist',
       emptyOutDir: true
     }
   };
