@@ -18,6 +18,7 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitError, setIsSubmitError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
 
   // A mapping of field names to their corresponding validation functions.
   const rules = useMemo(
@@ -37,10 +38,8 @@ const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Set the updated form field value
     setForm({ ...form, [name]: value });
 
-    // Reset error message for the field if the value is empty, else populate error and clear form
     if (value.trim() === '') {
       setErrors({ ...errors, [name]: '' });
     } else {
@@ -48,7 +47,6 @@ const Contact = () => {
       setErrors({ ...errors, [name]: errorMessage, form: '' });
     }
 
-    // Reset submit error state
     setIsSubmitError(false);
   };
 
@@ -59,13 +57,42 @@ const Contact = () => {
     [rules]
   );
 
-  const handleSubmit = (e) => {
+  const sendEmail = async (form) => {
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICEID,
+        import.meta.env.VITE_EMAILJS_TEMPLATEID,
+        {
+          from_name: form.name,
+          to_name: 'Treez',
+          from_email: form.email,
+          to_email: 'treezcode@gmail.com',
+          message: form.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLICKEY
+      );
+      return null;
+    } catch (error) {
+      return 'Oops, something went wrong.';
+    }
+  };
+
+  const handleSubmit = async (
+    e,
+    form,
+    setForm,
+    setIsSubmitError,
+    setLoading,
+    setErrors
+  ) => {
     e.preventDefault();
 
     if (!form.name || !form.email || !form.message) {
       setErrors({ ...errors, form: 'Missing a required field' });
       return;
     }
+
+    setIsSubmitError(false);
 
     const filteredErrors = Object.entries(errors)
       .filter(([key, value]) => value !== '')
@@ -79,47 +106,26 @@ const Contact = () => {
       setErrors({ ...errors, ...filteredErrors });
       return;
     }
-
+    
     setLoading(true);
 
-    setForm({
-      name: '',
-      email: '',
-      message: '',
-    });
+    const error = await sendEmail(form);
 
-    console.log('Message sent successfully');
-
-    setTimeout(() => setLoading(false), 1000);
-
-    const serviceID = import.meta.env.VITE_EMAILJS_SERVICEID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLICKEY;
-    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATEID;
-
-    emailjs
-      .send(
-        serviceID, // service
-        templateID, // template
-        {
-          from_name: form.name,
-          to_name: 'Treez',
-          from_email: form.email,
-          to_email: 'treezcode@gmail.com',
-          message: form.message,
-        },
-        publicKey // public
-      )
-      .then(
-        () => {
-          setLoading(false);
-          alert('Thank you, I will get back to you as soon as possible.');
-        },
-        (err) => {
-          setLoading(false);
-          console.log(err);
-          alert('Oops, something went wrong.');
-        }
-      );
+    if (error) {
+      setIsEmailSent(false);
+      setIsSubmitError(true);
+      setErrors((errors) => ({ ...errors, form: error }));
+    } else {
+      setForm({
+        name: '',
+        email: '',
+        message: '',
+      });
+      setLoading(false);
+      setIsEmailSent(true);
+      setIsSubmitError(false);
+      setTimeout(() => setIsEmailSent(false), 5000);
+    }
   };
 
   return (
@@ -130,10 +136,18 @@ const Contact = () => {
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact</h3>
-
         <form
           ref={formRef}
-          onSubmit={handleSubmit}
+          onSubmit={(e) =>
+            handleSubmit(
+              e,
+              form,
+              setForm,
+              setIsSubmitError,
+              setLoading,
+              setErrors
+            )
+          }
           className='mt-12 flex flex-col gap-8'
         >
           <label className='flex flex-col'>
@@ -201,12 +215,16 @@ const Contact = () => {
               {errors.form}
             </span>
           )}
-          <button
-            type='submit'
-            className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-semibold shadow-md shadow-primary rounded-xl'
-          >
-            {loading ? 'Sending...' : 'Send'}
-          </button>
+          <div className='flex items-center'>
+            <button type='submit' className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-semibold shadow-md shadow-primary rounded-xl'>
+              {loading ? 'Sending...' : 'Send'}
+            </button>
+            {isEmailSent && (
+              <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+                Thanks for reaching out, I'll get back to you shortly. 👋🌳
+              </p>
+            )}
+          </div>
         </form>
       </motion.div>
 

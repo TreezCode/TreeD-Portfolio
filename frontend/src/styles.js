@@ -14,7 +14,10 @@ const styles = {
       "sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider",
 
     errorText:
-    "text-red-700"
+    "text-red-700",
+
+    successText:
+    "text-green-500"
   };
   
   export { styles };
