@@ -13,6 +13,9 @@ const styles = {
     sectionSubText:
       "sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider",
 
+    timelineCards:
+    { background: "#151030", color: '#fff'},
+
     errorText:
     "text-red-700",
     successText:

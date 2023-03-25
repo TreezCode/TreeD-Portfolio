@@ -9,17 +9,17 @@ import {
   ScrollControls,
   Scroll,
   PresentationControls,
+  Environment,
+  ContactShadows,
   Preload,
 } from '@react-three/drei';
-// internal imports
-import CanvasLoader from '../Loader';
 
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
 
   return (
     <Float speed={1.75} rotationIntensity={1}>
-      <mesh castShadow receiveShadow scale={2.75} dispose={true}>
+      <mesh scale={2} dispose={true} position={[0, 0.75, 0]}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
           color='#95a1f1'
@@ -32,7 +32,7 @@ const Ball = (props) => {
           rotation={[2 * Math.PI, 0, 6.25]} // mirror icons
           flatShading
           map={decal}
-          opacity={0.8}
+          opacity={0.65}
         />
       </mesh>
     </Float>
@@ -55,7 +55,7 @@ const BallCanvas = (props) => {
         left: '0',
       }}
     >
-      <Suspense fallback={<CanvasLoader />}>
+      <Suspense fallback={null}>
         <ScrollControls damping={4} pages={0}>
           <Scroll>
             {viewsPopulated &&
@@ -72,7 +72,7 @@ const BallCanvas = (props) => {
                     config={{ mass: 2, tension: 500 }}
                     snap={{ mass: 4, tension: 1500 }}
                     rotation={[0, 0, 0]}
-                    polar={[-Math.PI / 3, Math.PI / 3]}
+                    polar={[-Math.PI / 2, Math.PI / 2]}
                     azimuth={[-Math.PI / 1.4, Math.PI / 2]}
                   >
                     <Ball imgUrl={tech.icon} />
@@ -92,8 +92,10 @@ const Common = () => {
   return (
     <>
       <ambientLight intensity={0.15} />
-      <directionalLight position={[0, 0, 0.05]} intensity={0.5} />
-      <pointLight position={[-10, -5, 10]} color='#915eff' />
+      <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} shadow-mapSize={2048} castShadow />
+      <directionalLight position={[0, 0, 0.05]} intensity={0.15} />
+      <pointLight position={[-10, -5, 10]} intensity={0.5} color='#915eff' />
+      <ContactShadows position={[0, -1.65, 0]} opacity={0.15}  blur={2.5} color='#915eff' />
     </>
   );
 };

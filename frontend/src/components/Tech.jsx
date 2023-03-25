@@ -32,16 +32,16 @@ const Tech = () => {
       </motion.div>
       {/* Render views container and canvas */}
       <div ref={ref} className='tech-container relative mt-3'>
-        <div className='views-container flex flex-row flex-wrap justify-evenly items-center gap-10'>
+        <div className='views-container flex flex-row flex-wrap justify-evenly items-center sm:gap-10 gap-5'>
           {/* Map through views array and render title and div element with ref and technology data */}
           {views.current.map((view, i) => (
             <div key={i}>
-              <p className='text-center text-secondary text-[16px]'>
+              <p className='text-center text-[#915eff] text-[18px]'>
                 {technologies[i].name}
               </p>
               <div
                 ref={view}
-                className='view w-56 h-56 touch-none cursor-pointer'
+                className='view w-56 h-72 touch-none'
                 data-name={technologies[i].name}
               />
             </div>

@@ -139,7 +139,7 @@ const Contact = () => {
     <div className='xl:mt-12 xl:flex-row flex-col-reverse flex gap-10'>
       <motion.div
         variants={slideIn('left', 'tween', 0.2, 1)}
-        className='flex-[0.75] bg-black-100 sm:p-8 p-6 rounded-2xl'
+        className='flex-[0.75] bg-black-100 md:p-16 sm:p-10 xs:p-8 p-6 rounded-2xl'
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact</h3>
@@ -165,7 +165,7 @@ const Contact = () => {
               value={form.name}
               onChange={handleChange}
               placeholder="What's your name?"
-              className='bg-tertiary py-2 px-4 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              className='bg-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none border-none font-medium'
             />
             {errors.name && (
               <span
@@ -185,7 +185,7 @@ const Contact = () => {
               value={form.email}
               onChange={handleChange}
               placeholder="What's your email?"
-              className='bg-tertiary py-2 px-4 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              className='bg-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none border-none font-medium'
             />
             {errors.email && (
               <span
@@ -207,7 +207,7 @@ const Contact = () => {
               onChange={handleChange}
               onInput={textAreaInput}
               placeholder='What do you want to say?'
-              className='bg-tertiary py-2 px-4 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium min-h-[100px] resize-none'
+              className='bg-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none border-none font-medium min-h-[100px] resize-none'
             />
             {errors.message && (
               <span
