@@ -41,7 +41,7 @@ const Tech = () => {
         <h2 className={styles.sectionHeadText}>Technologies</h2>
       </motion.div>
       {/* Render views container and canvas */}
-      <div ref={ref} className='tech-container relative mt-3 select-none'>
+      <div ref={ref} className='tech-container relative mt-3'>
         <div className='views-container flex flex-row flex-wrap justify-evenly items-center gap-10'>
           {/* Map through views array and render title and div element with ref and technology data */}
           {views.current.map((view, i) => (

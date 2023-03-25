@@ -15,9 +15,8 @@ const styles = {
 
     errorText:
     "text-red-700",
-
     successText:
-    "text-green-500"
+    "text-green-500",
   };
   
   export { styles };
