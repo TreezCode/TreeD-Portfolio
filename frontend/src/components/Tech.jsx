@@ -1,22 +1,12 @@
 // External imports
-import { Suspense, useRef, createRef, useEffect, useState } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
-import {
-  PerspectiveCamera,
-  OrbitControls,
-  ScrollControls,
-  Scroll,
-  Preload,
-  View,
-} from '@react-three/drei';
+import { useRef, createRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 // Internal imports
-import Ball from './canvas/Ball';
+import { BallCanvas } from './canvas';
 import { technologies } from '../common/constants';
 import { textVariant } from '../utils/motion';
 import { SectionWrapper } from '../hoc';
 import { styles } from '../styles';
-import CanvasLoader from './Loader';
 
 const Tech = () => {
   // Define necessary states and refs
@@ -51,58 +41,22 @@ const Tech = () => {
               </p>
               <div
                 ref={view}
-                className='view w-56 h-56 cursor-pointer'
+                className='view w-56 h-56 touch-none cursor-pointer'
                 data-name={technologies[i].name}
               />
             </div>
           ))}
         </div>
-        {/* Render Canvas with Suspense component and fallback loader */}
-        <Canvas
+        {/* Render BallCanvas with Suspense component and fallback loader */}
+        <BallCanvas
           eventSource={ref}
-          className='canvas'
-          style={{
-            position: 'fixed',
-            top: '0',
-            left: '0',
-          }}
-        >
-          <Suspense fallback={<CanvasLoader />} >
-            <ScrollControls damping={4} pages={0}>
-              <Scroll>
-                {viewsPopulated &&
-                  technologies.map((tech, i) => (
-                    // console.log(views.current[i])
-                    <View key={i} track={views.current[i]}>
-                      <Common />
-                      <Ball imgUrl={tech.icon} />
-                    </View>
-                  ))}
-              </Scroll>
-            </ScrollControls>
-          </Suspense>
-
-          <Preload all />
-        </Canvas>
+          views={views}
+          technologies={technologies}
+          viewsPopulated={viewsPopulated}
+        />
       </div>
     </>
   );
 };
-
-function Common() {
-  return (
-    <>
-      <ambientLight intensity={0.15} />
-      <directionalLight position={[0, 0, 0.05]} />
-      <pointLight position={[-10, -10, 10]} color='blue' />
-      <PerspectiveCamera makeDefault position={[0, 0, 8]} />
-      <OrbitControls
-        enableZoom={false}
-        enableDamping={false}
-        enablePan={false}
-      />
-    </>
-  );
-}
 
 export default SectionWrapper(Tech, '');
