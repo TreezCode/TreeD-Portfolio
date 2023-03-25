@@ -26,7 +26,7 @@ const App = () => {
         <Tech />
         <Works />
         <Feedbacks />
-        <div className='relative z-0'>
+        <div className='relative z-0 overflow-hidden'>
           <Contact />
           <StarsCanvas />
         </div>
