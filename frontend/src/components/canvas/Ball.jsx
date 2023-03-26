@@ -19,7 +19,7 @@ const Ball = (props) => {
 
   return (
     <Float speed={1.75} rotationIntensity={1}>
-      <mesh scale={2} dispose={true} position={[0, 0.75, 0]}>
+      <mesh scale={2} dispose={null} position={[0, 0.75, 0]}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
           color='#95a1f1'

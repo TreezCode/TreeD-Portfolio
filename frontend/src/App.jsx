@@ -11,10 +11,11 @@ import {
   Tech,
   Works,
   StarsCanvas,
+  CustomScroll,
 } from './components';
 
 const App = () => {
-  return  (
+  return (
     <BrowserRouter>
       <div className='relative z-0 bg-primary'>
         <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
@@ -31,8 +32,9 @@ const App = () => {
           <StarsCanvas />
         </div>
       </div>
+      <CustomScroll />
     </BrowserRouter>
-  )
-}
+  );
+};
 
 export default App;

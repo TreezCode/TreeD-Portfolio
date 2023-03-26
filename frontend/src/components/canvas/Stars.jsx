@@ -15,7 +15,7 @@ const Stars = (props) => {
   });
 
   return (
-    <group rotation={[0, 0, Math.PI / 4]}>
+    <group rotation={[0, 0, Math.PI / 4]} dispose={null}>
       <Points
         ref={ref}
         positions={sphere}

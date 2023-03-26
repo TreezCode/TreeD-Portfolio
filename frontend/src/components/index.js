@@ -8,6 +8,7 @@ import Works from './Works';
 import Feedbacks from './Feedbacks';
 import Contact from './Contact';
 import CanvasLoader from './Loader';
+import CustomScroll from './CustomScroll';
 
 export {
   Hero,
@@ -23,4 +24,5 @@ export {
   ComputersCanvas, 
   StarsCanvas,
   CanvasLoader,
+  CustomScroll,
 }
