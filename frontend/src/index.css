@@ -49,6 +49,7 @@ body::-webkit-scrollbar-thumb {
     to(var(--bgSecondary)),
     color-stop(0.6, var(--bgTertiary))
     );
+    transition: all 1s ease;
 }
 
 .scroll-half::-webkit-scrollbar-thumb {
@@ -60,6 +61,43 @@ body::-webkit-scrollbar-thumb {
     to(var(--bgSecondary)),
     color-stop(0.6, var(--bgTertiary))
   );
+}
+/* React-VerticalTimeline mobile fix
+================================================================== */
+/* CUSTOM LINE COLOR */
+.vertical-timeline::before {
+  background: var(--colorViolet);
+  background: '#00cea8';
+  background: linear-gradient(-90.13deg, var(--colorViolet) 1.9%, #00cea8 97.5%);
+  background: -webkit-linear-gradient(-90.13deg, var(--colorViolet) 1.9%, #00cea8 97.5%);
+}
+
+.vertical-timeline .vertical-timeline-element .vertical-timeline-element-icon {
+  background: #383e56 !important;
+  box-shadow: 0 0 0 4px var(--colorViolet), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+}
+
+@media only screen and (max-width: 1169px) {
+  .vertical-timeline--animate  .vertical-timeline-element-content.bounce-in {
+    visibility: visible;
+    animation: timeline-slide 0.6s;
+  }
+}
+
+@keyframes timeline-slide {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  60% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Common

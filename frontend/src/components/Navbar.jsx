@@ -8,10 +8,25 @@ import { logo, logoLight, menu, close } from '../common/assets';
 const Navbar = () => {
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
+  const [isScrolled, setisScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY;
+      scrollPos > 0 ? setisScrolled(true) : setisScrolled(false);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <nav
-      className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-50 bg-primary`}
+      className={`${isScrolled ? styles.navScrolled : ''} ${
+        styles.paddingX
+      } w-full flex items-center py-5 fixed top-0 z-50 bg-primary`}
     >
       <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
         <Link
@@ -24,8 +39,7 @@ const Navbar = () => {
         >
           <img src={logo} alt='logo' className='w-10 h-10 object-contain' />
           <p className='text-white text-[18px] font-bold cursor-pointer flex'>
-            Treez &nbsp;
-            <span className='sm:block hidden'>| Technology</span>
+            <span className='sm:block hidden'>Treez | Technology</span>
           </p>
         </Link>
 
