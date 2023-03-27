@@ -9,16 +9,15 @@
 /* Root Variables
 ================================================================== */
 :root {
-  --bgPrimary: #050816;
-  --bgPrimaryFade: #050815e6;
-  --bgSecondary: #151030;
-  --bgTertiary: #100d25;
-  --bgQuaternary: #090325;
-  --colorViolet: #915eff;
-  --colorLogo: #95a1f1;
   --primary: #050816;
+  --primaryFade: #050815e6;
   --secondary: #aaa6c3;
   --tertiary: #151030;
+  --colorViolet: #915eff;
+  --colorLogo: #95a1f1;
+  --black100: #100d25;
+  --black200: #090325;
+  --white100: #f3f3f3;
 }
 
 /* Init/reset

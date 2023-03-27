@@ -3,28 +3,33 @@ import { useEffect, useState } from 'react';
 import './CustomScroll.css';
 
 const CustomScroll = () => {
-  const [currentScrollPos, setCurrentScrollPos] = useState(0);
-  const [totalHeight, setTotalHeight] = useState(0);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY;
-      const height = document.documentElement.scrollHeight;
-      setCurrentScrollPos(scrollPos);
-      setTotalHeight(height);
+
+      let scrollDirection;
+      scrollPos > prevScrollPos
+        ? (scrollDirection = 'down')
+        : (scrollDirection = 'up');
+
+      setPrevScrollPos(scrollPos);
+
+      if (scrollDirection === 'down') {
+        document.body.classList.add('scroll-down');
+      } else {
+        document.body.classList.remove('scroll-down');
+      }
+
+      return scrollDirection;
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-
-  const halfwayPoint = totalHeight / 2 + totalHeight * 0.02;
-  
-  currentScrollPos > halfwayPoint
-    ? document.body.classList.add('scroll-half')
-    : document.body.classList.remove('scroll-half');
+  }, [prevScrollPos]);
 
   return null;
 };

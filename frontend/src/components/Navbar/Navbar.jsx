@@ -75,7 +75,7 @@ const Navbar = () => {
           className='menu bg-primary fixed top-0 left-0 w-full text-center text-[1.3rem] h-full -translate-y-full opacity-0'
           style={{ transition: '0.7s cubic-bezier(0.74, -0.03, 0.83, 0.67)' }}
         >
-          <div className='flex justify-center flex-col p-1 pt-[5rem] h-full overflow-hidden'>
+          <div className='flex justify-center flex-col p-1 pt-[5rem] h-full xs:w-80 w-60 m-auto overflow-hidden'>
             <img
               src={logo}
               alt='logo'
