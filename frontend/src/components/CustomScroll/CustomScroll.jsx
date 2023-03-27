@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import './CustomScroll';
+
 const CustomScroll = () => {
   const [currentScrollPos, setCurrentScrollPos] = useState(0);
   const [totalHeight, setTotalHeight] = useState(0);

@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+/* Tailwind Presets
+================================================================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,14 +10,18 @@
 ================================================================== */
 :root {
   --bgPrimary: #050816;
+  --bgPrimaryFade: #050815e6;
   --bgSecondary: #151030;
   --bgTertiary: #100d25;
   --bgQuaternary: #090325;
   --colorViolet: #915eff;
   --colorLogo: #95a1f1;
+  --primary: #050816;
+  --secondary: #aaa6c3;
+  --tertiary: #151030;
 }
 
-/* Init
+/* Initialize
 ================================================================== */
 * {
   margin: 0;
@@ -62,6 +68,7 @@ body::-webkit-scrollbar-thumb {
     color-stop(0.6, var(--bgTertiary))
   );
 }
+
 /* React-VerticalTimeline mobile fix
 ================================================================== */
 /* CUSTOM LINE COLOR */
@@ -123,8 +130,8 @@ textarea {
   scrollbar-width: none; /* Firefox */
 }
 
-input:focus,
-textarea:focus {
+label input:focus,
+label textarea:focus {
   border-left: 2px solid #804dee;
 }
 
@@ -134,6 +141,7 @@ textarea:focus {
   display: block;
   user-select: none;
 }
+
 
 /* Gradients
 ================================================================== */
