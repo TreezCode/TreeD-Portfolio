@@ -9,7 +9,7 @@ import {
   Hero,
   Navbar,
   Tech,
-  Works,
+  Projects,
   StarsCanvas,
   CustomScroll,
 } from './components';
@@ -25,7 +25,7 @@ const App = () => {
         <About />
         <Experience />
         <Tech />
-        <Works />
+        <Projects />
         <Feedbacks />
         <div className='relative z-0 overflow-hidden'>
           <Contact />

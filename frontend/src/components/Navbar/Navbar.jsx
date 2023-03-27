@@ -7,19 +7,41 @@ import {
   FaEtsy,
   FaSearch,
   FaBars,
+  FaWindowClose,
 } from 'react-icons/fa';
 
-import { navLinks } from '../../common/constants';
+import { navLinks, navLinksSecondary } from '../../common/constants';
 import { logo } from '../../common/assets';
 
 import './Navbar.css';
 
 const Navbar = () => {
-  const [active, setActive] = useState('');
+  const [activeLink, setActiveLink] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
   const toggleMenu = () => {
-    menuRef.current.classList.toggle('menu-open');
+    setMenuOpen(!menuOpen);
+    const menuElement = menuRef.current;
+    menuElement.classList.toggle('menu-open');
+
+    // Disable scrolling when menu is open
+    const bodyElement = document.querySelector('body');
+    if (menuOpen) {
+      bodyElement.style.overflow = 'auto';
+    } else {
+      bodyElement.style.overflow = 'hidden';
+    }
+  };
+
+  const handleMenuClick = (link) => {
+    setActiveLink(link.title);
+    toggleMenu();
+  };
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link.title);
+    menuOpen && toggleMenu();
   };
 
   useEffect(() => {
@@ -53,43 +75,50 @@ const Navbar = () => {
           className='menu bg-primary fixed top-0 left-0 w-full text-center text-[1.3rem] h-full -translate-y-full opacity-0'
           style={{ transition: '0.7s cubic-bezier(0.74, -0.03, 0.83, 0.67)' }}
         >
-          <div>
+          <div className='flex justify-center flex-col p-1 pt-[5rem] h-full overflow-hidden'>
             <img
               src={logo}
               alt='logo'
               className='logo w-[4rem] h-[4rem] mx-auto'
             />
-            <ul>
-              <li>
-                <a href='#'>Articles</a>
-              </li>
-              <li>
-                <a href='#'>Gallery</a>
-              </li>
-              <li>
-                <a href='#'>Store</a>
-              </li>
+            <ul className='navlinks'>
+              {navLinks.map((link) => (
+                <li
+                  key={link.id}
+                  className={`${
+                    activeLink === link.title ? 'scale-110' : ''
+                  } text-[18px] font-medium`}
+                  onClick={() => handleMenuClick(link)}
+                >
+                  <a href={`#${link.id}`}>{link.title}</a>
+                </li>
+              ))}
             </ul>
-            <ul>
-              <li>
-                <a href='#'>Whats New</a>
-              </li>
-              <li>
-                <a href='#'>Projects</a>
-              </li>
-              <li>
-                <a href='#'>About</a>
-              </li>
-              <li>
-                <a href='#'>Resume</a>
-              </li>
-              <li>
-                <a href='#'>Contact</a>
-              </li>
+            <ul className='navlinks-secondary'>
+              {navLinksSecondary.map((link) => (
+                <li
+                  key={link.id}
+                  className={`${
+                    activeLink === link.title ? 'scale-110' : ''
+                  } text-[18px] font-medium`}
+                  onClick={() => handleMenuClick(link)}
+                >
+                  {!link.url ? (
+                    <a href={`#${link.id}`}>{link.title}</a>
+                  ) : (
+                    <a href={`${link.url}`} target='_blank'>
+                      {link.title}
+                    </a>
+                  )}
+                </li>
+              ))}
             </ul>
             <ul className='social-media'>
               <li>
-                <a href='https://www.linkedin.com/in/joey-kubalak-425032180/' target='_blank'>
+                <a
+                  href='https://www.linkedin.com/in/joey-kubalak-425032180/'
+                  target='_blank'
+                >
                   <FaLinkedin />
                 </a>
               </li>
@@ -99,12 +128,18 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href='https://www.etsy.com/shop/TranscendentTreez' target='_blank'>
+                <a
+                  href='https://www.etsy.com/shop/TranscendentTreez'
+                  target='_blank'
+                >
                   <FaEtsy />
                 </a>
               </li>
               <li>
-                <a href='https://www.youtube.com/channel/UCXuGXX7rA1wmk_fEpWmCQhA' target='_blank'>
+                <a
+                  href='https://www.youtube.com/channel/UCXuGXX7rA1wmk_fEpWmCQhA'
+                  target='_blank'
+                >
                   <FaYoutube />
                 </a>
               </li>
@@ -116,7 +151,11 @@ const Navbar = () => {
             </ul>
             <form>
               <div className='input-wrap flex justify-center items-center py-2'>
-                <input type='search' placeholder='Search...' />
+                <input
+                  type='search'
+                  placeholder='Search...'
+                  className='text-[1rem] max-w-[60%]'
+                />
                 <button type='submit'>
                   <FaSearch />
                 </button>
@@ -129,14 +168,14 @@ const Navbar = () => {
             TreezCode
           </a>
           <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center'>
-            <ul className='nav-links w-full my-0 mx-2'>
+            <ul className='navlinks w-full my-0 mx-2'>
               {navLinks.map((link) => (
                 <li
                   key={link.id}
                   className={`${
-                    active === link.title ? 'scale-110' : ''
+                    activeLink === link.title ? 'scale-110' : ''
                   } text-[18px] font-medium cursor-pointer inline-block px-2`}
-                  onClick={() => setActive(link.title)}
+                  onClick={() => handleLinkClick(link)}
                 >
                   <a href={`#${link.id}`}>{link.title}</a>
                 </li>
@@ -146,16 +185,25 @@ const Navbar = () => {
               <div className='input-wrap flex justify-center items-center py-2'>
                 <input type='search' placeholder='Search...' className='px-1' />
                 <button type='submit'>
-                  <FaSearch />
+                  <FaSearch className='transition duration-300 hover:text-secondary' />
                 </button>
               </div>
             </form>
           </div>
-          <FaBars
-            id='menu-btn'
-            className='text-[1.2rem] cursor-pointer transition duration-300 hover:text-secondary ml-auto'
-            onClick={toggleMenu}
-          />
+
+          {!menuOpen ? (
+            <FaBars
+              id='menu-btn'
+              className='text-[1.2rem] cursor-pointer transition duration-300 hover:text-secondary ml-auto'
+              onClick={toggleMenu}
+            />
+          ) : (
+            <FaWindowClose
+              id='menu-btn'
+              className='text-[1.2rem] cursor-pointer transition duration-300 hover:text-secondary ml-auto'
+              onClick={toggleMenu}
+            />
+          )}
         </div>
       </nav>
     </header>

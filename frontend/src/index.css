@@ -21,7 +21,7 @@
   --tertiary: #151030;
 }
 
-/* Initialize
+/* Init/reset
 ================================================================== */
 * {
   margin: 0;
@@ -32,41 +32,39 @@
   color-scheme: dark;
 }
 
-/* CustomScroll
+/* Common
 ================================================================== */
-body::-webkit-scrollbar {
-  width: 6px;
+::selection {
+  background: #804dee;
+  color: #fff;
 }
 
-body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: var(--bgSecondary);
+a,
+button,
+.view {
+  -webkit-tap-highlight-color: transparent;
 }
 
-body::-webkit-scrollbar-thumb {
-  min-height: 20px;
-  border-radius: 10px;
-  background-color: var(--colorViolet);
-  background-image: -webkit-gradient(
-    linear,
-    0% 25%,
-    0% 75%,
-    from(var(--colorViolet)),
-    to(var(--bgSecondary)),
-    color-stop(0.6, var(--bgTertiary))
-    );
-    transition: all 1s ease;
+/* Hide textarea scrollbar for Chrome, Safari and Opera */
+textarea::-webkit-scrollbar {
+  display: none;
 }
 
-.scroll-half::-webkit-scrollbar-thumb {
-  background-image: -webkit-gradient(
-    linear,
-    0% 75%,
-    0% 25%,
-    from(var(--colorViolet)),
-    to(var(--bgSecondary)),
-    color-stop(0.6, var(--bgTertiary))
-  );
+textarea {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+label input:focus,
+label textarea:focus {
+  border-left: 2px solid #804dee;
+}
+
+.hash-span {
+  margin-top: -100px;
+  padding-bottom: 100px;
+  display: block;
+  user-select: none;
 }
 
 /* React-VerticalTimeline mobile fix
@@ -107,40 +105,6 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
-/* Common
-================================================================== */
-::selection {
-  background: #804dee;
-  color: #fff;
-}
-
-a,
-button,
-.view {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Hide textarea scrollbar for Chrome, Safari and Opera */
-textarea::-webkit-scrollbar {
-  display: none;
-}
-
-textarea {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-label input:focus,
-label textarea:focus {
-  border-left: 2px solid #804dee;
-}
-
-.hash-span {
-  margin-top: -100px;
-  padding-bottom: 100px;
-  display: block;
-  user-select: none;
-}
 
 
 /* Gradients

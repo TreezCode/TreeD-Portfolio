@@ -1,4 +1,5 @@
 import {
+  resume,
   mobile,
   frontend,
   creator,
@@ -39,6 +40,34 @@ export const navLinks = [
   {
     id: 'contact',
     title: 'Contact',
+  },
+];
+
+export const navLinksSecondary = [
+  {
+    id: 'new', // valid element id
+    title: 'Whats New', // UI title
+    url: false, // website url
+  },
+  {
+    id: 'articles',
+    title: 'Articles',
+    url: false,
+  },
+  {
+    id: 'gallery',
+    title: 'Gallery',
+    url: false,
+  },
+  {
+    id: 'projects',
+    title: 'Projects',
+    url: false,
+  },
+  {
+    id: 'resume',
+    title: 'Resume',
+    url: resume,
   },
 ];
 

@@ -35,6 +35,8 @@ import treecommerce from './works/treecommerce.png'
 import vanilla from './works/vanilla.png'
 import clickgame from './works/clickgame.png'
 
+import resume from './documents/Resume2023.pdf'
+
 export {
   logo,
   logoLight,
@@ -67,4 +69,5 @@ export {
   treecommerce,
   vanilla,
   clickgame,
+  resume,
 };

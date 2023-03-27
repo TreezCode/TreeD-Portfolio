@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import './CustomScroll';
+import './CustomScroll.css';
 
 const CustomScroll = () => {
   const [currentScrollPos, setCurrentScrollPos] = useState(0);
