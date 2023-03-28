@@ -117,7 +117,6 @@ const Contact = () => {
     setLoading(true);
 
     const error = await sendEmail(form);
-
     if (error) {
       setIsEmailSent(false);
       setIsSubmitError(true);
@@ -136,7 +135,7 @@ const Contact = () => {
   };
 
   return (
-    <div className='xl:mt-12 xl:flex-row flex-col-reverse flex gap-10'>
+    <div className='xl:mt-12 xl:flex-row flex-col-reverse flex justify-center gap-10'>
       <motion.div
         variants={slideIn('left', 'tween', 0.2, 1)}
         className='flex-[0.75] bg-black-100 md:p-16 sm:p-10 xs:p-8 p-6 rounded-2xl'
@@ -232,22 +231,21 @@ const Contact = () => {
               {loading ? 'Sending...' : 'Send'}
             </button>
             {isEmailSent && (
-              <p
-                className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}
-              >
+              <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
                 Thanks for reaching out, I'll get back to you shortly. 👋🌳
               </p>
             )}
           </div>
         </form>
       </motion.div>
-
-      <motion.div
+      
+      {/* <motion.div
         variants={slideIn('right', 'tween', 0.2, 1)}
         className='xl:flex-1 xl:h-auto md:h-[550px] h-[350px]'
       >
-        {/* <EarthCanvas /> */}
-      </motion.div>
+        <EarthCanvas />
+      </motion.div> */}
+
     </div>
   );
 };

@@ -1,16 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  FaGithub,
-  FaDribbble,
-  FaLinkedin,
-  FaYoutube,
-  FaEtsy,
   FaSearch,
   FaBars,
   FaWindowClose,
 } from 'react-icons/fa';
 
-import { navLinks, navLinksSecondary } from '../../common/constants';
+import { navLinks, navLinksSecondary, socials } from '../../common/constants';
 import { logo } from '../../common/assets';
 
 import './Navbar.css';
@@ -34,12 +30,18 @@ const Navbar = () => {
     }
   };
 
+  const handleLogoClick = () => {
+    setActiveLink('');
+    window.scrollTo(0, 0);
+    menuOpen && toggleMenu();
+  };
+
   const handleMenuClick = (link) => {
     setActiveLink(link.title);
     toggleMenu();
   };
 
-  const handleLinkClick = (link) => {
+  const handleNavbarClick = (link) => {
     setActiveLink(link.title);
     menuOpen && toggleMenu();
   };
@@ -81,73 +83,60 @@ const Navbar = () => {
               alt='logo'
               className='logo w-[4rem] h-[4rem] mx-auto'
             />
-            <ul className='navlinks'>
-              {navLinks.map((link) => (
-                <li
-                  key={link.id}
-                  className={`${
-                    activeLink === link.title ? 'scale-110' : ''
-                  } text-[18px] font-medium`}
-                  onClick={() => handleMenuClick(link)}
-                >
-                  <a href={`#${link.id}`}>{link.title}</a>
-                </li>
-              ))}
-            </ul>
-            <ul className='navlinks-secondary'>
-              {navLinksSecondary.map((link) => (
-                <li
-                  key={link.id}
-                  className={`${
-                    activeLink === link.title ? 'scale-110' : ''
-                  } text-[18px] font-medium`}
-                  onClick={() => handleMenuClick(link)}
-                >
-                  {!link.url ? (
-                    <a href={`#${link.id}`}>{link.title}</a>
-                  ) : (
-                    <a href={`${link.url}`} target='_blank'>
+            <div className='link-group'>
+              <ul className='navlinks'>
+                {navLinks.map((link) => (
+                  <li
+                    key={link.id}
+                    className={`${
+                      activeLink === link.title ? 'scale-110' : ''
+                    } text-[18px] font-medium`}
+                  >
+                    <a
+                      href={`#${link.id}`}
+                      onClick={() => handleMenuClick(link)}
+                    >
                       {link.title}
                     </a>
-                  )}
+                  </li>
+                ))}
+              </ul>
+              <ul className='navlinks-secondary'>
+                {navLinksSecondary.map((link) => (
+                  <li
+                    key={link.id}
+                    className={`${
+                      activeLink === link.title ? 'scale-110' : ''
+                    } text-[18px] font-medium`}
+                  >
+                    {!link.url ? (
+                      <a
+                        href={`#${link.id}`}
+                        onClick={() => handleMenuClick(link)}
+                      >
+                        {link.title}
+                      </a>
+                    ) : (
+                      <a
+                        href={`${link.url}`}
+                        target='_blank'
+                        onClick={() => handleMenuClick(link)}
+                      >
+                        {link.title}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <ul className='social-media py-8'>
+              {socials.map((social) => (
+                <li key={social.title}>
+                  <Link to={social.link} target='_blank'>
+                    <social.Icon className='text-[1.25rem] inline-block hover:text-accent hover:scale-110 transition'/>
+                  </Link>
                 </li>
               ))}
-            </ul>
-            <ul className='social-media'>
-              <li>
-                <a
-                  href='https://www.linkedin.com/in/joey-kubalak-425032180/'
-                  target='_blank'
-                >
-                  <FaLinkedin />
-                </a>
-              </li>
-              <li>
-                <a href='https://github.com/TreezCode' target='_blank'>
-                  <FaGithub />
-                </a>
-              </li>
-              <li>
-                <a
-                  href='https://www.etsy.com/shop/TranscendentTreez'
-                  target='_blank'
-                >
-                  <FaEtsy />
-                </a>
-              </li>
-              <li>
-                <a
-                  href='https://www.youtube.com/channel/UCXuGXX7rA1wmk_fEpWmCQhA'
-                  target='_blank'
-                >
-                  <FaYoutube />
-                </a>
-              </li>
-              <li>
-                <a href='https://dribbble.com/TreezCode' target='_blank'>
-                  <FaDribbble />
-                </a>
-              </li>
             </ul>
             <form>
               <div className='input-wrap flex justify-center items-center py-2'>
@@ -157,16 +146,21 @@ const Navbar = () => {
                   className='text-[1rem] max-w-[60%]'
                 />
                 <button type='submit'>
-                  <FaSearch />
+                  <FaSearch className='hover:text-secondary transition' />
                 </button>
               </div>
             </form>
           </div>
         </div>
+
         <div className='nav-container max-w-[1350px] relative grid justify-between items-center my-0 mx-auto'>
-          <a href='#' className='brand text-[1.6rem] text-[#915eff]'>
+          <Link
+            to={'/'}
+            className='brand text-[1.6rem] text-[#915eff]'
+            onClick={handleLogoClick}
+          >
             TreezCode
-          </a>
+          </Link>
           <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center'>
             <ul className='navlinks w-full my-0 mx-2'>
               {navLinks.map((link) => (
@@ -174,10 +168,10 @@ const Navbar = () => {
                   key={link.id}
                   className={`${
                     activeLink === link.title ? 'scale-110' : ''
-                  } text-[18px] font-medium cursor-pointer inline-block px-2`}
-                  onClick={() => handleLinkClick(link)}
+                  } text-[18px] font-medium cursor-pointer inline-block px-2 `}
+                  onClick={() => handleNavbarClick(link)}
                 >
-                  <a href={`#${link.id}`}>{link.title}</a>
+                  <a href={`#${link.id}`} className='hover:text-secondary'>{link.title}</a>
                 </li>
               ))}
             </ul>

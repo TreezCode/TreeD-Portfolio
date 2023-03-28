@@ -1,3 +1,13 @@
+// external imports
+import { 
+  FaLinkedin,
+  FaGithub,
+  FaDribbble,
+  FaYoutube,
+  FaEtsy,
+  FaPinterest,
+ } from 'react-icons/fa';
+// internal imports
 import {
   resume,
   mobile,
@@ -47,7 +57,7 @@ export const navLinksSecondary = [
   {
     id: 'new', // valid element id
     title: 'Whats New', // UI title
-    url: false, // website url
+    url: false, // website url/relative path/import
   },
   {
     id: 'articles',
@@ -71,6 +81,39 @@ export const navLinksSecondary = [
   },
 ];
 
+const socials = [
+  {
+    title: 'LinkedIn',
+    link: 'https://www.linkedin.com/in/joey-kubalak-425032180/',
+    Icon: FaLinkedin
+  },
+  {
+    title: 'Github',
+    link: 'https://github.com/TreezCode',
+    Icon: FaGithub
+  },
+  {
+    title: 'Etsy',
+    link: 'https://www.etsy.com/shop/TranscendentTreez',
+    Icon: FaEtsy
+  },
+  // {
+  //   title: 'Pinterest',
+  //   link: 'https://www.pinterest.com/transcendenttreez/',
+  //   Icon: FaPinterest
+  // },
+  {
+    title: 'YouTube',
+    link: 'https://www.youtube.com/channel/UCXuGXX7rA1wmk_fEpWmCQhA',
+    Icon: FaYoutube
+  },
+  {
+    title: 'Dribble',
+    link: 'https://dribbble.com/TreezCode',
+    Icon: FaDribbble
+  },
+]
+
 const services = [
   {
     title: 'Web Developer',
@@ -89,20 +132,8 @@ const services = [
     icon: creator,
   },
   // {
-  //   title: "MongoDB Developer",
-  //   icon: mongodb,
-  // },
-  // {
-  //   title: "Express Developer",
-  //   icon: express,
-  // },
-  // {
   //   title: "React Developer",
   //   icon: react,
-  // },
-  // {
-  //   title: "Node.js Developer",
-  //   icon: node,
   // },
 ];
 
@@ -238,14 +269,6 @@ const testimonials = [
   //   company: 'Acme Co',
   //   image: 'https://randomuser.me/api/portraits/women/4.jpg',
   // },
-  // {
-  //   testimonial:
-  //     "I've never met a web developer who truly cares about their clients' success like Joey does.",
-  //   name: 'Chris Brown',
-  //   designation: 'COO',
-  //   company: 'DEF Corp',
-  //   image: 'https://randomuser.me/api/portraits/men/5.jpg',
-  // },
 ];
 
 const projects = [
@@ -317,4 +340,4 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects };
+export { services, technologies, experiences, testimonials, projects, socials };

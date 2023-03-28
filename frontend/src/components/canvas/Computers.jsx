@@ -2,7 +2,6 @@ import { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
   OrbitControls,
-  ScrollControls,
   Preload,
   useGLTF,
 } from '@react-three/drei';
@@ -16,7 +15,7 @@ const Computers = ({ isMobile }) => {
 
   // Return the computer as a mesh with some lighting and shadow effects
   return (
-    <mesh>
+    <mesh dispose={null}>
       <hemisphereLight intensity={0.15} groundColor='black' />
       <pointLight intensity={0.75} color='#804dee' />
       <spotLight
@@ -27,7 +26,6 @@ const Computers = ({ isMobile }) => {
         intensity={1}
         castShadow
         shadow-mapSize={1024}
-        dispose={null}
       />
       <primitive
         object={computer.scene}

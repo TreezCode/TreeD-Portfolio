@@ -2,14 +2,15 @@
 import { BrowserRouter } from 'react-router-dom';
 // internal imports
 import {
-  About,
-  Contact,
-  Experience,
-  Feedbacks,
-  Hero,
   Navbar,
+  Hero,
+  About,
+  Experience,
   Tech,
   Projects,
+  Feedbacks,
+  Contact,
+  Footer,
   StarsCanvas,
   CustomScroll,
 } from './components';
@@ -31,6 +32,7 @@ const App = () => {
           <Contact />
           <StarsCanvas />
         </div>
+        <Footer />
       </div>
       <CustomScroll />
     </BrowserRouter>

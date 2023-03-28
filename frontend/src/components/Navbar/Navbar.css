@@ -29,19 +29,15 @@ form input:focus {
   transition: all 400ms ease;
 }
 
-.menu div:hover .navlinks li a,
-.menu div:hover .navlinks-secondary li a {
+.menu .link-group:hover li a {
   opacity: 0.3;
 }
 
-.menu .navlinks li:hover a:hover,
-.menu .navlinks-secondary li:hover a:hover {
+.menu .link-group li a:hover {
   opacity: 1;
 }
 
-.social-media svg {
-  display: inherit;
-}
+
 
 .menu ul,
 .menu form {
@@ -59,10 +55,6 @@ form input:focus {
 
 .menu .social-media {
   padding: 2rem 0;
-}
-
-.social-media svg {
-  font-size: 1.25rem;
 }
 
 .social-media li {
