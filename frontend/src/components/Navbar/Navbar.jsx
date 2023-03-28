@@ -1,10 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  FaSearch,
-  FaBars,
-  FaWindowClose,
-} from 'react-icons/fa';
+import { FaSearch, FaBars, FaWindowClose } from 'react-icons/fa';
 
 import { navLinks, navLinksSecondary, socials } from '../../common/constants';
 import { logo } from '../../common/assets';
@@ -89,13 +85,19 @@ const Navbar = () => {
                     } text-[18px] font-medium cursor-pointer inline-block px-2 `}
                     onClick={() => handleNavbarClick(link)}
                   >
-                    <a href={`#${link.id}`} className='hover:text-secondary'>{link.title}</a>
+                    <a href={`#${link.id}`} className='hover:text-secondary'>
+                      {link.title}
+                    </a>
                   </li>
                 ))}
               </ul>
               <form>
                 <div className='input-wrap flex justify-center items-center py-2'>
-                  <input type='search' placeholder='Search...' className='px-1' />
+                  <input
+                    type='search'
+                    placeholder='Search...'
+                    className='px-1'
+                  />
                   <button type='submit'>
                     <FaSearch className='transition duration-300 hover:text-secondary' />
                   </button>
@@ -117,9 +119,7 @@ const Navbar = () => {
               />
             )}
           </div>
-
-
-          </div>
+        </div>
 
         <div
           ref={menuRef}
@@ -178,11 +178,11 @@ const Navbar = () => {
                 ))}
               </ul>
             </div>
-            <ul className='social-media py-8'>
+            <ul className='social-media py-4'>
               {socials.map((social) => (
                 <li key={social.title}>
                   <Link to={social.link} target='_blank'>
-                    <social.Icon className='text-[1.25rem] inline-block hover:text-accent hover:scale-110 transition'/>
+                    <social.Icon className='text-[1.25rem] inline-block hover:text-accent hover:scale-110 transition' />
                   </Link>
                 </li>
               ))}
@@ -201,7 +201,6 @@ const Navbar = () => {
             </form>
           </div>
         </div>
-
       </nav>
     </header>
   );

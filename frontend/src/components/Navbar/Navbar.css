@@ -51,10 +51,6 @@ form input:focus {
   display: none;
 }
 
-.menu .social-media {
-  padding: 2rem 0;
-}
-
 .social-media li {
   display: inline-block;
   padding: 0 0.5rem;
@@ -82,13 +78,13 @@ nav .navbar-active {
     display: none;
   }
 
-  nav .nav-container {
+  nav .nav-content {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media screen and (max-width: 400px) {
-  nav {
+  nav div {
     font-size: 13px;
   }
 }
