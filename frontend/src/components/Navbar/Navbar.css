@@ -20,7 +20,7 @@ form input:focus {
   outline: none;
 }
 
-.nav-container {
+.nav-content {
   grid-template-columns: 1fr 5fr 1fr;
 }
 
@@ -36,8 +36,6 @@ form input:focus {
 .menu .link-group li a:hover {
   opacity: 1;
 }
-
-
 
 .menu ul,
 .menu form {
@@ -63,14 +61,20 @@ form input:focus {
 }
 
 /* Classes for JavaScript */
-nav .menu-open {
+nav .nav-container {
+  transition: opacity 400ms ease, padding 400ms ease;
+}
+
+nav .menu-active {
   transform: translateY(0);
   opacity: 1;
 }
 
-header .navbar-active {
+nav .navbar-active {
   background: var(--primaryFade);
+  backdrop-filter: blur(15px);
   padding: 1rem;
+  border-bottom: 1px solid var(--primary);
 }
 
 @media screen and (max-width: 800px) {
