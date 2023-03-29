@@ -70,7 +70,7 @@ nav .navbar-active {
   background: var(--primaryFade);
   backdrop-filter: blur(15px);
   padding: 1rem;
-  border-bottom: 1px solid var(--primary);
+  border-bottom: 1px solid var(--tertiary);
 }
 
 @media screen and (max-width: 800px) {

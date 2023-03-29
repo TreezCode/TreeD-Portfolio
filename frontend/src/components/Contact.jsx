@@ -21,7 +21,6 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
 
-  // A mapping of field names to their corresponding validation functions
   const rules = useMemo(
     () => ({
       name: (value) =>
@@ -38,7 +37,9 @@ const Contact = () => {
 
   const textAreaInput = (e) => {
     const { scrollHeight } = e.target;
-    const { paddingTop, paddingBottom } = window.getComputedStyle(textAreaRef.current);
+    const { paddingTop, paddingBottom } = window.getComputedStyle(
+      textAreaRef.current
+    );
     const paddingY = parseInt(paddingTop) + parseInt(paddingBottom);
     textAreaRef.current.style.height = `${scrollHeight - paddingY}px`;
   };
@@ -55,6 +56,15 @@ const Contact = () => {
     }
 
     setIsSubmitError(false);
+  };
+
+  const handleReset = () => {
+    setForm({
+      name: '',
+      email: '',
+      message: '',
+    });
+    setErrors({});
   };
 
   const validateField = useCallback(
@@ -138,7 +148,8 @@ const Contact = () => {
     <div className='xl:mt-12 xl:flex-row flex-col-reverse flex justify-center gap-10'>
       <motion.div
         variants={slideIn('left', 'tween', 0.2, 1)}
-        className='flex-[0.75] bg-black-100 md:p-16 sm:p-10 xs:p-8 p-6 rounded-2xl'
+        className='flex-[0.75] bg-primaryFade md:p-16 sm:p-10 xs:p-8 p-6 rounded-2xl border-tertiary border'
+        style={{ backdropFilter: 'blur(15px)' }}
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact</h3>
@@ -154,82 +165,93 @@ const Contact = () => {
               setErrors
             )
           }
-          className='mt-12 flex flex-col gap-8'
+          className='mt-3 flex flex-col gap-8'
         >
-          <label className='flex flex-col'>
-            <span className='text-white font-mediummb-4'>Your Name</span>
-            <input
-              type='text'
-              name='name'
-              value={form.name}
-              onChange={handleChange}
-              placeholder="What's your name?"
-              className='bg-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none border-none font-medium'
-            />
-            {errors.name && (
-              <span
-                className={`${
-                  isSubmitError ? `${styles.errorText}` : 'text-secondary'
-                } text-[14px]`}
-              >
-                {errors.name}
+          <div className='top flex justify-between sm:flex-row flex-col gap-4'>
+            <label className='flex flex-col sm:w-[calc((100%-30px)/2)]'>
+              <span className='text-white font-mediummb-4'>Your Name</span>
+              <input
+                type='text'
+                name='name'
+                value={form.name}
+                onChange={handleChange}
+                placeholder="What's your name?"
+                className='bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none font-medium'
+              />
+              {errors.name && (
+                <span
+                  className={`${
+                    isSubmitError ? `${styles.errorText}` : 'text-secondary'
+                  } text-[14px]`}
+                >
+                  {errors.name}
+                </span>
+              )}
+            </label>
+            <label className='flex flex-col sm:w-[calc((100%-30px)/2)]'>
+              <span className='text-white font-mediummb-4'>Your Email</span>
+              <input
+                type='email'
+                name='email'
+                value={form.email}
+                onChange={handleChange}
+                placeholder="What's your email?"
+                className='bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none font-medium'
+              />
+              {errors.email && (
+                <span
+                  className={`${
+                    isSubmitError ? `${styles.errorText}` : 'text-secondary'
+                  } text-[14px]`}
+                >
+                  {errors.email}
+                </span>
+              )}
+            </label>
+          </div>
+          <div className='bottom flex flex-col gap-8'>
+            <label className='flex flex-col'>
+              <span className='text-white font-mediummb-4'>Your Message</span>
+              <textarea
+                ref={textAreaRef}
+                rows={1}
+                name='message'
+                value={form.message}
+                onChange={handleChange}
+                onInput={textAreaInput}
+                placeholder='What do you want to say?'
+                className='bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none font-medium min-h-[100px]'
+              />
+              {errors.message && (
+                <span
+                  className={`${
+                    isSubmitError ? `${styles.errorText}` : 'text-secondary'
+                  } text-[14px]`}
+                >
+                  {errors.message}
+                </span>
+              )}
+            </label>
+            {errors.form && (
+              <span className={`${styles.errorText} text-[16px]`}>
+                {errors.form}
               </span>
             )}
-          </label>
-          <label className='flex flex-col'>
-            <span className='text-white font-mediummb-4'>Your Email</span>
-            <input
-              type='email'
-              name='email'
-              value={form.email}
-              onChange={handleChange}
-              placeholder="What's your email?"
-              className='bg-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none border-none font-medium'
-            />
-            {errors.email && (
-              <span
-                className={`${
-                  isSubmitError ? `${styles.errorText}` : 'text-secondary'
-                } text-[14px]`}
+            <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
+              <button
+                type='submit'
+                className='bg-tertiary py-3 px-8 outline-none text-white font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
               >
-                {errors.email}
-              </span>
-            )}
-          </label>
-          <label className='flex flex-col'>
-            <span className='text-white font-mediummb-4'>Your Message</span>
-            <textarea
-              ref={textAreaRef}
-              rows={1}
-              name='message'
-              value={form.message}
-              onChange={handleChange}
-              onInput={textAreaInput}
-              placeholder='What do you want to say?'
-              className='bg-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none border-none font-medium min-h-[100px] resize-none'
-            />
-            {errors.message && (
-              <span
-                className={`${
-                  isSubmitError ? `${styles.errorText}` : 'text-secondary'
-                } text-[14px]`}
+                {loading ? 'Sending...' : 'Send'}
+              </button>
+              <button
+                type='button'
+                className='bg-tertiary py-3 px-8 outline-none text-white font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
+                onClick={handleReset}
               >
-                {errors.message}
-              </span>
-            )}
-          </label>
-          {errors.form && (
-            <span className={`${styles.errorText} text-[16px]`}>
-              {errors.form}
-            </span>
-          )}
-          <div className='flex items-center'>
-            <button
-              type='submit'
-              className='bg-tertiary py-3 px-8 outline-none w-fit text-white font-semibold shadow-md shadow-primary rounded-xl'
-            >
-              {loading ? 'Sending...' : 'Send'}
-            </button>
+                Reset
+              </button>
+            </div>
             {isEmailSent && (
               <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
                 Thanks for reaching out, I'll get back to you shortly. 👋🌳
@@ -238,14 +260,13 @@ const Contact = () => {
           </div>
         </form>
       </motion.div>
-      
+
       {/* <motion.div
         variants={slideIn('right', 'tween', 0.2, 1)}
         className='xl:flex-1 xl:h-auto md:h-[550px] h-[350px]'
       >
         <EarthCanvas />
       </motion.div> */}
-
     </div>
   );
 };
