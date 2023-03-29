@@ -10,7 +10,6 @@ import {
   Projects,
   Feedbacks,
   Contact,
-  Contact1,
   Footer,
   StarsCanvas,
   CustomScroll,

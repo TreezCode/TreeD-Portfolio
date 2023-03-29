@@ -7,7 +7,6 @@ import Experience from './Experience';
 import Projects from './Projects';
 import Feedbacks from './Feedbacks';
 import Contact from './Contact';
-import Contact1 from './Contact/Contact1';
 import Footer from './Footer';
 import CanvasLoader from './Loader';
 import CustomScroll from './CustomScroll/CustomScroll';
@@ -21,7 +20,6 @@ export {
   Projects,
   Feedbacks,
   Contact,
-  Contact1,
   Footer,
   EarthCanvas, 
   BallCanvas, 
