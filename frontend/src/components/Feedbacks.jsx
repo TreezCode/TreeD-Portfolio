@@ -62,4 +62,4 @@ const Feedbacks = () => {
   );
 };
 
-export default SectionWrapper(Feedbacks, '');
+export default SectionWrapper(Feedbacks, '', 0.25);

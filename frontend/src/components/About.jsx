@@ -69,4 +69,4 @@ const About = () => {
   );
 };
 
-export default SectionWrapper(About, 'about'); // wrap component. 1st arg: component, 2nd arg: id name
+export default SectionWrapper(About, 'about', 0.15); // wrap component. 1st arg: component, 2nd arg: id name, 3rd arg: viewport amount

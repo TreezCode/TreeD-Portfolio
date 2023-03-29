@@ -49,7 +49,7 @@ const ExperienceCard = ({ experience }) => (
 const Experience = () => {
   return (
     <>
-      <motion.div variants={textVariant()} className='pb-6'>
+      <motion.div variants={textVariant()} className='pb-8'>
         <p className={styles.sectionSubText}>What I have done so far</p>
         <h2 className={styles.sectionHeadText}>My Experience</h2>
       </motion.div>
@@ -65,4 +65,4 @@ const Experience = () => {
   );
 };
 
-export default SectionWrapper(Experience, 'work');
+export default SectionWrapper(Experience, 'work', 0.15);

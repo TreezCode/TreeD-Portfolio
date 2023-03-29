@@ -26,12 +26,12 @@ const Tech = () => {
   return (
     <>
       {/* Render section title and subtitle */}
-      <motion.div variants={textVariant()} className='mb-3'>
+      <motion.div variants={textVariant()} className='pb-8'>
         <p className={styles.sectionSubText}>What tools I build with</p>
         <h2 className={styles.sectionHeadText}>Technologies</h2>
       </motion.div>
       {/* Render views container and canvas */}
-      <div ref={ref} className='tech-container relative mt-3'>
+      <div ref={ref} className='tech-container relative pt-3'>
         <div className='views-container flex flex-row flex-wrap justify-evenly items-center sm:gap-10 gap-5'>
           {/* Map through views array and render title and div element with ref and technology data */}
           {views.current.map((view, i) => (
@@ -59,4 +59,4 @@ const Tech = () => {
   );
 };
 
-export default SectionWrapper(Tech, '');
+export default SectionWrapper(Tech, '', 0.05);

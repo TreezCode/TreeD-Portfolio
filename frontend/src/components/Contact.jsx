@@ -35,15 +35,6 @@ const Contact = () => {
     []
   );
 
-  const textAreaInput = (e) => {
-    const { scrollHeight } = e.target;
-    const { paddingTop, paddingBottom } = window.getComputedStyle(
-      textAreaRef.current
-    );
-    const paddingY = parseInt(paddingTop) + parseInt(paddingBottom);
-    textAreaRef.current.style.height = `${scrollHeight - paddingY}px`;
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -165,7 +156,7 @@ const Contact = () => {
               setErrors
             )
           }
-          className='mt-3 flex flex-col gap-8'
+          className='mt-8 flex flex-col gap-8'
         >
           <div className='top flex justify-between sm:flex-row flex-col gap-4'>
             <label className='flex flex-col sm:w-[calc((100%-30px)/2)]'>
@@ -176,7 +167,7 @@ const Contact = () => {
                 value={form.name}
                 onChange={handleChange}
                 placeholder="What's your name?"
-                className='bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none font-medium'
+                className={styles.inputField}
               />
               {errors.name && (
                 <span
@@ -196,7 +187,7 @@ const Contact = () => {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="What's your email?"
-                className='bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none font-medium'
+                className={styles.inputField}
               />
               {errors.email && (
                 <span
@@ -218,9 +209,8 @@ const Contact = () => {
                 name='message'
                 value={form.message}
                 onChange={handleChange}
-                onInput={textAreaInput}
                 placeholder='What do you want to say?'
-                className='bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg outline-none font-medium min-h-[100px]'
+                className={`${styles.inputField} min-h-[100px]`}
               />
               {errors.message && (
                 <span
@@ -271,4 +261,4 @@ const Contact = () => {
   );
 };
 
-export default SectionWrapper(Contact, 'contact');
+export default SectionWrapper(Contact, 'contact', 0.25);
