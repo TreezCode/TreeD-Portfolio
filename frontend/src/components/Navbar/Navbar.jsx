@@ -1,9 +1,12 @@
+// external imports
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaSearch, FaBars, FaWindowClose } from 'react-icons/fa';
-
+import { FaSearch } from 'react-icons/fa';
+// internal imports
 import { navLinks, navLinksSecondary, socials } from '../../common/constants';
 import { logo } from '../../common/assets';
+import { styles } from '../../styles';
+import MenuIcon from '../MenuIcon/MenuIcon';
 
 import './Navbar.css';
 
@@ -19,7 +22,6 @@ const Navbar = () => {
     const menuElement = menuRef.current;
     menuElement.classList.toggle('menu-active');
 
-    // Disable scrolling when menu is open
     const bodyElement = document.querySelector('body');
     if (menuActive) {
       bodyElement.style.overflow = 'auto';
@@ -99,25 +101,14 @@ const Navbar = () => {
                     className='px-1'
                   />
                   <button type='submit'>
-                    <FaSearch className='transition duration-300 hover:text-secondary' />
+                    <FaSearch className='transition duration-300 hover:text-accent' />
                   </button>
                 </div>
               </form>
             </div>
-
-            {!menuActive ? (
-              <FaBars
-                id='menu-btn'
-                className='text-[1.2rem] cursor-pointer transition duration-300 hover:text-secondary ml-auto'
-                onClick={toggleMenu}
-              />
-            ) : (
-              <FaWindowClose
-                id='menu-btn'
-                className='text-[1.2rem] cursor-pointer transition duration-300 hover:text-secondary ml-auto'
-                onClick={toggleMenu}
-              />
-            )}
+            <div className='hover:text-secondary ml-auto scale-50' onClick={toggleMenu}>
+              <MenuIcon active={menuActive} color={styles.accent} />
+            </div>
           </div>
         </div>
 
@@ -195,7 +186,7 @@ const Navbar = () => {
                   className='text-[1rem] max-w-[60%]'
                 />
                 <button type='submit'>
-                  <FaSearch className='hover:text-secondary transition' />
+                  <FaSearch className='hover:text-accent duration-300 transition' />
                 </button>
               </div>
             </form>

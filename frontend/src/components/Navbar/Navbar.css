@@ -13,7 +13,7 @@ nav button {
 }
 
 form input::placeholder {
-  color: #fff;
+  color: var(--secondary);
 }
 
 form input:focus {

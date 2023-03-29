@@ -1,4 +1,13 @@
 const styles = {
+  primary: '#050816',
+  primaryFade: '#05081540',
+  secondary: '#aaa6c3',
+  tertiary: '#151030',
+  accent: '#915eff',
+  black100: '#100d25',
+  black200: '#090325',
+  white100: '#f3f3f3',
+  
   paddingX: 'sm:px-16 px-6',
   paddingY: 'sm:py-16 py-6',
   padding: 'sm:px-16 px-6 sm:py-16 py-10',

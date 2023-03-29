@@ -2,6 +2,8 @@
 import { useState, useRef, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import { FaPaperPlane } from 'react-icons/fa';
+import { HiOutlineRefresh } from 'react-icons/hi';
 // internal imports
 import { styles } from '../styles';
 import { EarthCanvas } from './canvas';
@@ -230,16 +232,16 @@ const Contact = () => {
             <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
               <button
                 type='submit'
-                className='bg-tertiary py-3 px-8 outline-none text-white font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
+                className='bg-tertiary text-white text-[1.25rem] flex justify-center py-3 px-8 outline-none font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
               >
-                {loading ? 'Sending...' : 'Send'}
+                {loading ? 'Sending...' : <FaPaperPlane />}
               </button>
               <button
                 type='button'
-                className='bg-tertiary py-3 px-8 outline-none text-white font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
+                className='bg-tertiary text-white text-[1.25rem] flex justify-center py-3 px-8 outline-none font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
                 onClick={handleReset}
               >
-                Reset
+                <HiOutlineRefresh />
               </button>
             </div>
             {isEmailSent && (

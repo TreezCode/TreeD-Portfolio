@@ -1,6 +1,7 @@
 import { EarthCanvas, BallCanvas, ComputersCanvas, StarsCanvas } from './canvas';
 import Hero from './Hero';
 import Navbar from './Navbar/Navbar';
+import MenuIcon from './MenuIcon/MenuIcon';
 import About from './About';
 import Tech from './Tech';
 import Experience from './Experience';
@@ -14,6 +15,7 @@ import CustomScroll from './CustomScroll/CustomScroll';
 export {
   Hero,
   Navbar,
+  MenuIcon,
   About,
   Tech,
   Experience,
