@@ -1,13 +1,11 @@
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 
-import { styles } from '../styles';
-import { services } from '../common/constants';
-import { fadeIn, textVariant } from '../utils/motion';
+import { styles } from '../../styles';
+import { services } from '../../common/constants';
+import { fadeIn, textVariant } from '../../utils/motion';
 // fadeIn : direction > type > delay > duration
-import { SectionWrapper } from '../hoc';
-
-import '../styles/custom.css';
+import { SectionWrapper } from '../../hoc';
 
 const ServiceCard = ({ index, title, icon }) => {
   return (

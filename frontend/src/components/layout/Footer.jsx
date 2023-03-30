@@ -1,7 +1,7 @@
 // external imports
 import { Link } from 'react-router-dom';
 // internal imports
-import { socials } from '../common/constants';
+import { socials } from '../../common/constants';
 
 const Footer = () => {
   return (

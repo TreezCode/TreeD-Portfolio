@@ -1,12 +1,11 @@
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 
-import { styles } from '../styles';
-import { github, logo } from '../common/assets';
-import { SectionWrapper } from '../hoc';
-import { projects } from '../common/constants';
-import { fadeIn, textVariant } from '../utils/motion';
-import '../styles/custom.css';
+import { styles } from '../../styles';
+import { github, logo } from '../../common/assets';
+import { SectionWrapper } from '../../hoc';
+import { projects } from '../../common/constants';
+import { fadeIn, textVariant } from '../../utils/motion';
 
 const ProjectCard = ({
   index,

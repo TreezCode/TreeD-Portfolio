@@ -2,11 +2,11 @@
 import { useRef, createRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 // Internal imports
-import { BallCanvas } from './canvas';
-import { technologies } from '../common/constants';
-import { textVariant } from '../utils/motion';
-import { SectionWrapper } from '../hoc';
-import { styles } from '../styles';
+import { BallCanvas } from '../canvas';
+import { technologies } from '../../common/constants';
+import { textVariant } from '../../utils/motion';
+import { SectionWrapper } from '../../hoc';
+import { styles } from '../../styles';
 
 const Tech = () => {
   // Define necessary states and refs

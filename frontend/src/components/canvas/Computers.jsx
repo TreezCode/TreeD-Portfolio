@@ -6,7 +6,7 @@ import {
   useGLTF,
 } from '@react-three/drei';
 
-import CanvasLoader from '../Loader';
+import CanvasLoader from '../layout/Loader';
 
 // Define the Computers component, which displays a 3D model of a desktop computer
 const Computers = ({ isMobile }) => {

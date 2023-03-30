@@ -73,23 +73,42 @@ a svg {
   transition: scale 3000ms ease;
 }
 
+.parallax-effect-img {
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.parallax-effect-img .inner-element {
+  transform: translateZ(40px) scale(0.95);
+}
+
 /* React-VerticalTimeline mobile fix
 ================================================================== */
-/* CUSTOM LINE COLOR */
+/* custom line color */
 .vertical-timeline::before {
   background: var(--colorViolet);
   background: '#00cea8';
-  background: linear-gradient(-90.13deg, var(--colorViolet) 1.9%, #00cea8 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, var(--colorViolet) 1.9%, #00cea8 97.5%);
+  background: linear-gradient(
+    -90.13deg,
+    var(--colorViolet) 1.9%,
+    #00cea8 97.5%
+  );
+  background: -webkit-linear-gradient(
+    -90.13deg,
+    var(--colorViolet) 1.9%,
+    #00cea8 97.5%
+  );
 }
 
 .vertical-timeline .vertical-timeline-element .vertical-timeline-element-icon {
   background: #383e56 !important;
-  box-shadow: 0 0 0 4px var(--colorViolet), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 0 4px var(--colorViolet), inset 0 2px 0 rgba(0, 0, 0, 0.08),
+    0 3px 0 4px rgba(0, 0, 0, 0.05);
 }
 
 @media only screen and (max-width: 1169px) {
-  .vertical-timeline--animate  .vertical-timeline-element-content.bounce-in {
+  .vertical-timeline--animate .vertical-timeline-element-content.bounce-in {
     visibility: visible;
     animation: timeline-slide 0.6s;
   }

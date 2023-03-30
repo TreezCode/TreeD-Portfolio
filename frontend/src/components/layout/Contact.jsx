@@ -5,10 +5,11 @@ import emailjs from '@emailjs/browser';
 import { FaPaperPlane } from 'react-icons/fa';
 import { HiOutlineRefresh } from 'react-icons/hi';
 // internal imports
-import { styles } from '../styles';
-import { EarthCanvas } from './canvas';
-import { SectionWrapper } from '../hoc';
-import { slideIn } from '../utils/motion';
+import { SectionWrapper } from '../../hoc';
+import { slideIn } from '../../utils/motion';
+import { styles } from '../../styles';
+import { EarthCanvas } from '../canvas';
+import { GlowButton } from '../global';
 
 const Contact = () => {
   const formRef = useRef();
@@ -229,6 +230,11 @@ const Contact = () => {
                 {errors.form}
               </span>
             )}
+            {isEmailSent && (
+              <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+                Thanks for reaching out, I'll get back to you shortly. 👋🌳
+              </p>
+            )}
             <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
               <button
                 type='submit'
@@ -244,11 +250,9 @@ const Contact = () => {
                 <HiOutlineRefresh />
               </button>
             </div>
-            {isEmailSent && (
-              <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
-                Thanks for reaching out, I'll get back to you shortly. 👋🌳
-              </p>
-            )}
+            <div className='flex justify-center'>
+              <GlowButton text='Button' color={styles.accent} bgColor={styles.tertiary}/>
+            </div>
           </div>
         </form>
       </motion.div>

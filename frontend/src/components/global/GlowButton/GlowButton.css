@@ -1,0 +1,79 @@
+.glow-btn {
+  position: relative;
+  background: var(--bgClr);
+  color: var(--secondary);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  font-weight: 400;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border-radius: 10px;
+}
+
+.glow-btn:hover {
+  letter-spacing: 0.25rem;
+  background: var(--clr);
+  color: var(--clr);
+  box-shadow: 0 0 35px var(--clr);
+}
+
+.glow-btn::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bgClr);
+  border-radius: 10px;
+}
+
+.glow-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.glow-btn i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.glow-btn i::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 100%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--bgClr);
+  border: 2px solid var(--clr);
+  transition: 0.5s;
+  border-radius: 50%;
+}
+
+.glow-btn:hover i::before {
+  left: 0%;
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 39px 39px var(--clr);
+}
+
+.glow-btn i::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--bgClr);
+  border: 2px solid var(--clr);
+  transition: 0.5s;
+  border-radius: 50%;
+}
+
+.glow-btn:hover i::after {
+  left: 100%;
+  transform: translateX(-50%) rotate(-45deg);
+  box-shadow: 39px -39px var(--clr);
+}
