@@ -12,12 +12,12 @@ body::-webkit-scrollbar {
   body::-webkit-scrollbar-thumb {
     min-height: 20px;
     border-radius: 10px;
-    background-color: var(--colorViolet);
+    background-color: var(--accent);
     background-image: -webkit-gradient(
       linear,
       0% 10%,
       0% 100%,
-      from(var(--colorViolet)),
+      from(var(--accent)),
       to(var(--tertiary)),
       color-stop(0.6, var(--black100))
       );
@@ -29,7 +29,7 @@ body::-webkit-scrollbar {
       linear,
       0% 100%,
       0% 10%,
-      from(var(--colorViolet)),
+      from(var(--accent)),
       to(var(--tertiary)),
       color-stop(0.6, var(--black100))
     );

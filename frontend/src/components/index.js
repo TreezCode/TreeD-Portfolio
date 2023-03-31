@@ -6,7 +6,6 @@ import {
   Feedbacks,
   Footer,
   Hero,
-  CanvasLoader,
   Projects,
   Tech,
 } from './layout';
@@ -17,8 +16,9 @@ import {
   StarsCanvas,
 } from './canvas';
 import { 
-  GlowButton, 
+  CanvasLoader,
   CustomScroll, 
+  GlowButton, 
   MenuIcon 
 } from './global';
 

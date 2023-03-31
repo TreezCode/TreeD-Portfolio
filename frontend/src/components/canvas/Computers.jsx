@@ -1,3 +1,4 @@
+// external imports
 import { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
@@ -5,8 +6,8 @@ import {
   Preload,
   useGLTF,
 } from '@react-three/drei';
-
-import CanvasLoader from '../layout/Loader';
+// internal imports
+import { CanvasLoader } from '../global';
 
 // Define the Computers component, which displays a 3D model of a desktop computer
 const Computers = ({ isMobile }) => {

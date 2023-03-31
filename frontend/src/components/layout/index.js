@@ -5,7 +5,6 @@ import Experience from './Experience';
 import Feedbacks from './Feedbacks';
 import Footer from './Footer';
 import Hero from './Hero';
-import CanvasLoader from './Loader';
 import Projects from './Projects';
 import Tech from './Tech';
 
@@ -17,7 +16,6 @@ export {
   Feedbacks,
   Footer,
   Hero,
-  CanvasLoader,
   Projects,
   Tech,
 };
