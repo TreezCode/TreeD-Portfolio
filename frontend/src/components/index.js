@@ -1,13 +1,7 @@
 import {
   Navbar,
-  About,
-  Contact,
-  Experience,
-  Feedbacks,
   Footer,
-  Hero,
-  Projects,
-  Tech,
+  Layout
 } from './layout';
 import {
   EarthCanvas,
@@ -23,15 +17,9 @@ import {
 } from './global';
 
 export {
-  Hero,
   Navbar,
   MenuIcon,
-  About,
-  Tech,
-  Experience,
-  Projects,
-  Feedbacks,
-  Contact,
+  Layout,
   Footer,
   EarthCanvas,
   BallCanvas,

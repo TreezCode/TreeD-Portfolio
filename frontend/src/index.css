@@ -16,6 +16,7 @@
   --tertiary: #151030;
   --tertiaryFade: #15103040;
   --accent: #915eff;
+  --accentFade: #915effcc;
   --logoAccent: #95a1f1;
   --black100: #100d25;
   --black200: #090325;
@@ -152,8 +153,8 @@ a svg {
 
 .green-pink-gradient {
   background: '#00cea8';
-  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+  background: linear-gradient(90.13deg, #00cea8dd 1.9%, #bf61ff 97.5%);
+  background: -webkit-linear-gradient(-90.13deg, #00cea8dd 1.9%, #bf61ff 97.5%);
 }
 
 .orange-text-gradient {

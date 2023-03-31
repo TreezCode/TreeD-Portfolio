@@ -1,21 +1,9 @@
 import Navbar from './Navbar/Navbar';
-import About from './About';
-import Contact from './Contact';
-import Experience from './Experience';
-import Feedbacks from './Feedbacks';
 import Footer from './Footer';
-import Hero from './Hero';
-import Projects from './Projects';
-import Tech from './Tech';
+import Layout from './Layout';
 
 export {
   Navbar,
-  About,
-  Contact,
-  Experience,
-  Feedbacks,
   Footer,
-  Hero,
-  Projects,
-  Tech,
+  Layout,
 };

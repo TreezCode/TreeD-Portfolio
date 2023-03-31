@@ -4,6 +4,7 @@ const styles = {
   secondary: '#aaa6c3',
   tertiary: '#151030',
   accent: '#915eff',
+  accentFade: '#915effcc',
   black100: '#100d25',
   black200: '#090325',
   white100: '#f3f3f3',
@@ -25,7 +26,7 @@ const styles = {
     'sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider',
 
   inputField:
-    'bg-primaryFade border border-tertiary py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg font-medium outline-none focus:outline-none focus-visible:border-accent',
+    'bg-primaryFade py-2 px-4 placeholder:text-secondary placeholder:opacity-60 text-white rounded-lg font-medium outline-none focus:outline-none border border-accentFade focus-visible:border-accent',
 
   errorText: 'text-red-700',
   successText: 'text-green-500',

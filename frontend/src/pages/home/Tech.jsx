@@ -2,7 +2,7 @@
 import { useRef, createRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 // Internal imports
-import { BallCanvas } from '../canvas';
+import { BallCanvas } from '../../components/canvas';
 import { technologies } from '../../common/constants';
 import { textVariant } from '../../utils/motion';
 import { SectionWrapper } from '../../hoc';
