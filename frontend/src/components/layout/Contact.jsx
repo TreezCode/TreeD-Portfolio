@@ -134,7 +134,7 @@ const Contact = () => {
       setLoading(false);
       setIsEmailSent(true);
       setIsSubmitError(false);
-      setTimeout(() => setIsEmailSent(false), 5000);
+      setTimeout(() => setIsEmailSent(false), 7000);
     }
   };
 
@@ -216,46 +216,40 @@ const Contact = () => {
                 className={`${styles.inputField} min-h-[100px]`}
               />
               {errors.message && (
-                <span
-                  className={`${
-                    isSubmitError ? `${styles.errorText}` : 'text-secondary'
-                  } text-[14px]`}
-                >
+                <span className={`${isSubmitError ? `${styles.errorText}` : 'text-secondary'} text-[14px]`}>
                   {errors.message}
                 </span>
               )}
             </label>
-            {errors.form && (
-              <span className={`${styles.errorText} text-[16px]`}>
-                {errors.form}
-              </span>
-            )}
-            {isEmailSent && (
-              <p
-                className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}
-              >
-                Thanks for reaching out, I'll get back to you shortly. 👋🌳
-              </p>
-            )}
+            <div>
+              {errors.form && (
+                <p className={`${styles.errorText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+                  {errors.form}
+                </p>
+              )}
+              {isEmailSent && (
+                <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+                  Thanks for reaching out, I'll get back to you shortly. 👋🌳
+                </p>
+              )}
+            </div>
             <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
-              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full'>
+              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full m-4'>
                 <GlowButton
                   type='submit'
                   text={loading ? 'Sending...' : <span className='flex items-center justify-center gap-2'>Send<FaPaperPlane /></span>}
                   href='contact'
                   color={styles.accent}
                   bgColor={styles.tertiary}
-                  loading={loading}
                 />
               </div>
-              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full'>
+              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full m-4'>
                 <GlowButton
                   type='button'
                   text={<span className='flex items-center justify-center gap-2'>Reset<HiOutlineRefresh /></span>}
                   href='contact'
                   color={styles.accent}
                   bgColor={styles.tertiary}
-                  loading={loading}
                   onClick={handleReset}
                 />
               </div>

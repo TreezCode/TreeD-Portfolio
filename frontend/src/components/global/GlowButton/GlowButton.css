@@ -12,6 +12,8 @@
   transition: 0.5s;
   border-radius: 10px;
   width: 100%;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .glow-btn::before {
   content: '';
@@ -56,7 +58,7 @@
   border-radius: 50%;
 }
 
-/* Targets only devices that can hover */
+/* Targets only devices that can hover (desktop) */
 @media (hover: hover) {
   .glow-btn:hover {
     letter-spacing: 0.25rem;
@@ -91,39 +93,39 @@
   }
 }
 
-/* Targets only devices that don't hover */
-@media (hover: none) {
-  .glow-btn {
-    letter-spacing: 0.25rem;
-    background: var(--clr);
-    color: var(--clr);
-    box-shadow: 0 0 30px var(--clr);
-  }
-  .glow-btn i::before {
-    left: 0%;
-    transform: translateX(-50%) rotate(45deg);
-    box-shadow: 35px 35px var(--clr);
-  }
-  .glow-btn i::after {
-    left: 100%;
-    transform: translateX(-50%) rotate(-45deg);
-    box-shadow: 35px -35px var(--clr);
-  }
+/* Targets only devices that don't hover (mobile) */
+.mobile-btn {
+  letter-spacing: 0.25rem;
+  background: var(--clr);
+  color: var(--clr);
+  box-shadow: 0 0 15px var(--clr);
 }
-.active-btn-touch {
+.mobile-btn i::before {
+  left: 0%;
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 35px 35px var(--clr);
+}
+.mobile-btn i::after {
+  left: 100%;
+  transform: translateX(-50%) rotate(-45deg);
+  box-shadow: 35px -35px var(--clr);
+}
+
+/* Mobile animations */
+.mobile-btn-active {
   animation: activeBtn 1s ease 1;
 }
-.active-btn-i-touch::before {
+.mobile-btn-i-active::before {
   animation: activeIBefore 1s ease 1;
 }
-.active-btn-i-touch::after {
+.mobile-btn-i-active::after {
   animation: activeIAfter 1s ease 1;
 }
 @keyframes activeBtn {
   50% {
     letter-spacing: 0.1rem;
     transform: scale(0.95);
-    box-shadow: 0 0 15px var(--clr);
+    box-shadow: 0 0 5px var(--clr);
   }
 }
 @keyframes activeIBefore {
@@ -140,34 +142,3 @@
     box-shadow: 35px -35px var(--clr);
   }
 }
-/* .glow-btn-touch {
-  animation: animateBtn 1s ease 1;
-}
-.glow-btn-i-touch::before {
-  animation: animateIBefore 1s ease 1;
-}
-.glow-btn-i-touch::after {
-  animation: animateIAfter 1s ease 1;
-}
-@keyframes animateBtn {
-  50% {
-    letter-spacing: 0.25rem;
-    background: var(--clr);
-    color: var(--clr);
-    box-shadow: 0 0 30px var(--clr);
-  }
-}
-@keyframes animateIBefore {
-  50% {
-    left: 0%;
-    transform: translateX(-50%) rotate(45deg);
-    box-shadow: 35px 35px var(--clr);
-  }
-}
-@keyframes animateIAfter {
-  50% {
-    left: 100%;
-    transform: translateX(-50%) rotate(-45deg);
-    box-shadow: 35px -35px var(--clr);
-  }
-} */
