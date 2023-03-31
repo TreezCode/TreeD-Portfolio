@@ -231,27 +231,34 @@ const Contact = () => {
               </span>
             )}
             {isEmailSent && (
-              <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+              <p
+                className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}
+              >
                 Thanks for reaching out, I'll get back to you shortly. 👋🌳
               </p>
             )}
             <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
-              <button
-                type='submit'
-                className='bg-tertiary text-white text-[1.25rem] flex justify-center py-3 px-8 outline-none font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
-              >
-                {loading ? 'Sending...' : <FaPaperPlane />}
-              </button>
-              <button
-                type='button'
-                className='bg-tertiary text-white text-[1.25rem] flex justify-center py-3 px-8 outline-none font-semibold shadow-md shadow-primary rounded-xl sm:w-[calc((100%-30px)/2)] w-full'
-                onClick={handleReset}
-              >
-                <HiOutlineRefresh />
-              </button>
-            </div>
-            <div className='flex justify-center'>
-              <GlowButton text='Button' color={styles.accent} bgColor={styles.tertiary}/>
+              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full'>
+                <GlowButton
+                  type='submit'
+                  text={loading ? 'Sending...' : <span className='flex items-center justify-center gap-2'>Send<FaPaperPlane /></span>}
+                  href='contact'
+                  color={styles.accent}
+                  bgColor={styles.tertiary}
+                  loading={loading}
+                />
+              </div>
+              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full'>
+                <GlowButton
+                  type='button'
+                  text={<span className='flex items-center justify-center gap-2'>Reset<HiOutlineRefresh /></span>}
+                  href='contact'
+                  color={styles.accent}
+                  bgColor={styles.tertiary}
+                  loading={loading}
+                  onClick={handleReset}
+                />
+              </div>
             </div>
           </div>
         </form>

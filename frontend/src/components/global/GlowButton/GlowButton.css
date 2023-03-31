@@ -1,24 +1,18 @@
+/* Desktop and Mobile globally shared */
 .glow-btn {
   position: relative;
   background: var(--bgClr);
   color: var(--secondary);
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   letter-spacing: 0.1rem;
   font-weight: 400;
   padding: 10px 30px;
   transition: 0.5s;
   border-radius: 10px;
+  width: 100%;
 }
-
-.glow-btn:hover {
-  letter-spacing: 0.25rem;
-  background: var(--clr);
-  color: var(--clr);
-  box-shadow: 0 0 35px var(--clr);
-}
-
 .glow-btn::before {
   content: '';
   position: absolute;
@@ -26,18 +20,15 @@
   background: var(--bgClr);
   border-radius: 10px;
 }
-
 .glow-btn span {
   position: relative;
   z-index: 1;
 }
-
 .glow-btn i {
   position: absolute;
   inset: 0;
   display: block;
 }
-
 .glow-btn i::before {
   content: '';
   position: absolute;
@@ -51,13 +42,6 @@
   transition: 0.5s;
   border-radius: 50%;
 }
-
-.glow-btn:hover i::before {
-  left: 0%;
-  transform: translateX(-50%) rotate(45deg);
-  box-shadow: 39px 39px var(--clr);
-}
-
 .glow-btn i::after {
   content: '';
   position: absolute;
@@ -72,8 +56,118 @@
   border-radius: 50%;
 }
 
-.glow-btn:hover i::after {
-  left: 100%;
-  transform: translateX(-50%) rotate(-45deg);
-  box-shadow: 39px -39px var(--clr);
+/* Targets only devices that can hover */
+@media (hover: hover) {
+  .glow-btn:hover {
+    letter-spacing: 0.25rem;
+    background: var(--clr);
+    color: var(--clr);
+    box-shadow: 0 0 30px var(--clr);
+  }
+  .glow-btn:hover i::before {
+    left: 0%;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 35px 35px var(--clr);
+  }
+  .glow-btn:hover i::after {
+    left: 100%;
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 35px -35px var(--clr);
+  }
+  .glow-btn:active {
+    letter-spacing: 0.1rem;
+    transform: scale(0.95);
+    box-shadow: 0 0 15px var(--clr);
+  }
+  .glow-btn:active i::before {
+    left: 100%;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 35px 35px var(--clr);
+  }
+  .glow-btn:active i::after {
+    left: 0%;
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 35px -35px var(--clr);
+  }
 }
+
+/* Targets only devices that don't hover */
+@media (hover: none) {
+  .glow-btn {
+    letter-spacing: 0.25rem;
+    background: var(--clr);
+    color: var(--clr);
+    box-shadow: 0 0 30px var(--clr);
+  }
+  .glow-btn i::before {
+    left: 0%;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 35px 35px var(--clr);
+  }
+  .glow-btn i::after {
+    left: 100%;
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 35px -35px var(--clr);
+  }
+}
+.active-btn-touch {
+  animation: activeBtn 1s ease 1;
+}
+.active-btn-i-touch::before {
+  animation: activeIBefore 1s ease 1;
+}
+.active-btn-i-touch::after {
+  animation: activeIAfter 1s ease 1;
+}
+@keyframes activeBtn {
+  50% {
+    letter-spacing: 0.1rem;
+    transform: scale(0.95);
+    box-shadow: 0 0 15px var(--clr);
+  }
+}
+@keyframes activeIBefore {
+  50% {
+    left: 100%;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 35px 35px var(--clr);
+  }
+}
+@keyframes activeIAfter {
+  50% {
+    left: 0%;
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 35px -35px var(--clr);
+  }
+}
+/* .glow-btn-touch {
+  animation: animateBtn 1s ease 1;
+}
+.glow-btn-i-touch::before {
+  animation: animateIBefore 1s ease 1;
+}
+.glow-btn-i-touch::after {
+  animation: animateIAfter 1s ease 1;
+}
+@keyframes animateBtn {
+  50% {
+    letter-spacing: 0.25rem;
+    background: var(--clr);
+    color: var(--clr);
+    box-shadow: 0 0 30px var(--clr);
+  }
+}
+@keyframes animateIBefore {
+  50% {
+    left: 0%;
+    transform: translateX(-50%) rotate(45deg);
+    box-shadow: 35px 35px var(--clr);
+  }
+}
+@keyframes animateIAfter {
+  50% {
+    left: 100%;
+    transform: translateX(-50%) rotate(-45deg);
+    box-shadow: 35px -35px var(--clr);
+  }
+} */
