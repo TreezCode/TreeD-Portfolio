@@ -1,5 +1,5 @@
 // external imports
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { FaPaperPlane } from 'react-icons/fa';
@@ -13,16 +13,16 @@ import { GlowButton } from '../global';
 
 const Contact = () => {
   const formRef = useRef();
-  const textAreaRef = useRef(null);
   const [form, setForm] = useState({
     name: '',
     email: '',
     message: '',
   });
   const [errors, setErrors] = useState({});
-  const [isSubmitError, setIsSubmitError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [isSubmitError, setIsSubmitError] = useState(false);
+  const [userMessage, setUserMessage] = useState({});
 
   const rules = useMemo(
     () => ({
@@ -138,6 +138,14 @@ const Contact = () => {
     }
   };
 
+  useEffect(() => {
+    isEmailSent
+      ? setUserMessage({ message: "Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText })
+      : errors.form
+      ? setUserMessage({ message: errors.form, class: styles.errorText })
+      : setUserMessage({ message: 'placeholder', class: 'opacity-0 select-none'});
+  }, [isEmailSent, errors]);
+
   return (
     <div className='xl:mt-12 xl:flex-row flex-col-reverse flex justify-center gap-10'>
       <motion.div
@@ -207,7 +215,6 @@ const Contact = () => {
             <label className='flex flex-col'>
               <span className='text-white font-mediummb-4'>Your Message</span>
               <textarea
-                ref={textAreaRef}
                 rows={1}
                 name='message'
                 value={form.message}
@@ -222,32 +229,37 @@ const Contact = () => {
               )}
             </label>
             <div>
-              {errors.form && (
-                <p className={`${styles.errorText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
-                  {errors.form}
-                </p>
-              )}
-              {isEmailSent && (
-                <p className={`${styles.successText} text-center text-[16px] inset-x-0 mx-auto px-3`}>
-                  Thanks for reaching out, I'll get back to you shortly. 👋🌳
-                </p>
-              )}
+              <p className={`${userMessage.class} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+                {userMessage.message}
+              </p>
             </div>
             <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
-              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full m-4'>
+              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
                 <GlowButton
                   type='submit'
-                  text={loading ? 'Sending...' : <span className='flex items-center justify-center gap-2'>Send<FaPaperPlane /></span>}
-                  href='contact'
+                  text={loading ? ('Sending...'
+                    ) : (
+                      <span className='flex items-center justify-center gap-2'>
+                        Send
+                        <FaPaperPlane />
+                      </span>
+                    )
+                  }
+                  href=''
                   color={styles.accent}
                   bgColor={styles.tertiary}
                 />
               </div>
-              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full m-4'>
+              <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
                 <GlowButton
                   type='button'
-                  text={<span className='flex items-center justify-center gap-2'>Reset<HiOutlineRefresh /></span>}
-                  href='contact'
+                  text={
+                    <span className='flex items-center justify-center gap-2'>
+                      Reset
+                      <HiOutlineRefresh />
+                    </span>
+                  }
+                  href=''
                   color={styles.accent}
                   bgColor={styles.tertiary}
                   onClick={handleReset}

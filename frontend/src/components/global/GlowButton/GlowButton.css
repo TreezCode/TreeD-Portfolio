@@ -98,7 +98,7 @@
   letter-spacing: 0.25rem;
   background: var(--clr);
   color: var(--clr);
-  box-shadow: 0 0 15px var(--clr);
+  box-shadow: 0 0 11px var(--clr);
 }
 .mobile-btn i::before {
   left: 0%;
