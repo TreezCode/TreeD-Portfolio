@@ -1,20 +1,20 @@
 import { useRef, useState, useEffect } from 'react';
 import './GlowButton.css';
 
-const GlowButton = ({ type, text, href, color, bgColor, onClick, loading }) => {
+const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
   const btnRef = useRef();
   const iRef = useRef();
-  const [isTouch, setIsTouch] = useState(false);
+  const [animation, setAnimation] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  const handlePointerEvent = ({ pointerType }) => {
-    if (pointerType === 'touch' && isMobile) {
-      setIsTouch(true);
+  const handlePointerEvent = () => {
+    if (isMobile) {
+      setAnimation(true);
       setTimeout(() => {
-        setIsTouch(false);
+        setAnimation(false);
       }, 1000);
     } else{
-      setIsTouch(false);
+      setAnimation(false);
     }
   };
 
@@ -33,23 +33,26 @@ const GlowButton = ({ type, text, href, color, bgColor, onClick, loading }) => {
 
   useEffect(() => {
     const button = btnRef.current;
-    isMobile
-      ? button.classList.add('mobile-btn')
-      : button.classList.remove('mobile-btn')
+    if (isMobile) {
+      button.classList.add('mobile-btn')
+      button.classList.remove('desktop-btn')
+    } else {
+      button.classList.add('desktop-btn')
+      button.classList.remove('mobile-btn')
+    }
   }, [isMobile])
   
   useEffect(() => {
     const buttonElement = btnRef.current;
     const iElement = iRef.current;
-
-    if (isTouch) {
+    if (animation) {
       buttonElement.classList.add('mobile-btn-active');
       iElement.classList.add('mobile-btn-i-active');
     } else {
       buttonElement.classList.remove('mobile-btn-active');
       iElement.classList.remove('mobile-btn-i-active');
     }
-  }, [isTouch]);
+  }, [animation]);
 
   return (
     <>
@@ -59,7 +62,7 @@ const GlowButton = ({ type, text, href, color, bgColor, onClick, loading }) => {
         type={type || 'button'}
         href={`#${href}`}
         style={{ '--clr': color, '--bgClr': bgColor }}
-        onPointerDown={(e) => handlePointerEvent(e)}
+        onPointerDown={handlePointerEvent}
         onClick={onClick}
       >
         <span>{text}</span>
