@@ -5,25 +5,14 @@
 .input-box input {
   width: 100%;
   padding: 10px;
-  border: 1px solid var(--accentFade);
+  border: 1px solid var(--accentFade100);
+  border-left: 1px solid var(--accent);
   background: var(--primaryFade);
   border-radius: 5px;
   outline: none;
   color: var(--secondary);
   font-size: 1rem;
 }
-
-.input-box input:autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--primary) inset !important;
-  box-shadow: 0 0 0 1000px var(--primary) inset !important;
-  -webkit-text-fill-color: var(--secondary) !important;
-}
-.input-box input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--primary) inset !important;
-  box-shadow: 0 0 0 1000px var(--primary) inset !important;
-  -webkit-text-fill-color: var(--secondary) !important;
-}
-
 .input-box label {
   position: absolute;
   left: 0;
@@ -31,12 +20,11 @@
   border-radius: 5px;
   pointer-events: none;
   font-size: 1rem;
-  color: var(--accentFade);
+  color: var(--accentFade100);
   text-transform: uppercase;
   transition: 0.5s;
-  border-left: 1px solid var(--accentFade);
+  border-left: none;
 }
-
 .input-box textarea.valid ~ label,
 .input-box textarea:focus ~ label,
 .input-box input.valid ~ label,
@@ -49,7 +37,6 @@
   border-left: 1px solid var(--accent);
   letter-spacing: 0.15rem;
 }
-
 .input-box textarea.invalid ~ label,
 .input-box input.invalid ~ label {
   color: var(--white100);
@@ -59,4 +46,18 @@
   background: var(--accentFade);
   border-left: 1px solid var(--accent);
   letter-spacing: 0.15rem;
+}
+.input-box textarea.valid,
+.input-box input.valid {
+  color: var(--white100);
+}
+.input-box input:autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  /* -webkit-text-fill-color: var(--white100) !important; */
+}
+.input-box input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  /* -webkit-text-fill-color: var(--white100) !important; */
 }

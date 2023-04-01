@@ -11,6 +11,8 @@ module.exports = {
         tertiary: "#151030",
         accent: "#915eff",
         accentFade: "#915eff50",
+        accentFade100: "#915eff90",
+        accentFade200: "#915effcc",
         "black-100": "#100d25",
         "black-200": "#090325",
         "white-100": "#f3f3f3",

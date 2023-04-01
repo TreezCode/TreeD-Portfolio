@@ -169,10 +169,7 @@ const Form = () => {
   }, [isEmailSent, errors]);
 
   return (
-    <form
-      onSubmit={(e) => handleSubmit(e)}
-      className='flex flex-col gap-8 mt-8'
-    >
+    <form onSubmit={(e) => handleSubmit(e)} className='flex flex-col gap-8 mt-8'>
       <div className='form-top flex justify-between sm:flex-row flex-col gap-4'>
         <InputField
           inputRef={nameRef}
