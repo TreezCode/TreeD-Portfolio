@@ -1,14 +1,51 @@
+// external imports
 import { useState, useEffect, useRef } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { HiOutlineRefresh } from 'react-icons/hi';
-
-import { useValidateField, useValidationRules } from '../../../utils/formValidation';
+// internal imports
+import {useValidateField, useValidationRules } from '../../../utils/formValidation';
 import { sendEmail } from '../../../utils/email';
 import { styles } from '../../../styles';
 import GlowButton from '../GlowButton/GlowButton';
-
 import './Form.css';
 
+const InputField = ({
+  inputRef,
+  type,
+  name,
+  value,
+  onChange,
+  required,
+  className,
+  htmlFor,
+  label,
+  errors,
+  isSubmitError,
+}) => (
+  <div className='input-box sm:w-[calc((100%-30px)/2)]'>
+    <input
+      ref={inputRef}
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className={className}
+    />
+    <label htmlFor={htmlFor}>{label}</label>
+    <LabelMessage errors={errors} isSubmitError={isSubmitError} />
+  </div>
+);
+
+const LabelMessage = ({ errors, isSubmitError }) => (
+  <span
+    className={`${
+      isSubmitError ? `${styles.errorText}` : 'text-secondary'
+    } text-[14px]`}
+  >
+    {errors}
+  </span>
+);
 const Form = () => {
   const [form, setForm] = useState({
     name: '',
@@ -80,34 +117,62 @@ const Form = () => {
     setErrors({});
   };
 
+  const { name, email, message } = errors;
   useEffect(() => {
-    const { name, email, message } = errors;
     const nameInput = nameRef.current;
-    const emailInput = emailRef.current;
-    const messageInput = messageRef.current;
     if (name) {
-      nameInput.classList.add('invalid')
-    } else if (email) {
-      emailInput.classList.add('invalid')
-    } else if (message) {
-      messageInput.classList.add('invalid')
+      nameInput.classList.add('invalid');
+      nameInput.classList.remove('valid');
+    } else if (!form.name) {
+      nameInput.classList.remove('invalid');
+      nameInput.classList.remove('valid');
     } else {
-      emailInput.classList.remove('invalid')
-      messageInput.classList.remove('invalid')
-      nameInput.classList.remove('invalid')
+      nameInput.classList.remove('invalid');
+      nameInput.classList.add('valid');
     }
-  }, [errors])
+  }, [name, form]);
+
+  useEffect(() => {
+    const emailInput = emailRef.current;
+    if (email) {
+      emailInput.classList.add('invalid');
+      emailInput.classList.remove('valid');
+    } else if (!form.email) {
+      emailInput.classList.remove('invalid');
+      emailInput.classList.remove('valid');
+    } else {
+      emailInput.classList.remove('invalid');
+      emailInput.classList.add('valid');
+    }
+  }, [email, form]);
+
+  useEffect(() => {
+    const messageInput = messageRef.current;
+    if (message) {
+      messageInput.classList.add('invalid');
+      messageInput.classList.remove('valid');
+    } else if (!form.message) {
+      messageInput.classList.remove('invalid');
+      messageInput.classList.remove('valid');
+    } else {
+      messageInput.classList.remove('invalid');
+      messageInput.classList.add('valid');
+    }
+  }, [message, form]);
 
   useEffect(() => {
     isEmailSent
-      ? setUserMessage({ message: "Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText})
+      ? setUserMessage({ message:"Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText })
       : errors.form
         ? setUserMessage({ message: errors.form, class: styles.errorText })
         : setUserMessage({ message: 'placeholder', class: 'opacity-0 select-none'});
   }, [isEmailSent, errors]);
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className='flex flex-col gap-8 mt-8'>
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      className='flex flex-col gap-8 mt-8'
+    >
       <div className='form-top flex justify-between sm:flex-row flex-col gap-4'>
         <InputField
           inputRef={nameRef}
@@ -115,7 +180,7 @@ const Form = () => {
           name='name'
           value={form.name}
           onChange={handleChange}
-          required='required'
+          required={false}
           className={styles.inputField}
           htmlFor='name'
           label='Your Name'
@@ -128,7 +193,7 @@ const Form = () => {
           name='email'
           value={form.email}
           onChange={handleChange}
-          required='required'
+          required={false}
           className={styles.inputField}
           htmlFor='email'
           label='Your Email'
@@ -144,7 +209,7 @@ const Form = () => {
             name='message'
             value={form.message}
             onChange={handleChange}
-            required='required'
+            required={false}
             className={`${styles.inputField} min-h-[100px]`}
           />
           <label htmlFor='message'>Your Message</label>
@@ -176,39 +241,5 @@ const Form = () => {
     </form>
   );
 };
-
-const InputField = ({
-  inputRef,
-  type,
-  name,
-  value,
-  onChange,
-  required,
-  className,
-  htmlFor,
-  label,
-  errors,
-  isSubmitError
-}) => (
-  <div className='input-box sm:w-[calc((100%-30px)/2)]'>
-    <input
-      ref={inputRef}
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      className={className}
-    />
-    <label htmlFor={htmlFor}>{label}</label>
-    <LabelMessage errors={errors} isSubmitError={isSubmitError} />
-  </div>
-);
-
-const LabelMessage = ({errors, isSubmitError}) => (
-  <span className={`${isSubmitError ? `${styles.errorText}` : 'text-secondary'} text-[14px]`}>
-    {errors}
-  </span>
-);
 
 export default Form;

@@ -12,6 +12,18 @@
   color: var(--secondary);
   font-size: 1rem;
 }
+
+.input-box input:autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  -webkit-text-fill-color: var(--secondary) !important;
+}
+.input-box input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  box-shadow: 0 0 0 1000px var(--primary) inset !important;
+  -webkit-text-fill-color: var(--secondary) !important;
+}
+
 .input-box label {
   position: absolute;
   left: 0;
@@ -24,9 +36,10 @@
   transition: 0.5s;
   border-left: 1px solid var(--accentFade);
 }
-.input-box textarea:valid ~ label,
+
+.input-box textarea.valid ~ label,
 .input-box textarea:focus ~ label,
-.input-box input:valid ~ label,
+.input-box input.valid ~ label,
 .input-box input:focus ~ label {
   color: var(--white100);
   transform: translateX(10px) translateY(-10px);
