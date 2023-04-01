@@ -1,18 +1,17 @@
 // external imports
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-import { FaPaperPlane } from 'react-icons/fa';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { HiOutlineRefresh } from 'react-icons/hi';
+import { FaPaperPlane } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 // internal imports
+import { styles } from '../../styles';
 import { SectionWrapper } from '../../hoc';
 import { slideIn } from '../../utils/motion';
-import { styles } from '../../styles';
-import { EarthCanvas } from '../../components/canvas';
+import { sendEmail } from '../../utils/email';
 import { GlowButton } from '../../components/global';
+import { EarthCanvas } from '../../components/canvas';
 
 const Contact = () => {
-  const formRef = useRef();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -23,6 +22,28 @@ const Contact = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isSubmitError, setIsSubmitError] = useState(false);
   const [userMessage, setUserMessage] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    if (value.trim() === '') {
+      setErrors({ ...errors, [name]: '' });
+    } else {
+      const errorMessage = validateField(name, value);
+      setErrors({ ...errors, [name]: errorMessage, form: '' });
+    }
+    setIsSubmitError(false);
+  };
+
+  const resetForm = () => {
+    setForm({
+      name: '',
+      email: '',
+      message: '',
+    });
+    setErrors({});
+  };
 
   const rules = useMemo(
     () => ({
@@ -38,29 +59,6 @@ const Contact = () => {
     []
   );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-
-    if (value.trim() === '') {
-      setErrors({ ...errors, [name]: '' });
-    } else {
-      const errorMessage = validateField(name, value);
-      setErrors({ ...errors, [name]: errorMessage, form: '' });
-    }
-
-    setIsSubmitError(false);
-  };
-
-  const handleReset = () => {
-    setForm({
-      name: '',
-      email: '',
-      message: '',
-    });
-    setErrors({});
-  };
-
   const validateField = useCallback(
     (fieldName, value) => {
       return rules[fieldName](value);
@@ -68,82 +66,44 @@ const Contact = () => {
     [rules]
   );
 
-  const sendEmail = async (form) => {
-    try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICEID,
-        import.meta.env.VITE_EMAILJS_TEMPLATEID,
-        {
-          from_name: form.name,
-          to_name: 'Treez',
-          from_email: form.email,
-          to_email: 'treezcode@gmail.com',
-          message: form.message,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLICKEY
-      );
-      return null;
-    } catch (error) {
-      return 'Oops, something went wrong.';
-    }
-  };
-
-  const handleSubmit = async (
-    e,
-    form,
-    setForm,
-    setIsSubmitError,
-    setLoading,
-    setErrors
-  ) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!form.name || !form.email || !form.message) {
       setErrors({ ...errors, form: 'Missing a required field' });
+      setLoading(false);
       return;
     }
 
-    setIsSubmitError(false);
-
-    const filteredErrors = Object.entries(errors)
-      .filter(([keys, values]) => values !== '')
-      .reduce((object, [key, value]) => {
-        object[key] = value;
-        return object;
-      }, {});
-
-    if (Object.keys(filteredErrors).length > 0) {
+    const errorsExist = Object.values(errors).some((value) => value !== '')
+    if (errorsExist) {
       setIsSubmitError(true);
-      setErrors({ ...errors, ...filteredErrors });
+      setErrors({ ...errors });
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
-
-    const error = await sendEmail(form);
-    if (error) {
+    const response = await sendEmail(form);
+    if (response) {
       setIsEmailSent(false);
       setIsSubmitError(true);
-      setErrors((errors) => ({ ...errors, form: error }));
+      setErrors((errors) => ({ ...errors, form: response }));
     } else {
-      setForm({
-        name: '',
-        email: '',
-        message: '',
-      });
+      resetForm();
       setLoading(false);
       setIsEmailSent(true);
       setIsSubmitError(false);
-      setTimeout(() => setIsEmailSent(false), 7000);
+      setTimeout(() => setIsEmailSent(false), 5000);
     }
   };
 
   useEffect(() => {
     isEmailSent
-      ? setUserMessage({ message: "Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText })
+      ? setUserMessage({ message: "Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText})
       : errors.form
-      ? setUserMessage({ message: errors.form, class: styles.errorText })
-      : setUserMessage({ message: 'placeholder', class: 'opacity-0 select-none'});
+        ? setUserMessage({ message: errors.form, class: styles.errorText })
+        : setUserMessage({ message: 'placeholder', class: 'opacity-0 select-none'});
   }, [isEmailSent, errors]);
 
   return (
@@ -155,20 +115,7 @@ const Contact = () => {
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact</h3>
-        <form
-          ref={formRef}
-          onSubmit={(e) =>
-            handleSubmit(
-              e,
-              form,
-              setForm,
-              setIsSubmitError,
-              setLoading,
-              setErrors
-            )
-          }
-          className='mt-8 flex flex-col gap-8'
-        >
+        <form onSubmit={(e) =>handleSubmit(e)} className='mt-8 flex flex-col gap-8'>
           <div className='top flex justify-between sm:flex-row flex-col gap-4'>
             <label className='flex flex-col sm:w-[calc((100%-30px)/2)]'>
               <span className='text-white font-mediummb-4'>Your Name</span>
@@ -181,13 +128,7 @@ const Contact = () => {
                 className={styles.inputField}
               />
               {errors.name && (
-                <span
-                  className={`${
-                    isSubmitError ? `${styles.errorText}` : 'text-secondary'
-                  } text-[14px]`}
-                >
-                  {errors.name}
-                </span>
+                <LabelMessage errors={errors.name} isSubmitError={isSubmitError} />
               )}
             </label>
             <label className='flex flex-col sm:w-[calc((100%-30px)/2)]'>
@@ -201,13 +142,7 @@ const Contact = () => {
                 className={styles.inputField}
               />
               {errors.email && (
-                <span
-                  className={`${
-                    isSubmitError ? `${styles.errorText}` : 'text-secondary'
-                  } text-[14px]`}
-                >
-                  {errors.email}
-                </span>
+                <LabelMessage errors={errors.email} isSubmitError={isSubmitError} />
               )}
             </label>
           </div>
@@ -223,21 +158,19 @@ const Contact = () => {
                 className={`${styles.inputField} min-h-[100px]`}
               />
               {errors.message && (
-                <span className={`${isSubmitError ? `${styles.errorText}` : 'text-secondary'} text-[14px]`}>
-                  {errors.message}
-                </span>
+                <LabelMessage errors={errors.message} isSubmitError={isSubmitError} />
               )}
             </label>
-            <div>
-              <p className={`${userMessage.class} text-center text-[16px] inset-x-0 mx-auto px-3`}>
-                {userMessage.message}
-              </p>
-            </div>
+            <p className={`${userMessage.class} text-center text-[16px] inset-x-0 mx-auto px-3`}>
+              {userMessage.message}
+            </p>
             <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
               <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
                 <GlowButton
                   type='submit'
-                  text={loading ? ('Sending...'
+                  text={
+                    loading ? (
+                      'Sending...'
                     ) : (
                       <span className='flex items-center justify-center gap-2'>
                         Send
@@ -245,7 +178,6 @@ const Contact = () => {
                       </span>
                     )
                   }
-                  href=''
                   color={styles.accent}
                   bgColor={styles.tertiary}
                 />
@@ -262,7 +194,7 @@ const Contact = () => {
                   href=''
                   color={styles.accent}
                   bgColor={styles.tertiary}
-                  onClick={handleReset}
+                  onClick={resetForm}
                 />
               </div>
             </div>
@@ -279,5 +211,11 @@ const Contact = () => {
     </div>
   );
 };
+
+const LabelMessage = ({errors, isSubmitError}) => (
+  <span className={`${isSubmitError ? `${styles.errorText}` : 'text-secondary'} text-[14px]`}>
+    {errors}
+  </span>
+);
 
 export default SectionWrapper(Contact, 'contact', 0.25);

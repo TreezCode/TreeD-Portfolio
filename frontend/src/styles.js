@@ -4,7 +4,7 @@ const styles = {
   secondary: '#aaa6c3',
   tertiary: '#151030',
   accent: '#915eff',
-  accentFade: '#915effcc',
+  accentFade: '#915eff50',
   black100: '#100d25',
   black200: '#090325',
   white100: '#f3f3f3',
