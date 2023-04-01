@@ -1,31 +1,32 @@
 import {
   Navbar,
   Footer,
-  Layout
+  Layout,
 } from './layout';
 import {
-  EarthCanvas,
   BallCanvas,
-  ComputersCanvas,
   StarsCanvas,
+  EarthCanvas,
+  ComputersCanvas,
 } from './canvas';
 import { 
+  Form,
+  MenuIcon,
+  GlowButton, 
   CanvasLoader,
   CustomScroll, 
-  GlowButton, 
-  MenuIcon 
 } from './global';
 
 export {
-  Navbar,
-  MenuIcon,
   Layout,
+  Navbar,
   Footer,
-  EarthCanvas,
+  MenuIcon,
   BallCanvas,
-  ComputersCanvas,
+  GlowButton,
+  EarthCanvas,
   StarsCanvas,
   CanvasLoader,
   CustomScroll,
-  GlowButton,
+  ComputersCanvas,
 };
