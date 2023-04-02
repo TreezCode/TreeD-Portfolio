@@ -3,11 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 // internal imports
-import {
-  navLinks,
-  navLinksSecondary,
-  socials,
-} from '../../../common/constants';
+import { navLinks, navLinksSecondary, socials } from '../../../common/constants';
 import { logo } from '../../../common/assets';
 import { styles } from '../../../styles';
 import { MenuIcon } from '../../global';
