@@ -13,6 +13,8 @@ module.exports = {
         accentFade: "#915eff50",
         accentFade100: "#915eff90",
         accentFade200: "#915effcc",
+        logoAccent: "#95a1f1",
+        logoAccentFade: "#95a1f150",
         "black-100": "#100d25",
         "black-200": "#090325",
         "white-100": "#f3f3f3",

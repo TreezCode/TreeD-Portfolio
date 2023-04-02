@@ -84,6 +84,21 @@ a svg {
   transform: translateZ(40px) scale(0.95);
 }
 
+footer p svg:hover {
+  box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
+}
+footer p svg:active {
+  box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
+}
+@media screen and (max-width: 450px) {
+  footer a svg:hover {
+    box-shadow: none;
+  }
+  footer a svg:active {
+    box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
+  }
+}
+
 /* React-VerticalTimeline mobile fix
 ================================================================== */
 /* custom line color */

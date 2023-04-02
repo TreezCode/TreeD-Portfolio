@@ -76,7 +76,7 @@ const Navbar = () => {
           <div className='nav-content max-w-[1350px] relative grid justify-between items-center my-0 mx-auto'>
             <Link
               to={'/'}
-              className='brand text-[1.6rem] text-[#915eff]'
+              className='brand text-[1.6rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
               onClick={handleLogoClick}
             >
               TreezCode
@@ -105,13 +105,13 @@ const Navbar = () => {
                     className='px-1'
                   />
                   <button type='submit'>
-                    <FaSearch className='transition duration-300 hover:text-accent' />
+                    <FaSearch className='transition duration-300 hover:opacity-60' />
                   </button>
                 </div>
               </form>
             </div>
             <div
-              className='hover:text-secondary ml-auto scale-50'
+              className='ml-auto scale-50 xs:hover:opacity-60 active:opacity-60 transition duration-300'
               onClick={toggleMenu}
             >
               <MenuIcon active={menuActive} color={styles.accent} />
@@ -135,10 +135,7 @@ const Navbar = () => {
                 {navLinks.map((link) => (
                   <li
                     key={link.id}
-                    className={`${
-                      activeLink === link.title ? 'scale-110' : ''
-                    } text-[18px] font-medium`}
-                  >
+                    className={activeLink === link.title ? 'scale-110' : ''}>
                     <a
                       href={`#${link.id}`}
                       onClick={() => handleMenuClick(link)}
@@ -150,12 +147,7 @@ const Navbar = () => {
               </ul>
               <ul className='navlinks-secondary'>
                 {navLinksSecondary.map((link) => (
-                  <li
-                    key={link.id}
-                    className={`${
-                      activeLink === link.title ? 'scale-110' : ''
-                    } text-[18px] font-medium`}
-                  >
+                  <li key={link.id} className={activeLink === link.title ? 'scale-110' : ''}>
                     {!link.url ? (
                       <a
                         href={`#${link.id}`}
@@ -176,11 +168,11 @@ const Navbar = () => {
                 ))}
               </ul>
             </div>
-            <ul className='social-media py-4'>
+            <ul className='social-media'>
               {socials.map((social) => (
-                <li key={social.title}>
+                <li key={social.title} className='inline-block px-1'>
                   <Link to={social.link} target='_blank'>
-                    <social.Icon className='text-[1.25rem] inline-block hover:text-accent hover:scale-110 transition' />
+                    <social.Icon className='inline-block text-[2.25rem] text-logoAccent border-2 border-accent rounded-full p-[7px] xs:hover:text-primary xs:hover:bg-accent xs:hover:scale-110 active:text-primary active:bg-accent active:scale-110 transition duration-500' />
                   </Link>
                 </li>
               ))}
@@ -193,7 +185,7 @@ const Navbar = () => {
                   className='text-[1rem] max-w-[60%]'
                 />
                 <button type='submit'>
-                  <FaSearch className='hover:text-accent duration-300 transition' />
+                  <FaSearch className='transition duration-300 hover:opacity-60' />
                 </button>
               </div>
             </form>

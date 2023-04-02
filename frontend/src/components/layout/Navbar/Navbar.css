@@ -1,11 +1,3 @@
-/* Navbar
-================================================================== */
-nav a {
-  font-size: 1rem;
-  transition: 0.3s;
-  font-weight: 600;
-}
-
 nav input,
 nav button {
   background: none;
@@ -24,9 +16,14 @@ form input:focus {
   grid-template-columns: 1fr 5fr 1fr;
 }
 
-.navlinks li,
-.navlinks-secondary li {
-  transition: all 400ms ease;
+.link-group ul li {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.navlinks li a,
+.navlinks-secondary li a {
+  transition: all 300ms ease;
 }
 
 .menu .link-group:hover li a {
@@ -51,11 +48,12 @@ form input:focus {
   display: none;
 }
 
-.social-media li {
-  display: inline-block;
-  padding: 0 0.5rem;
+.social-media li svg:hover {
+  box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
 }
-
+.social-media li svg:active {
+  box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
+}
 /* Classes for JavaScript */
 nav .nav-container {
   transition: opacity 400ms ease, padding 400ms ease;
@@ -83,8 +81,14 @@ nav .navbar-active {
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 450px) {
   nav div {
     font-size: 13px;
+  }
+  .social-media li svg:hover {
+    box-shadow: none;
+  }
+  .social-media li svg:active {
+    box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
   }
 }
