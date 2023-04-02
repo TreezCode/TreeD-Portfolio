@@ -69,7 +69,7 @@ const Navbar = () => {
     <header>
       <nav className='fixed top-0 left-0 w-full z-50 text-white overflow-y-hidden'>
         <div ref={navRef} className='nav-container relative w-full z-50 p-6'>
-          <div className='nav-content max-w-[1350px] relative grid justify-between items-baseline my-0 mx-auto'>
+          <div className='nav-content max-w-[1350px] relative grid justify-between items-center my-0 mx-auto'>
             <Link
               to={'/'}
               className='brand text-[1.75rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
