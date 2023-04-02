@@ -69,22 +69,22 @@ const Navbar = () => {
     <header>
       <nav className='fixed top-0 left-0 w-full z-50 text-white overflow-y-hidden'>
         <div ref={navRef} className='nav-container relative w-full z-50 p-6'>
-          <div className='nav-content max-w-[1350px] relative grid justify-between items-center my-0 mx-auto'>
+          <div className='nav-content max-w-[1350px] relative grid justify-between items-baseline my-0 mx-auto'>
             <Link
               to={'/'}
-              className='brand text-[1.6rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
+              className='brand text-[1.75rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
               onClick={handleLogoClick}
             >
               TreezCode
             </Link>
-            <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center'>
-              <ul className='navlinks w-full my-0 mx-2'>
+            <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center px-4'>
+              <ul className='navlinks w-full'>
                 {navLinks.map((link) => (
                   <li
                     key={link.id}
                     className={`${
                       activeLink === link.title ? 'scale-110' : ''
-                    } text-[18px] font-medium cursor-pointer inline-block px-2 `}
+                    } text-[16px] font-medium cursor-pointer inline-block pr-4 `}
                     onClick={() => handleNavbarClick(link)}
                   >
                     <a href={`#${link.id}`} className='hover:text-secondary'>
@@ -93,12 +93,11 @@ const Navbar = () => {
                   </li>
                 ))}
               </ul>
-              <form>
-                <div className='input-wrap flex justify-center items-center py-2'>
+              <form className='hidden lg:block'>
+                <div className='input-wrap flex justify-center items-center gap-1'>
                   <input
                     type='search'
                     placeholder='Search...'
-                    className='px-1'
                   />
                   <button type='submit'>
                     <FaSearch className='transition duration-300 hover:opacity-60' />
@@ -107,10 +106,10 @@ const Navbar = () => {
               </form>
             </div>
             <div
-              className='ml-auto scale-50 xs:hover:opacity-60 active:opacity-60 transition duration-300'
+              className='xs:hover:opacity-60 active:opacity-60 transition duration-300'
               onClick={toggleMenu}
             >
-              <MenuIcon active={menuActive} color={styles.accent} />
+              <MenuIcon active={menuActive} color={styles.accent} className='ml-auto' />
             </div>
           </div>
         </div>
@@ -174,7 +173,7 @@ const Navbar = () => {
               ))}
             </ul>
             <form>
-              <div className='input-wrap flex justify-center items-center py-2'>
+              <div className='input-wrap flex justify-center items-center gap-1'>
                 <input
                   type='search'
                   placeholder='Search...'

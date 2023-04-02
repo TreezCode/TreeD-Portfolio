@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import './MenuIcon.css';
 
-const MenuIcon = ({ color, active }) => {
+const MenuIcon = ({ color, active, className }) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const MenuIcon = ({ color, active }) => {
   }, [active]);
     
   return (
-    <div ref={ref} className='menu-icon'>
+    <div ref={ref} className={`menu-icon ${className}`}>
       <span style={{ background: color }}></span>
       <span style={{ background: color }}></span>
       <span style={{ background: color }}></span>

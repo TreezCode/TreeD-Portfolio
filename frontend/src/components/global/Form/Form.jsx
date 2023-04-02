@@ -16,6 +16,7 @@ const InputField = ({
   value,
   onChange,
   required,
+  autoComplete,
   className,
   htmlFor,
   label,
@@ -30,6 +31,7 @@ const InputField = ({
       value={value}
       onChange={onChange}
       required={required}
+      autoComplete={autoComplete}
       className={className}
     />
     <label htmlFor={htmlFor}>{label}</label>
@@ -178,6 +180,7 @@ const Form = () => {
           value={form.name}
           onChange={handleChange}
           required={false}
+          autoComplete={'off'}
           className={styles.inputField}
           htmlFor='name'
           label='Your Name'
@@ -207,6 +210,7 @@ const Form = () => {
             value={form.message}
             onChange={handleChange}
             required={false}
+            autoComplete='off'
             className={`${styles.inputField} min-h-[100px]`}
           />
           <label htmlFor='message'>Your Message</label>

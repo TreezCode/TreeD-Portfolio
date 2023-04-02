@@ -8,10 +8,6 @@ form input::placeholder {
   color: var(--secondary);
 }
 
-form input:focus {
-  outline: none;
-}
-
 .nav-content {
   grid-template-columns: 1fr 5fr 1fr;
 }

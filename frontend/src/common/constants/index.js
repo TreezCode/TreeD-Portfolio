@@ -44,8 +44,16 @@ export const navLinks = [
     title: 'About',
   },
   {
-    id: 'work',
-    title: 'Work',
+    id: 'experience',
+    title: 'Experience',
+  },
+  {
+    id: 'tech',
+    title: 'Tech',
+  },
+  {
+    id: 'projects',
+    title: 'Projects',
   },
   {
     id: 'contact',
@@ -60,18 +68,13 @@ export const navLinksSecondary = [
     url: false, // website url/relative path/import
   },
   {
-    id: 'articles',
-    title: 'Articles',
-    url: false,
-  },
-  {
     id: 'gallery',
     title: 'Gallery',
     url: false,
   },
   {
-    id: 'projects',
-    title: 'Projects',
+    id: 'articles',
+    title: 'Articles',
     url: false,
   },
   {

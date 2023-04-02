@@ -59,4 +59,4 @@ const Tech = () => {
   );
 };
 
-export default SectionWrapper(Tech, '', 0.05);
+export default SectionWrapper(Tech, 'tech', 0.05);
