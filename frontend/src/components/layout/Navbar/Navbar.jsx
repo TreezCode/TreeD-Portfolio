@@ -36,18 +36,15 @@ const Navbar = () => {
   };
 
   const handleLogoClick = () => {
-    setActiveLink('');
     window.scrollTo(0, 0);
     menuActive && toggleMenu();
   };
 
   const handleMenuClick = (link) => {
-    setActiveLink(link.title);
     toggleMenu();
   };
 
   const handleNavbarClick = (link) => {
-    setActiveLink(link.title);
     menuActive && toggleMenu();
   };
 
