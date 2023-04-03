@@ -31,7 +31,7 @@ form input::placeholder {
 }
 .menu .navlinks li,
 .menu .navlinks-secondary li {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 .menu > div::-webkit-scrollbar {
   display: none;
