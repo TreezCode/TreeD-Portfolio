@@ -73,6 +73,12 @@ label textarea:focus {
   display: block;
   user-select: none;
 }
+.hash-span-extra {
+  margin-top: -70px;
+  padding-bottom: 100px;
+  display: block;
+  user-select: none;
+}
 
 a svg {
   transition: scale 3000ms ease;

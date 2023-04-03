@@ -5,7 +5,7 @@ import { staggerContainer } from '../utils/motion';
 
 // Considered HOC because it is a function that will be returning another function
 
-const SectionWrapper = (Component, idName, viewport) =>
+const SectionWrapper = (Component, idName, viewport, extra) =>
   function HOC() {
     return (
       <motion.section
@@ -15,7 +15,7 @@ const SectionWrapper = (Component, idName, viewport) =>
         viewport={{once: true, amount: viewport}}
         className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
       >
-        <span className='hash-span' id={idName} > 
+        <span className={extra ? `hash-span-extra`: 'hash-span'} id={idName} > 
             &nbsp; {/* scroll to invisible span */}
         </span>
         <Component />

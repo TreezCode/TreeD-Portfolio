@@ -45,6 +45,10 @@ const Navbar = () => {
     setActiveLink(link.title);
     menuActive && toggleMenu();
   };
+  
+  useEffect(() => {
+    console.log(activeLink);
+  }, [activeLink])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,17 +81,17 @@ const Navbar = () => {
             >
               TreezCode
             </Link>
-            <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center px-4'>
-              <ul className='navlinks w-full'>
+            <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center px-6'>
+              <ul className='navlinks flex gap-4 w-full'>
                 {navLinks.map((link) => (
                   <li
                     key={link.id}
                     className={`${
-                      activeLink === link.title ? 'scale-110' : ''
-                    } text-[16px] font-medium cursor-pointer inline-block pr-4 `}
+                      activeLink === link.title ? 'active-link' : ''
+                    } text-[16px] font-medium cursor-pointer inline-block`}
                     onClick={() => handleNavbarClick(link)}
                   >
-                    <a href={`#${link.id}`} className='hover:text-secondary'>
+                    <a href={`#${link.id}`} className='lg:hover:opacity-60'>
                       {link.title}
                     </a>
                   </li>
@@ -120,17 +124,23 @@ const Navbar = () => {
           style={{ transition: '0.7s cubic-bezier(0.74, -0.03, 0.83, 0.67)' }}
         >
           <div className='flex justify-center flex-col p-1 pt-[5rem] h-full xs:w-80 w-60 m-auto overflow-hidden'>
-            <img
-              src={logo}
-              alt='logo'
-              className='logo w-[4rem] h-[4rem] mx-auto'
-            />
+          <Link
+              to={'/'}
+              onClick={handleLogoClick}
+              className='w-[5rem] h-[5rem] mx-auto'
+            >
+              <img
+                src={logo}
+                alt='logo'
+                className='logo border-2 border-accent rounded-full p-1 xs:hover:scale-105 active:opacity-60 transition duration-500'
+              />
+            </Link>
             <div className='link-group'>
               <ul className='navlinks'>
                 {navLinks.map((link) => (
                   <li
                     key={link.id}
-                    className={activeLink === link.title ? 'scale-110' : ''}>
+                    className={activeLink === link.title ? 'active-link' : ''}>
                     <a
                       href={`#${link.id}`}
                       onClick={() => handleMenuClick(link)}
@@ -142,7 +152,7 @@ const Navbar = () => {
               </ul>
               <ul className='navlinks-secondary'>
                 {navLinksSecondary.map((link) => (
-                  <li key={link.id} className={activeLink === link.title ? 'scale-110' : ''}>
+                  <li key={link.id} className={activeLink === link.title ? 'active-link' : ''}>
                     {!link.url ? (
                       <a
                         href={`#${link.id}`}
