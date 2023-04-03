@@ -36,19 +36,15 @@ form input::placeholder {
 .menu > div::-webkit-scrollbar {
   display: none;
 }
-.menu img:hover {
-  box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
-}
-.menu img:active {
-  transform: scale(0.95);
-}
+.menu img:hover,
 .social-media li svg:hover {
   box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
 }
+.menu img:active,
 .social-media li svg:active {
-  box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
+  transform: scale(0.95);
+  box-shadow: none;
 }
-
 /* Classes for JavaScript */
 nav .nav-container {
   transition: opacity 400ms ease, padding 400ms ease;
@@ -84,10 +80,8 @@ nav .navbar-active {
   .social-media li svg:hover {
     box-shadow: none;
   }
-  .social-media li svg {
+  .social-media li svg:active {
     box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);
-    /* background: var(--accent);
-    color: var(--primary); */
   }
   .menu img {
     box-shadow: 0 0 8px var(--accentFade200), 0 0 16px var(--accentFade100);

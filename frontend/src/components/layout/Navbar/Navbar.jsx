@@ -3,20 +3,25 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 // internal imports
-import { navLinks, navLinksSecondary, socials } from '../../../common/constants';
+import {
+  navLinks,
+  navLinksSecondary,
+  socials,
+} from '../../../common/constants';
 import { logo } from '../../../common/assets';
 import { styles } from '../../../styles';
 import { MenuIcon } from '../../global';
-
+import { useActiveSection } from '../../../utils/useActiveSection';
 import './Navbar.css';
 
 const Navbar = () => {
-  const [activeLink, setActiveLink] = useState(null);
   const [menuActive, setMenuActive] = useState(false);
 
   const navRef = useRef(null);
   const menuRef = useRef(null);
 
+  const activeSection = useActiveSection();
+  
   const toggleMenu = () => {
     setMenuActive(!menuActive);
     const menuElement = menuRef.current;
@@ -45,10 +50,6 @@ const Navbar = () => {
     setActiveLink(link.title);
     menuActive && toggleMenu();
   };
-  
-  useEffect(() => {
-    console.log(activeLink);
-  }, [activeLink])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,7 +88,7 @@ const Navbar = () => {
                   <li
                     key={link.id}
                     className={`${
-                      activeLink === link.title ? 'active-link' : ''
+                     activeSection && activeSection.includes(link.title.toLowerCase()) ? 'active-link' : ''
                     } text-[16px] font-medium cursor-pointer inline-block`}
                     onClick={() => handleNavbarClick(link)}
                   >
@@ -99,10 +100,7 @@ const Navbar = () => {
               </ul>
               <form className='hidden lg:block'>
                 <div className='input-wrap flex justify-center items-center gap-1'>
-                  <input
-                    type='search'
-                    placeholder='Search...'
-                  />
+                  <input type='search' placeholder='Search...' />
                   <button type='submit'>
                     <FaSearch className='transition duration-300 hover:opacity-60' />
                   </button>
@@ -113,7 +111,11 @@ const Navbar = () => {
               className='xs:hover:opacity-60 active:opacity-60 transition duration-300'
               onClick={toggleMenu}
             >
-              <MenuIcon active={menuActive} color={styles.accent} className='ml-auto' />
+              <MenuIcon
+                active={menuActive}
+                color={styles.accent}
+                className='ml-auto'
+              />
             </div>
           </div>
         </div>
@@ -124,7 +126,7 @@ const Navbar = () => {
           style={{ transition: '0.7s cubic-bezier(0.74, -0.03, 0.83, 0.67)' }}
         >
           <div className='flex justify-center flex-col p-1 pt-[5rem] h-full xs:w-80 w-60 m-auto overflow-hidden'>
-          <Link
+            <Link
               to={'/'}
               onClick={handleLogoClick}
               className='w-[5rem] h-[5rem] mx-auto'
@@ -132,19 +134,14 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt='logo'
-                className='logo border-2 border-accent rounded-full p-1 xs:hover:scale-105 active:opacity-60 transition duration-500'
+                className='logo border-2 border-accent rounded-full p-1 xs:hover:scale-105 transition duration-500'
               />
             </Link>
             <div className='link-group'>
               <ul className='navlinks'>
                 {navLinks.map((link) => (
-                  <li
-                    key={link.id}
-                    className={activeLink === link.title ? 'active-link' : ''}>
-                    <a
-                      href={`#${link.id}`}
-                      onClick={() => handleMenuClick(link)}
-                    >
+                  <li key={link.id} className={activeSection && activeSection.includes(link.title.toLowerCase()) ? 'active-link' : ''}>
+                    <a href={`#${link.id}`} onClick={() => handleMenuClick(link)} >
                       {link.title}
                     </a>
                   </li>
@@ -152,20 +149,13 @@ const Navbar = () => {
               </ul>
               <ul className='navlinks-secondary'>
                 {navLinksSecondary.map((link) => (
-                  <li key={link.id} className={activeLink === link.title ? 'active-link' : ''}>
+                  <li key={link.id} className={activeSection && activeSection.includes(link.title.toLowerCase()) ? 'active-link' : ''}>
                     {!link.url ? (
-                      <a
-                        href={`#${link.id}`}
-                        onClick={() => handleMenuClick(link)}
-                      >
+                      <a href={`#${link.id}`} onClick={() => handleMenuClick(link)}>
                         {link.title}
                       </a>
                     ) : (
-                      <a
-                        href={`${link.url}`}
-                        target='_blank'
-                        onClick={() => handleMenuClick(link)}
-                      >
+                      <a href={`${link.url}`} target='_blank' onClick={() => handleMenuClick(link)}>
                         {link.title}
                       </a>
                     )}
@@ -177,7 +167,7 @@ const Navbar = () => {
               {socials.map((social) => (
                 <li key={social.title} className='inline-block px-1'>
                   <Link to={social.link} target='_blank'>
-                    <social.Icon className='inline-block text-[2.25rem] text-logoAccent border-2 border-accent rounded-full p-[7px] xs:hover:text-primary xs:hover:bg-accent xs:hover:scale-110 active:text-primary active:bg-accent active:scale-110 transition duration-500' />
+                    <social.Icon className='inline-block text-[2.25rem] text-logoAccent border-2 border-accent rounded-full p-[7px] xs:hover:text-primary xs:hover:bg-accent xs:hover:scale-110 active:text-primary active:bg-accent transition duration-500' />
                   </Link>
                 </li>
               ))}

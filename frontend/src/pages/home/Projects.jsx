@@ -116,4 +116,4 @@ const Projects = () => {
   );
 };
 
-export default SectionWrapper(Projects, 'projects', 0.1);
+export default SectionWrapper(Projects, 'projects', 0.1, false);
