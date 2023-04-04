@@ -24,7 +24,7 @@ const Navbar = () => {
     menuElement.classList.toggle('menu-active');
     menuActive 
       ? bodyElement.style.overflow = 'auto' 
-      : bodyElement.style.overflow = 'hidden'
+      : bodyElement.style.overflow = 'hidden';
   };
 
   const handleLogoClick = () => {
@@ -37,12 +37,9 @@ const Navbar = () => {
       const navElement = navRef.current;
       const offset = 50;
       const scrollPos = window.scrollY;
-
-      if (scrollPos > offset) {
-        navElement.classList.add('navbar-active');
-      } else {
-        navElement.classList.remove('navbar-active');
-      }
+      scrollPos > offset 
+        ? navElement.classList.add('navbar-active')
+        : navElement.classList.remove('navbar-active');
     };
 
     window.addEventListener('scroll', handleScroll);
