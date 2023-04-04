@@ -4,13 +4,12 @@ import { styles } from '../styles';
 import { staggerContainer } from '../utils/motion';
 
 // Considered HOC because it is a function that will be returning another function
-
 const SectionWrapper = (Component, idName, viewport, extra) =>
   function HOC() {
     return (
       <motion.section
-        id={`${idName}Section`}
-        variants={staggerContainer()} //animate
+        data-section={idName} // intersection observer api (section tracking)
+        variants={staggerContainer()} // animate
         initial='hidden'
         whileInView='show'
         viewport={{once: true, amount: viewport}}

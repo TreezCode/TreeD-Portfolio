@@ -9,8 +9,8 @@ const styles = {
   black200: '#090325',
   white100: '#f3f3f3',
   
-  paddingX: 'sm:px-16 px-6',
   paddingY: 'sm:py-16 py-6',
+  paddingX: 'sm:px-16 px-4',
   padding: 'sm:px-16 px-4 sm:py-16 py-10',
 
   navScrolled: 'bg-opacity-75',

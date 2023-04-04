@@ -3,11 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 // internal imports
-import {
-  navLinks,
-  navLinksSecondary,
-  socials,
-} from '../../../common/constants';
+import { navLinks, navLinksSecondary, socials } from '../../../common/constants';
 import { logo } from '../../../common/assets';
 import { styles } from '../../../styles';
 import { MenuIcon } from '../../global';
@@ -16,35 +12,23 @@ import './Navbar.css';
 
 const Navbar = () => {
   const [menuActive, setMenuActive] = useState(false);
-
   const navRef = useRef(null);
   const menuRef = useRef(null);
 
   const activeSection = useActiveSection();
-  
+
   const toggleMenu = () => {
     setMenuActive(!menuActive);
     const menuElement = menuRef.current;
-    menuElement.classList.toggle('menu-active');
-
     const bodyElement = document.querySelector('body');
-    if (menuActive) {
-      bodyElement.style.overflow = 'auto';
-    } else {
-      bodyElement.style.overflow = 'hidden';
-    }
+    menuElement.classList.toggle('menu-active');
+    menuActive 
+      ? bodyElement.style.overflow = 'auto' 
+      : bodyElement.style.overflow = 'hidden'
   };
 
   const handleLogoClick = () => {
     window.scrollTo(0, 0);
-    menuActive && toggleMenu();
-  };
-
-  const handleMenuClick = (link) => {
-    toggleMenu();
-  };
-
-  const handleNavbarClick = (link) => {
     menuActive && toggleMenu();
   };
 
@@ -85,9 +69,9 @@ const Navbar = () => {
                   <li
                     key={link.id}
                     className={`${
-                     activeSection && activeSection.includes(link.title.toLowerCase()) ? 'active-link' : ''
+                     activeSection && activeSection.includes(link.id) ? 'active-link' : ''
                     } text-[16px] font-medium cursor-pointer inline-block`}
-                    onClick={() => handleNavbarClick(link)}
+                    onClick={() => menuActive && toggleMenu()}
                   >
                     <a href={`#${link.id}`} className='lg:hover:opacity-60'>
                       {link.title}
@@ -104,10 +88,7 @@ const Navbar = () => {
                 </div>
               </form>
             </div>
-            <div
-              className='xs:hover:opacity-60 active:opacity-60 transition duration-300'
-              onClick={toggleMenu}
-            >
+            <div className='xs:hover:opacity-60 active:opacity-60 transition duration-300' onClick={toggleMenu}>
               <MenuIcon
                 active={menuActive}
                 color={styles.accent}
@@ -137,8 +118,8 @@ const Navbar = () => {
             <div className='link-group'>
               <ul className='navlinks'>
                 {navLinks.map((link) => (
-                  <li key={link.id} className={activeSection && activeSection.includes(link.title.toLowerCase()) ? 'active-link' : ''}>
-                    <a href={`#${link.id}`} onClick={() => handleMenuClick(link)} >
+                  <li key={link.id} className={activeSection && activeSection === link.id ? 'active-link' : ''}>
+                    <a href={`#${link.id}`} onClick={toggleMenu} >
                       {link.title}
                     </a>
                   </li>
@@ -146,13 +127,13 @@ const Navbar = () => {
               </ul>
               <ul className='navlinks-secondary'>
                 {navLinksSecondary.map((link) => (
-                  <li key={link.id} className={activeSection && activeSection.includes(link.title.toLowerCase()) ? 'active-link' : ''}>
+                  <li key={link.id} className={activeSection && activeSection === link.id ? 'active-link' : ''}>
                     {!link.url ? (
-                      <a href={`#${link.id}`} onClick={() => handleMenuClick(link)}>
+                      <a href={`#${link.id}`} onClick={toggleMenu}>
                         {link.title}
                       </a>
                     ) : (
-                      <a href={`${link.url}`} target='_blank' onClick={() => handleMenuClick(link)}>
+                      <a href={`${link.url}`} target='_blank' onClick={toggleMenu}>
                         {link.title}
                       </a>
                     )}
