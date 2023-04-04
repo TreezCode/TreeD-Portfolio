@@ -39,12 +39,7 @@ const Ball = (props) => {
   );
 };
 
-const BallCanvas = (props) => {
-  const eventSource = props.eventSource;
-  const views = props.views;
-  const technologies = props.technologies;
-  const viewsPopulated = props.viewsPopulated;
-
+const BallCanvas = ({ eventSource, views, technologies, viewsPopulated }) => {
   return (
     <Canvas
       eventSource={eventSource}
@@ -56,31 +51,27 @@ const BallCanvas = (props) => {
       }}
     >
       <Suspense fallback={null}>
-        <ScrollControls damping={4} pages={0}>
-          <Scroll>
-            {viewsPopulated &&
-              technologies.map((tech, i) => (
-                <View key={i} track={views.current[i]}>
-                  <Common />
-                  <PresentationControls
-                    global
-                    // snap
-                    // zoom={0.7}
-                    // rotation={[0, -Math.PI / 50, 0]}
-                    // polar={[0, Math.PI / 2]}
-                    // azimuth={[-Math.PI / 2, Math.PI / 2]}
-                    config={{ mass: 2, tension: 500 }}
-                    snap={{ mass: 4, tension: 1500 }}
-                    rotation={[0, 0, 0]}
-                    polar={[-Math.PI / 2, Math.PI / 2]}
-                    azimuth={[-Math.PI / 1.4, Math.PI / 2]}
-                  >
-                    <Ball imgUrl={tech.icon} />
-                  </PresentationControls>
-                </View>
-              ))}
-          </Scroll>
-        </ScrollControls>
+        {viewsPopulated &&
+          technologies.map((tech, i) => (
+            <View key={i} track={views.current[i]}>
+              <Common />
+              <PresentationControls
+                global
+                // snap
+                // zoom={0.7}
+                // rotation={[0, -Math.PI / 50, 0]}
+                // polar={[0, Math.PI / 2]}
+                // azimuth={[-Math.PI / 2, Math.PI / 2]}
+                config={{ mass: 2, tension: 500 }}
+                snap={{ mass: 4, tension: 1500 }}
+                rotation={[0, 0, 0]}
+                polar={[-Math.PI / 2, Math.PI / 2]}
+                azimuth={[-Math.PI / 1.4, Math.PI / 2]}
+              >
+                <Ball imgUrl={tech.icon} />
+              </PresentationControls>
+            </View>
+          ))}
       </Suspense>
 
       <Preload all />
