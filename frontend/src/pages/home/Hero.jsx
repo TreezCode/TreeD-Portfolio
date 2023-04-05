@@ -20,7 +20,7 @@ const Hero = () => {
       strings: heroContent.subText,
       typeSpeed: 40,
       backSpeed: 40,
-      startDelay: 2500,
+      startDelay: 2700,
       backDelay: 1500,
       loop: true,
       loopCount: Infinity,
