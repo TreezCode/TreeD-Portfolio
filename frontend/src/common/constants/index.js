@@ -118,7 +118,7 @@ const socials = [
 ];
 
 const heroContent = {
-  headText: ["Hi I'm <span style='color:#915eff'>Joey</span>"],
+  headText: ["Hi I'm <span style='color:#915eff'>Joey</span>."],
   subText: [
     "I develop immersive 3D visuals, intuitive user interfaces and dynamic web applications.",
     "Whether I'm creating complex user interfaces or implementing complex logic, React allows me to write scalable code.",
