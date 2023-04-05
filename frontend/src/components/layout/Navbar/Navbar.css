@@ -19,6 +19,16 @@ form input::placeholder {
 .navlinks-secondary li a {
   transition: all 300ms ease;
 }
+.nav-container li.active-link a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 100%;
+  height: 0.2rem;
+  border-radius: 0.4rem;
+  background: var(--accent);
+}
 .menu .link-group:hover li a {
   opacity: 0.3;
 }
@@ -72,7 +82,6 @@ nav .navbar-active {
     grid-template-columns: 1fr 1fr;
   }
 }
-
 @media screen and (max-width: 450px) {
   nav div {
     font-size: 13px;

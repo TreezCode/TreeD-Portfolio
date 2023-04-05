@@ -70,7 +70,7 @@ const Navbar = () => {
                     } text-[16px] font-medium cursor-pointer inline-block`}
                     onClick={() => menuActive && toggleMenu()}
                   >
-                    <a href={`#${link.id}`} className='lg:hover:opacity-60'>
+                    <a href={`#${link.id}`} className='hover:opacity-60'>
                       {link.title}
                     </a>
                   </li>

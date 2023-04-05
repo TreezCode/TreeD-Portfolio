@@ -67,6 +67,26 @@ label textarea:focus {
   background: var(--tertiaryFade);
 }
 
+.typed-cursor {
+  font-size: 30px;
+  color: var(--secondary);
+}
+@media screen and (max-width: 1024px) {
+  .typed-cursor {
+    font-size: 26px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .typed-cursor {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .typed-cursor {
+    font-size: 18px;
+  }
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;

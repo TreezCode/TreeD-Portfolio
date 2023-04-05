@@ -1,12 +1,12 @@
 // external imports
-import { 
+import {
   FaLinkedin,
   FaGithub,
   FaDribbble,
   FaYoutube,
   FaEtsy,
   FaPinterest,
- } from 'react-icons/fa';
+} from 'react-icons/fa';
 // internal imports
 import {
   resume,
@@ -88,17 +88,17 @@ const socials = [
   {
     title: 'LinkedIn',
     link: 'https://www.linkedin.com/in/joey-kubalak-425032180/',
-    Icon: FaLinkedin
+    Icon: FaLinkedin,
   },
   {
     title: 'Github',
     link: 'https://github.com/TreezCode',
-    Icon: FaGithub
+    Icon: FaGithub,
   },
   {
     title: 'Etsy',
     link: 'https://www.etsy.com/shop/TranscendentTreez',
-    Icon: FaEtsy
+    Icon: FaEtsy,
   },
   // {
   //   title: 'Pinterest',
@@ -108,14 +108,26 @@ const socials = [
   {
     title: 'YouTube',
     link: 'https://www.youtube.com/channel/UCXuGXX7rA1wmk_fEpWmCQhA',
-    Icon: FaYoutube
+    Icon: FaYoutube,
   },
   {
     title: 'Dribble',
     link: 'https://dribbble.com/TreezCode',
-    Icon: FaDribbble
+    Icon: FaDribbble,
   },
-]
+];
+
+const heroContent = {
+  headText: ["Hi I'm <span style='color:#915eff'>Joey</span>"],
+  subText: [
+    "I develop immersive 3D visuals, intuitive user interfaces and dynamic web applications.",
+    "Whether I'm creating complex user interfaces or implementing complex logic, React allows me to write efficient and scalable code.",
+    "With a passion for visual design and a keen eye for detail, I create immersive 3D graphics and animations that bring web experiences to life.",
+    "From HTML and CSS to JavaScript and Node.js, I have expertise in both frontend and backend technologies.",
+    "I'm comfortable working with a wide range of tools and frameworks to build custom web applications that meet business needs.",
+    "I focus on creating intuitive, user-friendly interfaces that drive engagement and conversions.",
+  ],
+};
 
 const services = [
   {
@@ -343,4 +355,12 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, testimonials, projects, socials };
+export {
+  services,
+  heroContent,
+  technologies,
+  experiences,
+  testimonials,
+  projects,
+  socials,
+};
