@@ -65,7 +65,7 @@ const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
         onPointerDown={handlePointerEvent}
         onClick={onClick}
       >
-        <span className='flex items-center justify-center gap-2'>{text}</span>
+        <span className='flex items-center justify-center'>{text}</span>
         <i ref={iRef}></i>
       </button>
     </>

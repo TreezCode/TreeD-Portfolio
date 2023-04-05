@@ -26,6 +26,7 @@
 .glow-btn span {
   position: relative;
   z-index: 1;
+  gap: 0.25rem;
 }
 .glow-btn i {
   position: absolute;
