@@ -6,27 +6,22 @@ import {
   Float,
   useTexture,
   View,
-  ScrollControls,
-  Scroll,
   PresentationControls,
-  Environment,
   ContactShadows,
   Preload,
 } from '@react-three/drei';
+import * as THREE from 'three';
+
+THREE.ColorManagement.enabled = true // If you create a material or color in global space - outside of React Three Fiber's Canvas context 
+
+const geometry = new THREE.IcosahedronGeometry(1, 1)
+const material = new THREE.MeshStandardMaterial({ color: '#95a1f1', polygonOffset: false, polygonOffsetFactor: '-5', flatShading: true })
 
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
-
   return (
     <Float speed={1.75} rotationIntensity={1}>
-      <mesh scale={2} dispose={null} position={[0, 0.75, 0]}>
-        <icosahedronGeometry args={[1, 1]} />
-        <meshStandardMaterial
-          color='#95a1f1'
-          polygonOffset
-          polygonOffsetFactor={-5}
-          flatShading
-        />
+      <mesh scale={2} dispose={null} position={[0, 0.75, 0]} geometry={geometry} material={material}>
         <Decal
           position={[0, 0, 1]}
           rotation={[2 * Math.PI, 0, 6.25]} // mirror icons
@@ -42,13 +37,10 @@ const Ball = (props) => {
 const BallCanvas = ({ eventSource, views, technologies, viewsPopulated }) => {
   return (
     <Canvas
+      frameloop='always'
       eventSource={eventSource}
       className='canvas'
-      style={{
-        position: 'fixed',
-        top: '0',
-        left: '0',
-      }}
+      style={{ position: 'fixed', top: '0', left: '0' }}
     >
       <Suspense fallback={null}>
         {viewsPopulated &&
