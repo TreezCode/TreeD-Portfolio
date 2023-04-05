@@ -22,6 +22,8 @@ const Hero = () => {
       backSpeed: 40,
       startDelay: 2500,
       backDelay: 1500,
+      loop: true,
+      loopCount: Infinity,
     };
     const headOptions = {
       strings: heroContent.headText,
