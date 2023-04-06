@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { BallCanvas } from '../../components/canvas';
 import { technologies } from '../../common/constants';
 import { textVariant } from '../../utils/motion';
+import { useActiveSection } from '../../utils/useActiveSection';
 import { SectionWrapper } from '../../hoc';
 import { styles } from '../../styles';
 
@@ -13,6 +14,7 @@ const Tech = () => {
   const ref = useRef(null);
   const views = useRef([]);
   const [viewsPopulated, setViewsPopulated] = useState(false);
+  const activeSection = useActiveSection();
 
   // Populate views ref with createRef()
   useEffect(() => {
@@ -49,6 +51,7 @@ const Tech = () => {
         </div>
         {/* Render BallCanvas with Suspense component and fallback loader */}
         <BallCanvas
+          frameloop={activeSection && activeSection === 'tech' ? 'always' : 'demand'}
           eventSource={ref}
           views={views}
           technologies={technologies}

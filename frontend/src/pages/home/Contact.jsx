@@ -4,19 +4,25 @@ import { motion } from 'framer-motion';
 import { styles } from '../../styles';
 import { SectionWrapper } from '../../hoc';
 import { slideIn, textVariant } from '../../utils/motion';
+import { useActiveSection } from '../../utils/useActiveSection';
 import { ContactForm } from '../../components/global';
 import { EarthCanvas } from '../../components/canvas';
 
 const Contact = () => {
+  const activeSection = useActiveSection();
+
   return (
     <>
       <div className='xl:grid xl:grid-cols-2 gap-10'>
         <div className='xl:order-2'>
           <motion.div variants={slideIn('right', 'tween', 0.2, 1)} className='xl:flex-1 xl:h-full md:h-[550px] h-[350px]'>
-            <EarthCanvas />
+            <EarthCanvas 
+              frameloop={activeSection && activeSection === 'contact' ? 'always' : 'demand'} 
+              autoRotate={activeSection && activeSection === 'contact' ? true : false} 
+            />
           </motion.div>
         </div>
-        <div className='xl:pt-0 pt-10'>
+        <div className={styles.paddingY}>
           <motion.div variants={textVariant()}>
             <p className={styles.sectionSubText}>Get in touch</p>
             <h2 className={styles.sectionHeadText}>Contact.</h2>

@@ -13,7 +13,7 @@ export const useTyped = (heroContent) => {
     const headTextOptions = {
       strings: heroContent.headText,
       typeSpeed: 50,
-      startDelay: 1500,
+      startDelay: 2000,
       showCursor: true,
       cursorChar: '&nbsp;', // take up space when empty
       onComplete: (self) => { self.cursor.remove() },
@@ -22,7 +22,7 @@ export const useTyped = (heroContent) => {
       strings: heroContent.subText,
       typeSpeed: 40,
       backSpeed: 20,
-      startDelay: 4000,
+      startDelay: 4500,
       backDelay: 2500,
       loop: false,
       loopCount: Infinity,

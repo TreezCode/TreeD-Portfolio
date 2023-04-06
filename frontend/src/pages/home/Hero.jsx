@@ -22,7 +22,7 @@ const Hero = () => {
             <div className='typed-container'>
               <span className={`${styles.heroHeadText} text-white`} ref={headTextRef} />
             </div>
-            <div className='typed-container w-[80%]'>
+            <div className='typed-container'>
               <span className={`${styles.heroSubText} mt-2`} ref={subTextRef} />
             </div>
           </div>

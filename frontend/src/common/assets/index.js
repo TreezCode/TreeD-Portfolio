@@ -1,5 +1,5 @@
-import logo from './logo.png';
-import logoLight from './logoLight.png';
+import logo from './brand/logo.png';
+import logoLight from './brand/logoLight.png';
 
 import frontend from './ui/frontend.png';
 import creator from './ui/creator.png';
@@ -30,10 +30,9 @@ import du from './company/du.png';
 import lyft from './company/lyft.png';
 import strainwise from './company/strainwise.jpg';
 
-
-import treecommerce from './works/treecommerce.png'
-import vanilla from './works/vanilla.png'
-import clickgame from './works/clickgame.png'
+import treecommerce from './projects/treecommerce.png'
+import vanilla from './projects/vanilla.png'
+import clickgame from './projects/clickgame.png'
 
 import resume from './documents/Resume2023.pdf'
 
