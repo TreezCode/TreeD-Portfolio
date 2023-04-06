@@ -7,7 +7,7 @@ import {useValidateField, useValidationRules } from '../../../utils/formValidati
 import { sendEmail } from '../../../utils/email';
 import { styles } from '../../../styles';
 import GlowButton from '../GlowButton/GlowButton';
-import './Form.css';
+import './ContactForm.css';
 
 const InputField = ({
   inputRef,
@@ -48,7 +48,7 @@ const LabelMessage = ({ errors, isSubmitError }) => (
     {errors}
   </span>
 );
-const Form = () => {
+const ContactForm = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -243,4 +243,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default ContactForm;

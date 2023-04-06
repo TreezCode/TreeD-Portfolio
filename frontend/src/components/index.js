@@ -3,14 +3,16 @@ import {
   Footer,
   Layout,
 } from './layout';
+
 import {
   BallCanvas,
   StarsCanvas,
   EarthCanvas,
   ComputersCanvas,
 } from './canvas';
+
 import { 
-  Form,
+  ContactForm,
   MenuIcon,
   GlowButton, 
   CanvasLoader,
@@ -22,6 +24,7 @@ export {
   Navbar,
   Footer,
   MenuIcon,
+  ContactForm,
   BallCanvas,
   GlowButton,
   EarthCanvas,

@@ -13,16 +13,16 @@ const Hero = () => {
     <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
       <section className='relative w-full h-screen mx-auto' data-section='hero'>
 
-        <div className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start justify-start gap-4`}>
-          <div className='flex flex-col justify-center items-center mt-5 z-40'>
+        <div className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start justify-center gap-4`}>
+          <div className='flex flex-col justify-center items-center mt-2 z-40'>
             <div className='w-5 h-5 rounded-full bg-[#915eff]' />
             <div className='w-1 sm:h-80 h-60 violet-gradient' />
           </div>
-          <div className='z-40 min-w-[75%] max-w-xl'>
+          <div className='z-40 w-full'>
             <div className='typed-container'>
               <span className={`${styles.heroHeadText} text-white`} ref={headTextRef} />
             </div>
-            <div className='typed-container'>
+            <div className='typed-container w-[80%]'>
               <span className={`${styles.heroSubText} mt-2`} ref={subTextRef} />
             </div>
           </div>

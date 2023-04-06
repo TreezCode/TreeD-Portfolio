@@ -20,7 +20,7 @@ const material = new THREE.MeshStandardMaterial({ color: '#95a1f1', polygonOffse
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
   return (
-    <Float speed={1.75} rotationIntensity={1}>
+    <Float speed={1.75} rotationIntensity={1.25}>
       <mesh scale={2} dispose={null} position={[0, 0.75, 0]} geometry={geometry} material={material}>
         <Decal
           position={[0, 0, 1]}
