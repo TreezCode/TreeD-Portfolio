@@ -2,11 +2,10 @@
 import { useRef, useState, useEffect } from 'react';
 // internal imports
 import { useMediaQuery } from '../../../utils/useMediaQuery';
-import './GlowButton.css';
+import './PrimaryButton.css';
 
-const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
+const PrimaryButton = ({ type, text, href, color, bgColor, onClick }) => {
   const btnRef = useRef();
-  const iRef = useRef();
   const [animation, setAnimation] = useState(false);
   const isMobile = useMediaQuery();
 
@@ -24,23 +23,20 @@ const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
   useEffect(() => {
     const button = btnRef.current;
     if (isMobile) {
-      button.classList.add('mobile-glow-btn')
-      button.classList.remove('desktop-glow-btn')
+      button.classList.add('mobile-primary-btn')
+      button.classList.remove('desktop-primary-btn')
     } else {
-      button.classList.add('desktop-glow-btn')
-      button.classList.remove('mobile-glow-btn')
+      button.classList.add('desktop-primary-btn')
+      button.classList.remove('mobile-primary-btn')
     }
   }, [isMobile])
   
   useEffect(() => {
     const buttonElement = btnRef.current;
-    const iElement = iRef.current;
     if (animation) {
-      buttonElement.classList.add('mobile-glow-btn-active');
-      iElement.classList.add('mobile-glow-btn-i-active');
+      buttonElement.classList.add('mobile-primary-btn-active');
     } else {
-      buttonElement.classList.remove('mobile-glow-btn-active');
-      iElement.classList.remove('mobile-glow-btn-i-active');
+      buttonElement.classList.remove('mobile-primary-btn-active');
     }
   }, [animation]);
 
@@ -48,18 +44,17 @@ const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
     <>
       <button
         ref={btnRef}
-        className='glow-btn'
+        className='primary-btn'
         type={type || 'button'}
         href={`#${href}`}
-        style={{'--clr': color, '--bgClr': bgColor}}
+        style={{ '--clr': color, '--bgClr': bgColor }}
         onPointerDown={handlePointerEvent}
         onClick={onClick}
       >
         <span className='flex items-center justify-center'>{text}</span>
-        <i ref={iRef}></i>
       </button>
     </>
   );
 };
 
-export default GlowButton;
+export default PrimaryButton;

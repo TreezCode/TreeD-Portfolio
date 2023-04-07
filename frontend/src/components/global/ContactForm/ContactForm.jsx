@@ -7,6 +7,7 @@ import { useValidateField,useValidationRules } from '../../../utils/formValidati
 import { sendEmail } from '../../../utils/email';
 import { styles } from '../../../styles';
 import GlowButton from '../GlowButton/GlowButton';
+import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -166,17 +167,17 @@ const ContactForm = () => {
           <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
             <GlowButton 
               type='submit' 
-              text={loading ? ('Sending...') : (<>Send<FaPaperPlane /></>)} 
+              text={loading ? ('Sending...') : (<>Send<span style={{color: styles.accent}}><FaPaperPlane /></span></>)} 
               color={styles.accent} 
-              bgColor={styles.tertiary} 
+              bgColor='transparent' 
             />
           </div>
           <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
-            <GlowButton 
+            <PrimaryButton 
               type='button' 
-              text={<>Reset<HiOutlineRefresh /></>}
+              text={<>Reset<span style={{color: styles.accent}}><HiOutlineRefresh /></span></>}
               color={styles.accent}
-              bgColor={styles.tertiary}
+              bgColor='transparent'
               onClick={resetForm}
             />
           </div>

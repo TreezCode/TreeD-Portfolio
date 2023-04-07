@@ -1,0 +1,65 @@
+/* Desktop and mobile globally shared
+================================================================== */
+.primary-btn {
+  position: relative;
+  background: var(--bgClr);
+  color: var(--secondary);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  font-weight: 400;
+  padding: 10px 30px;
+  transition: 0.5s;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--clr);
+  width: 100%;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.primary-btn::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bgClr);
+  border-radius: 10px;
+}
+.primary-btn span {
+  position: relative;
+  z-index: 1;
+  gap: 0.25rem;
+}
+
+/* Targets only devices that can hover (desktop)
+================================================================== */
+@media (hover: hover) {
+  .desktop-primary-btn:hover {
+    letter-spacing: 0.25rem;
+    color: var(--clr);
+    box-shadow: 0 0 30px var(--clr);
+  }
+  .desktop-primary-btn:active {
+    letter-spacing: 0.1rem;
+    transform: scale(0.95);
+    box-shadow: 0 0 15px var(--clr);
+  }
+}
+
+/* Targets only devices that don't hover (mobile)
+================================================================== */
+.mobile-primary-btn {
+  letter-spacing: 0.25rem;
+}
+
+/* Mobile animations
+================================================================== */
+.mobile-primary-btn-active {
+  animation: activeBtn 500ms ease 1;
+}
+@keyframes activeBtn {
+  50% {
+    letter-spacing: 0.1rem;
+    transform: scale(0.95);
+    box-shadow: 0 0 5px var(--clr);
+  }
+}

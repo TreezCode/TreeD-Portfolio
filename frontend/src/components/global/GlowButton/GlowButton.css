@@ -12,6 +12,7 @@
   padding: 10px 30px;
   transition: 0.5s;
   border-radius: 10px;
+  box-shadow: 0 0 10px var(--clr);
   width: 100%;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -63,33 +64,32 @@
 /* Targets only devices that can hover (desktop)
 ================================================================== */
 @media (hover: hover) {
-  .desktop-btn:hover {
+  .desktop-glow-btn:hover {
     letter-spacing: 0.25rem;
-    background: var(--clr);
     color: var(--clr);
     box-shadow: 0 0 30px var(--clr);
   }
-  .desktop-btn:hover i::before {
+  .desktop-glow-btn:hover i::before {
     left: 0%;
     transform: translateX(-50%) rotate(45deg);
     box-shadow: 35px 35px var(--clr);
   }
-  .desktop-btn:hover i::after {
+  .desktop-glow-btn:hover i::after {
     left: 100%;
     transform: translateX(-50%) rotate(-45deg);
     box-shadow: 35px -35px var(--clr);
   }
-  .desktop-btn:active {
+  .desktop-glow-btn:active {
     letter-spacing: 0.1rem;
     transform: scale(0.95);
     box-shadow: 0 0 15px var(--clr);
   }
-  .desktop-btn:active i::before {
+  .desktop-glow-btn:active i::before {
     left: 100%;
     transform: translateX(-50%) rotate(45deg);
     box-shadow: 35px 35px var(--clr);
   }
-  .desktop-btn:active i::after {
+  .desktop-glow-btn:active i::after {
     left: 0%;
     transform: translateX(-50%) rotate(-45deg);
     box-shadow: 35px -35px var(--clr);
@@ -98,18 +98,16 @@
 
 /* Targets only devices that don't hover (mobile)
 ================================================================== */
-.mobile-btn {
+.mobile-glow-btn {
   letter-spacing: 0.25rem;
   background: var(--clr);
-  color: var(--clr);
-  box-shadow: 0 0 11px var(--clr);
 }
-.mobile-btn i::before {
+.mobile-glow-btn i::before {
   left: 0%;
   transform: translateX(-50%) rotate(45deg);
   box-shadow: 35px 35px var(--clr);
 }
-.mobile-btn i::after {
+.mobile-glow-btn i::after {
   left: 100%;
   transform: translateX(-50%) rotate(-45deg);
   box-shadow: 35px -35px var(--clr);
@@ -117,20 +115,20 @@
 
 /* Mobile animations
 ================================================================== */
-.mobile-btn-active {
+.mobile-glow-btn-active {
   animation: activeBtn 1s ease 1;
 }
-.mobile-btn-i-active::before {
+.mobile-glow-btn-i-active::before {
   animation: activeIBefore 1s ease 1;
 }
-.mobile-btn-i-active::after {
+.mobile-glow-btn-i-active::after {
   animation: activeIAfter 1s ease 1;
 }
 @keyframes activeBtn {
   50% {
     letter-spacing: 0.1rem;
     transform: scale(0.95);
-    box-shadow: 0 0 5px var(--clr);
+    box-shadow: 0 0 3px var(--clr);
   }
 }
 @keyframes activeIBefore {

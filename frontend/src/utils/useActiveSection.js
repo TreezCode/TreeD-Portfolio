@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-// 10 line io hook for the memes
+// 10 line section tracking io hook for the memes
 export const useActiveSection = () => {
   const [activeSection, setActiveSection] = useState(null);
   useEffect(() => {

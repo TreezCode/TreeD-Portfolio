@@ -14,7 +14,6 @@ const Navbar = () => {
   const [menuActive, setMenuActive] = useState(false);
   const navRef = useRef(null);
   const menuRef = useRef(null);
-
   const activeSection = useActiveSection();
 
   const toggleMenu = () => {
@@ -52,7 +51,7 @@ const Navbar = () => {
     <header>
       <nav className='fixed top-0 left-0 w-full z-50 text-white overflow-y-hidden'>
         <div ref={navRef} className='nav-container relative w-full z-50 p-6'>
-          <div className='nav-content max-w-[1350px] relative grid justify-between items-center my-0 mx-auto'>
+          <div className='nav-content max-w-[1350px] relative grid justify-between items-center gap-6 mx-auto'>
             <Link
               to={'/'}
               className='brand text-[1.75rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
@@ -60,7 +59,7 @@ const Navbar = () => {
             >
               TreezCode
             </Link>
-            <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center px-6'>
+            <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center'>
               <ul className='navlinks flex gap-4 w-full'>
                 {navLinks.map((link) => (
                   <li
