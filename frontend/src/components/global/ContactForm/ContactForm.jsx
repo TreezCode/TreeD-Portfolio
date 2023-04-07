@@ -3,51 +3,12 @@ import { useState, useEffect, useRef } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { HiOutlineRefresh } from 'react-icons/hi';
 // internal imports
-import {useValidateField, useValidationRules } from '../../../utils/formValidation';
+import { useValidateField,useValidationRules } from '../../../utils/formValidation';
 import { sendEmail } from '../../../utils/email';
 import { styles } from '../../../styles';
 import GlowButton from '../GlowButton/GlowButton';
 import './ContactForm.css';
 
-const InputField = ({
-  inputRef,
-  type,
-  name,
-  value,
-  onChange,
-  required,
-  autoComplete,
-  className,
-  htmlFor,
-  label,
-  errors,
-  isSubmitError,
-}) => (
-  <div className='input-box sm:w-[calc((100%-30px)/2)]'>
-    <input
-      ref={inputRef}
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      required={required}
-      autoComplete={autoComplete}
-      className={className}
-    />
-    <label htmlFor={htmlFor}>{label}</label>
-    <LabelMessage errors={errors} isSubmitError={isSubmitError} />
-  </div>
-);
-
-const LabelMessage = ({ errors, isSubmitError }) => (
-  <span
-    className={`${
-      isSubmitError ? `${styles.errorText}` : 'text-secondary'
-    } text-[14px]`}
-  >
-    {errors}
-  </span>
-);
 const ContactForm = () => {
   const [form, setForm] = useState({
     name: '',
@@ -70,12 +31,19 @@ const ContactForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
-
     value.trim() === ''
       ? setErrors({ ...errors, [name]: '' })
       : setErrors({ ...errors, [name]: validateField(name, value), form: '' });
-
     setIsSubmitError(false);
+  };
+
+  const resetForm = () => {
+    setForm({
+      name: '',
+      email: '',
+      message: '',
+    });
+    setErrors({});
   };
 
   const handleSubmit = async (e) => {
@@ -110,64 +78,39 @@ const ContactForm = () => {
     }
   };
 
-  const resetForm = () => {
-    setForm({
-      name: '',
-      email: '',
-      message: '',
-    });
-    setErrors({});
+  const validateInput = (inputRef, value, errors) => {
+    const input = inputRef.current;
+    if (errors) {
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+    } else if (!value) {
+      input.classList.remove('invalid');
+      input.classList.remove('valid');
+    } else {
+      input.classList.remove('invalid');
+      input.classList.add('valid');
+    }
   };
 
   const { name, email, message } = errors;
   useEffect(() => {
-    const nameInput = nameRef.current;
-    if (name) {
-      nameInput.classList.add('invalid');
-      nameInput.classList.remove('valid');
-    } else if (!form.name) {
-      nameInput.classList.remove('invalid');
-      nameInput.classList.remove('valid');
-    } else {
-      nameInput.classList.remove('invalid');
-      nameInput.classList.add('valid');
-    }
+    validateInput(nameRef, form.name, name);
   }, [name, form]);
 
   useEffect(() => {
-    const emailInput = emailRef.current;
-    if (email) {
-      emailInput.classList.add('invalid');
-      emailInput.classList.remove('valid');
-    } else if (!form.email) {
-      emailInput.classList.remove('invalid');
-      emailInput.classList.remove('valid');
-    } else {
-      emailInput.classList.remove('invalid');
-      emailInput.classList.add('valid');
-    }
+    validateInput(emailRef, form.email, email);
   }, [email, form]);
 
   useEffect(() => {
-    const messageInput = messageRef.current;
-    if (message) {
-      messageInput.classList.add('invalid');
-      messageInput.classList.remove('valid');
-    } else if (!form.message) {
-      messageInput.classList.remove('invalid');
-      messageInput.classList.remove('valid');
-    } else {
-      messageInput.classList.remove('invalid');
-      messageInput.classList.add('valid');
-    }
+    validateInput(messageRef, form.message, message);
   }, [message, form]);
 
   useEffect(() => {
     isEmailSent
-      ? setUserMessage({ message:"Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText })
+      ? setUserMessage({ message: "Thanks for reaching out, I'll get back to you shortly. 👋🌳", class: styles.successText })
       : errors.form
         ? setUserMessage({ message: errors.form, class: styles.errorText })
-        : setUserMessage({ message: 'placeholder', class: 'opacity-0 select-none'});
+        : setUserMessage({ message: 'placeholder', class: 'opacity-0 select-none' });
   }, [isEmailSent, errors]);
 
   return (
@@ -221,16 +164,16 @@ const ContactForm = () => {
         </p>
         <div className='flex sm:flex-row flex-col justify-center items-center gap-4'>
           <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
-            <GlowButton
-              type='submit'
-              text={loading ? ('Sending...') : (<>Send<FaPaperPlane /></>)}
-              color={styles.accent}
-              bgColor={styles.tertiary}
+            <GlowButton 
+              type='submit' 
+              text={loading ? ('Sending...') : (<>Send<FaPaperPlane /></>)} 
+              color={styles.accent} 
+              bgColor={styles.tertiary} 
             />
           </div>
           <div className='flex justify-center sm:w-[calc((100%-30px)/2)] w-full mb-2'>
-            <GlowButton
-              type='button'
+            <GlowButton 
+              type='button' 
               text={<>Reset<HiOutlineRefresh /></>}
               color={styles.accent}
               bgColor={styles.tertiary}
@@ -242,5 +185,41 @@ const ContactForm = () => {
     </form>
   );
 };
+
+const InputField = ({
+  inputRef,
+  type,
+  name,
+  value,
+  onChange,
+  required,
+  autoComplete,
+  className,
+  htmlFor,
+  label,
+  errors,
+  isSubmitError,
+}) => (
+  <div className='input-box sm:w-[calc((100%-30px)/2)]'>
+    <input
+      ref={inputRef}
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      autoComplete={autoComplete}
+      className={className}
+    />
+    <label htmlFor={htmlFor}>{label}</label>
+    <LabelMessage errors={errors} isSubmitError={isSubmitError} />
+  </div>
+);
+
+const LabelMessage = ({ errors, isSubmitError }) => (
+  <span className={`${isSubmitError ? `${styles.errorText}` : 'text-secondary'} text-[14px]`}>
+    {errors}
+  </span>
+);
 
 export default ContactForm;

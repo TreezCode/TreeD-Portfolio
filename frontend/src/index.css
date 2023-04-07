@@ -11,6 +11,7 @@
 :root {
   --primary: #050816;
   --primaryFade: #05081540;
+  --primaryFade100: #05081580;
   --secondary: #aaa6c3;
   --secondaryFade: #aaa6c340;
   --tertiary: #151030;
@@ -234,6 +235,7 @@ footer p svg:active {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  user-select: none;
 }
 
 .blue-text-gradient {
@@ -251,6 +253,7 @@ footer p svg:active {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  user-select: none;
 }
 
 .pink-text-gradient {
@@ -267,4 +270,5 @@ footer p svg:active {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  user-select: none;
 }

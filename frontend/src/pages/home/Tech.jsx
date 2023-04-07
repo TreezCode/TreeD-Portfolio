@@ -30,7 +30,7 @@ const Tech = () => {
       {/* Render section title and subtitle */}
       <motion.div variants={textVariant()} className='pb-8'>
         <p className={styles.sectionSubText}>What tools I build with</p>
-        <h2 className={styles.sectionHeadText}>Technologies.</h2>
+        <h2 className={styles.sectionHeadText}>Technologies<span style={{color:'#915eff'}}>.</span></h2>
       </motion.div>
       {/* Render views container and canvas */}
       <div ref={ref} className='tech-container relative pt-3'>

@@ -26,7 +26,6 @@ const EarthCanvas = ({ frameloop, autoRotate }) => (
         minPolarAngle={Math.PI / 2}
       />
       <Earth />
-
       <Preload all />
     </Suspense>
   </Canvas>

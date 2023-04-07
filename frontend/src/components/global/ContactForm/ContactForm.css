@@ -12,6 +12,12 @@
   outline: none;
   color: var(--secondary);
   font-size: 1rem;
+  font-weight: 500;
+}
+.input-box textarea:focus,
+.input-box input:focus  {
+  border: 1px solid var(--accent);
+  background: var(--primary);
 }
 .input-box label {
   position: absolute;

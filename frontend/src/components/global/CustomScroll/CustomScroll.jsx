@@ -8,19 +8,17 @@ const CustomScroll = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY;
-
       let scrollDirection;
+
       scrollPos > prevScrollPos
         ? (scrollDirection = 'down')
         : (scrollDirection = 'up');
-
+        
       setPrevScrollPos(scrollPos);
 
-      if (scrollDirection === 'down') {
-        document.body.classList.add('scroll-down');
-      } else {
-        document.body.classList.remove('scroll-down');
-      }
+      scrollDirection === 'down'
+        ? document.body.classList.add('scroll-down')
+        : document.body.classList.remove('scroll-down');
 
       return scrollDirection;
     };

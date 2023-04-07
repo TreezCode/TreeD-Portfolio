@@ -65,7 +65,7 @@ nav .menu-active {
 }
 nav .navbar-active {
   background: var(--primaryFade);
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(10px);
   padding: 1rem;
   border-bottom: 1px solid var(--tertiary);
 }

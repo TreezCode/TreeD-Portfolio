@@ -7,7 +7,7 @@ import {
   ContactShadows,
   Preload,
 } from '@react-three/drei';
-
+// internal imports
 import { Ball } from './models/Ball';
 
 const BallCanvas = ({
