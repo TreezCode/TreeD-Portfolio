@@ -6,6 +6,7 @@ import { OrbitControls, Preload } from '@react-three/drei';
 import { CanvasLoader } from '../global';
 import { Computer } from './models/Computer';
 import { useMediaQuery } from '../../utils/useMediaQuery';
+import { styles } from '../../styles';
 
 // Define the ComputersCanvas component, which displays the 3D model in a canvas with orbit controls
 const ComputersCanvas = () => {
@@ -13,12 +14,13 @@ const ComputersCanvas = () => {
   // Return a Canvas component with orbit controls and the Computers component inside a Suspense component for loading
   return (
     <Canvas
-      frameloop='demand'
+      frameloop='always'
       gl={{ preserveDrawingBuffer: true }}
-      shadows
       camera={{ fov: 30, position: [15, 2, 5], rotation: [0, 0, 0] }}
+      shadows
     >
       <Suspense fallback={<CanvasLoader />}>
+        <ambientLight intensity={0.1} color={styles.accent} />
         <hemisphereLight intensity={0.15} groundColor='black' />
         <pointLight intensity={0.75} color='#804dee' />
         <spotLight
