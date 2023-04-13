@@ -37,6 +37,10 @@
   color-scheme: dark;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 ::selection {
   background: #804dee;
   color: #fff;

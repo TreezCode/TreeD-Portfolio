@@ -1,74 +1,39 @@
 // external imports
+import { useState } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { proxy, useSnapshot } from 'valtio';
+import { useSnapshot } from 'valtio';
 // internal imports
-import {
-  deskMaterial,
-  caseMaterial,
-  ramMaterial,
-  mouseBtnsMaterial,
-  powersupplyMaterial,
-  accentStandardMaterial1,
-  accentStandardMaterial2,
-} from '../../../utils/threeMaterialEdit';
-
-const state = proxy({
-  current: null,
-  items: {
-    // standard materials
-    caseFansOuter: { color: '', material: ['Material.017'] }, // case fans outer
-    caseFrontFansWire: { color: '', material: ['Material.090'] }, // front fan wire
-    motherboardWires: { color: '', material: ['Material.087'] }, // motherboard wires
-    commonParts: { color: '', material: ['Material.025'] }, // wires / speakers / keyboard keys / wifi / monitor top
-    cpu: { color: '', material: ['Material.034'] }, // cpu
-    gpu: { color: '', material: ['Material.054'] }, // gpu
-    gpuWires: { color: '', material: ['Material.085'] }, // gpu wires
-    mousepad: { color: '#ff00a5', material: ['Material.074_21'] }, // mousepad
-    mouse: { color: 'royalblue', material: ['Material.074_25'] }, // mouse color
-    keyboardBottom: { color: '', material: ['Tastatur_Seite'] }, // keyboard bottom
-    keyboardMain: { color: '', material: ['Tastatur_Unterseite'] }, // keyboard main
-    monitorFront: { color: '', material: ['Material.055'] }, // monitor front
-    monitorArm: { color: '', material: ['Material.043'] }, // montitor arm
-    monitorBaseBack: { color: '', material: ['Material.037'] }, // monitor base back
-    monitorBackBottom: { color: '', material: ['Material.044'] },// monitor back bottom
-    monitorBackDecalR: { color: '', material: ['Material.074_28'] }, // monitor back decal right
-    monitorBackDecalL: { color: '', material: ['Material.074_29'] }, // monitor back decal left
-    monitorFrontDecal: { color: '', material: ['Material.074_31'] }, // monitor front decal
-    monitorBaseFrontInner: { color: '', material: ['Material.006'] }, // monitor base front inner
-    // accent materials
-    monitorBackPlate1: { material: accentStandardMaterial1 }, // monitor back plate 1
-    monitorBackPlate2: { material: accentStandardMaterial1}, // monitor back plate 2
-    monitorBaseFront: { material: accentStandardMaterial1 }, // monitor base front
-    peripheralWires: { material: accentStandardMaterial1 }, // periherals wires
-    monitorWire: { material: accentStandardMaterial1 }, // monitor wire
-    mouseWire: { material: accentStandardMaterial1 }, // mouse wire
-    keyboardWire: { material: accentStandardMaterial1 }, // keyboard wire
-    speakerWire: { material: accentStandardMaterial1 }, // speaker wire
-    wifi: { material: accentStandardMaterial1 }, // wifi antennas
-    motherboardWireClip: { material: accentStandardMaterial1 }, // motherboard clip
-    gpuClip: { material: accentStandardMaterial1 }, // gpu clip
-    gpuRtx: { material: accentStandardMaterial2 }, // gpu rtx
-    caseFrontBtns: { color: '', material: accentStandardMaterial2 }, // case front btns color
-    // textured materials
-    desk: { color: '', material: deskMaterial }, // Desk
-    case: { color: '', material: caseMaterial }, // case
-    mouseSideBtns: { color: '', material: mouseBtnsMaterial }, // mouse side btns
-    powersupply: { color: '', material: powersupplyMaterial }, // powersupply
-    ram: { color: '', material: ramMaterial }, // ram
-  },
-});
+import { state } from '../../store/store';
 
 export const Computer = (props) => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF('../desktop_pc/scene-transformed.glb');
+  const [hovered, setHovered] = useState(null);
   let toggle = false;
   return (
     <group
       {...props}
       position={props.isMobile ? [-1, -3, -1.2] : [-1, -2, -1.2]}
-      scale={props.isMobile ? 1.15 : 0.9}
-      rotation={[0, 0.15, -0.04]}
+      scale={props.isMobile ? 0.75 : 0.9}
+      rotation={[0, 0.2, -0.04]}
       dispose={null}
+      onPointerOver={(e) => {
+        e.stopPropagation(), setHovered(e.object.material.name);
+      }}
+      onPointerOut={(e) => {
+        e.intersections.length === 0 && setHovered(null);
+      }}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        console.log(e.object.material);
+        state.current = {
+          name: e.object.name,
+          material: e.object.material.name,
+        };
+      }}
+      onPointerMissed={(e) => {
+        state.current = null;
+      }}
     >
       <group scale={0.01}>
         <mesh
@@ -632,21 +597,6 @@ export const Computer = (props) => {
           scale={3.79}
         />
         <mesh
-          geometry={nodes.Object_954_Material072_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
-          material-color={snap.items.commonParts.color}
-          position={[184.78, 33.32, 601.23]}
-          rotation={[-Math.PI / 2, 0.09, -Math.PI]}
-          scale={[5.01, 3.88, 5.01]}
-        />
-        <mesh
-          geometry={nodes.Object_956_Material072_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
-          position={[164.62, 35.13, 204.97]}
-          rotation={[-Math.PI / 2, 0.09, 0]}
-          scale={3.13}
-        />
-        <mesh
           geometry={nodes.Object_958_Material066_0.geometry}
           material={materials['Material.074_35']}
           position={[189.42, 46.76, 488.89]}
@@ -991,7 +941,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Object_1056_Material073_0.geometry}
-          material={materials['Material.073']}
+          material={materials['Material.074_33']}
           position={[138.83, 50.63, 395.77]}
           rotation={[-Math.PI / 2, 0.04, Math.PI / 2]}
           scale={2.99}
@@ -1061,55 +1011,75 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube_Material_0.geometry}
-          material={!toggle ? materials['Material'] : snap.items.desk.material} // Desk
-          material-color={snap.items.desk.color}
+          material={
+            !toggle ? materials['Material'] : snap.items['Desk'].material
+          } // Desk
+          material-color={snap.items['Desk'].color}
+          name={'Desk'}
           position={[-61.02, -0.56, 156.09]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-368.95, 731.64, 25.98]}
         />
         <mesh
           geometry={nodes.Cube011_Material010_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case main
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case main
+          material-color={snap.items['Case'].color}
+          name={'Case'}
           position={[-85.94, 199.7, -353.72]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[173.49, 89.97, 157.35]}
         />
         <mesh
           geometry={nodes.Cube012_Material011_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case border
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case border
+          material-color={snap.items['Case'].color}
+          name={'Case'}
           position={[-85.94, 199.7, -353.72]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[173.49, 89.97, 157.35]}
         />
         <mesh
           geometry={nodes.Cube013_Material015_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case front base
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case front base
+          material-color={snap.items['Case'].color}
+          name={'Case'}
           position={[82.77, 33.23, -353.61]}
           rotation={[-Math.PI / 2, -0.24, Math.PI]}
           scale={[-5.99, 88.36, 12.14]}
         />
         <mesh
           geometry={nodes.Cube014_Material014_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case back base
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case back base
+          material-color={snap.items['Case'].color}
+          name={'Case'}
           position={[-253.45, 33.23, -353.61]}
           rotation={[-Math.PI / 2, 0.14, -Math.PI]}
           scale={[-5.98, 88.36, 12.15]}
         />
         <mesh
           geometry={nodes.Cylinder_Material009_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case screws
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case screws
+          name={'Case Screws'}
+          material-color={snap.items['Case'].color}
           position={[74.21, 51.22, -262.89]}
           scale={[6.08, 6.27, 2.28]}
         />
         <mesh
           geometry={nodes.Cube018_Material017_0.geometry}
           material={materials['Material.017']} // fans outer
-          material-color={snap.items.caseFansOuter.color}
+          material-color={snap.items['Case Fans'].color}
+          material-metalness={0.2}
+          name={'Case Fans'}
           position={[79.29, 288.43, -355.56]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[50.67, 50.67, 10]}
@@ -1117,6 +1087,8 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          material-color={snap.items['Case Fans RGB'].color}
+          name={'Case Fans RGB'}
           position={[89.59, 288.68, -355.42]}
           rotation={[0, Math.PI / 2, 0]}
           scale={108.52}
@@ -1124,13 +1096,16 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans001_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[69.02, 288.68, -355.42]}
           rotation={[0, -Math.PI / 2, 0]}
           scale={108.52}
         />
         <mesh
           geometry={nodes.Cube015_Material016_0.geometry}
-          material={materials['Material.074_1']}
+          material={materials[snap.items['Motherboard'].material]}
+          material-color={snap.items['Motherboard'].color}
+          name={'Motherboard'}
           position={[-165.45, 224.12, -440.84]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-89.37, 0.7, 106.43]}
@@ -1138,6 +1113,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube016_Material017_0.geometry}
           material={materials['Material.017']} // fans outer
+          name={'Case Fans'}
           position={[79.29, 177.86, -355.56]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[50.67, 50.67, 10]}
@@ -1145,6 +1121,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans002_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[89.59, 178.11, -355.42]}
           rotation={[0, Math.PI / 2, 0]}
           scale={108.52}
@@ -1152,6 +1129,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans003_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[69.02, 178.11, -355.42]}
           rotation={[0, -Math.PI / 2, 0]}
           scale={108.52}
@@ -1159,6 +1137,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube017_Material017_0.geometry}
           material={materials['Material.017']} // fans outer
+          name={'Case Fans'}
           position={[-251.38, 292.35, -334.9]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[50.67, 50.67, 10]}
@@ -1166,6 +1145,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans004_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[-241.08, 292.6, -334.76]}
           rotation={[0, Math.PI / 2, 0]}
           scale={108.52}
@@ -1173,6 +1153,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans005_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[-261.65, 292.6, -334.76]}
           rotation={[0, -Math.PI / 2, 0]}
           scale={108.52}
@@ -1180,6 +1161,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube019_Material017_0.geometry}
           material={materials['Material.017']} // fans outer
+          name={'Case Fans'}
           position={[-171.54, 344.36, -355.43]}
           rotation={[Math.PI / 2, 0, Math.PI]}
           scale={[51.51, 51.51, 10.17]}
@@ -1187,6 +1169,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans006_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[-171.29, 333.89, -355.29]}
           rotation={[Math.PI / 2, 0, -Math.PI / 2]}
           scale={110.31}
@@ -1194,22 +1177,31 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans007_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Fans RGB'}
           position={[-171.29, 354.81, -355.29]}
           rotation={[Math.PI / 2, 0, -Math.PI / 2]}
           scale={110.31}
         />
         <mesh
           geometry={nodes.Cube020_Material020_0.geometry}
-          material={!toggle ? materials['Material.074_2'] : snap.items.powersupply.material} // power supply
-          material-color={!toggle ? 'indigo' : snap.items.powersupply.color}
+          material={
+            !toggle
+              ? materials['Material.074_2']
+              : snap.items['Powersupply'].material
+          } // power supply
+          material-color={!toggle ? 'indigo' : snap.items['Powersupply'].color}
+          name={'Powersupply'}
           position={[-96.11, 78.83, -363.4]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[160.68, 73.93, 34.31]}
         />
         <mesh
           geometry={nodes.Cube021_Material018_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case top fan border
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case top fan border
+          material-color={snap.items['Case'].color}
+          name={'Case'}
           position={[-108.06, 346.35, -354.98]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[7.19, 57.54, 10.79]}
@@ -1217,6 +1209,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube022_Material017_0.geometry}
           material={materials['Material.017']} // fans outer
+          name={'Case Fans'}
           position={[-44.55, 344.36, -355.43]}
           rotation={[Math.PI / 2, 0, Math.PI]}
           scale={[51.51, 51.51, 10.17]}
@@ -1224,6 +1217,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans008_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Top Fans RGB'}
           position={[-44.29, 333.89, -355.29]}
           rotation={[Math.PI / 2, 0, -Math.PI / 2]}
           scale={110.31}
@@ -1231,20 +1225,25 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.aorus_case_fans009_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
+          name={'Case Top Fans RGB'}
           position={[-44.29, 354.81, -355.29]}
           rotation={[Math.PI / 2, 0, -Math.PI / 2]}
           scale={110.31}
         />
         <mesh
           geometry={nodes.Sphere_Material019_0.geometry}
-          material={snap.items.wifi.material} // wifi 1
+          material={snap.items['Wifi Antenna 1'].material} // wifi 1
+          material-color={snap.items['Wifi Antenna 1'].color}
+          name={'Wifi Antenna 1'}
           position={[-277.54, 457.86, -407.85]}
           rotation={[-1.51, 0, 0]}
           scale={4.86}
         />
         <mesh
           geometry={nodes.Sphere001_Material019_0.geometry}
-          material={snap.items.wifi.material} // wifi 2
+          material={snap.items['Wifi Antenna 2'].material} // wifi 2
+          material-color={snap.items['Wifi Antenna 2'].color}
+          name={'Wifi Antenna 2'}
           position={[-277.54, 457.86, -439.73]}
           rotation={[-1.62, 0, 0]}
           scale={4.86}
@@ -1258,16 +1257,22 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube023_Material021_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case front fan border
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case front fan border
+          material-color={snap.items['Case'].color}
+          name={'Case Front Fan Border'}
           position={[93.78, 228.59, -355.28]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-11.99, 59.26, 117.81]}
         />
         <mesh
           geometry={nodes.Cube024_Material022_0.geometry}
-          material={!toggle ? materials['Material.074'] : snap.items.case.material} // case back fan border
-          material-color={snap.items.case.color}
+          material={
+            !toggle ? materials['Material.074'] : snap.items['Case'].material
+          } // case back fan border
+          material-color={snap.items['Case'].color}
+          name={'Case Back Fan Border'}
           position={[-265.1, 291.7, -335.09]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[6.38, 55.46, 55.46]}
@@ -1321,28 +1326,31 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube027_Material008_0.geometry}
           material={materials['Material.074_6']}
+          name={'RAM'}
           position={[-96.41, 270.96, -430.93]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-1.51, 10.92, 44.29]}
         />
         <mesh
           geometry={nodes.Cube028_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
-          material-color={snap.items.ram.color}
+          material={materials['Material.074_7']} // ram
+          material-color={snap.items['RAM'].color}
+          name={'RAM'}
           position={[-95.71, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-1.05, 9.73, 44.41]}
         />
         <mesh
           geometry={nodes.Cube029_Material025_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.074_7']} // ram
           position={[-96.39, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-0.25, 9.34, 46.66]}
         />
         <mesh
           geometry={nodes.Cube030_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-97, 270.96, -451.7]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-1.05, 9.73, 44.41]}
@@ -1356,21 +1364,23 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube032_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-102.99, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-1.05, 9.73, 44.41]}
         />
         <mesh
           geometry={nodes.Cube033_Material025_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.074_7']} // ram
           position={[-103.67, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-0.25, 9.34, 46.66]}
         />
         <mesh
           geometry={nodes.Cube034_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-104.28, 270.96, -451.7]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-1.05, 9.73, 44.41]}
@@ -1384,21 +1394,23 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube036_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-109.85, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-1.05, 9.73, 44.41]}
         />
         <mesh
           geometry={nodes.Cube037_Material025_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.074_7']} // ram
           position={[-110.53, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-0.25, 9.34, 46.66]}
         />
         <mesh
           geometry={nodes.Cube038_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-111.14, 270.96, -451.7]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-1.05, 9.73, 44.41]}
@@ -1412,21 +1424,23 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube040_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-116.81, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-1.05, 9.73, 44.41]}
         />
         <mesh
           geometry={nodes.Cube041_Material025_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.074_7']} // ram
           position={[-117.48, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[-0.25, 9.34, 46.66]}
         />
         <mesh
           geometry={nodes.Cube042_Material026_0.geometry}
-          material={!toggle ? materials['Material.074_7'] : snap.items.ram.material} // ram
+          material={materials['Material.074_7']} // ram
+          name={'RAM'}
           position={[-118.09, 270.96, -451.7]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
           scale={[-1.05, 9.73, 44.41]}
@@ -1442,7 +1456,12 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube043_Material012_0.geometry}
-          material={materials['Material.025']} // speaker right
+          // material={!toggle ? materials['Material.074'] : snap.items['Speakers'].material}
+          material={materials[snap.items['Speakers'].material]} // speaker right
+          material-color={snap.items['Speakers'].color}
+          material-metalness={0.4}
+          material-roughness={0.2}
+          name={'Speakers'}
           position={[-219.49, 85.34, -71.15]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[49.18, 29.28, 59.66]}
@@ -1465,6 +1484,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes['maxresdefault_(1)_maxresdefault_(1)_0'].geometry}
           material={materials['Material.074_10']}
+          name={'Case Decal'}
           position={[87.71, 83.61, -355.31]}
           rotation={[0, Math.PI / 2, 0]}
           scale={39.41}
@@ -1472,6 +1492,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cylinder001_Material028_0.geometry}
           material={materials['Material.074_11']}
+          name={'Speaker RGB Right'}
           position={[-169.23, 114.41, -71.64]}
           rotation={[-1.57, 1.55, 0]}
           scale={[19.4, 19.4, 2.51]}
@@ -1479,13 +1500,17 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cylinder002_Material029_0.geometry}
           material={materials['Material.074_11']}
+          name={'Speaker RGB Right'}
           position={[-166.37, 70.65, -71.64]}
           rotation={[-Math.PI / 2, 1.54, 0]}
           scale={[10.3, 10.3, 1.33]}
         />
         <mesh
           geometry={nodes.Cube044_Material012_0.geometry}
-          material={materials['Material.025']} // speaker left
+          // material={!toggle ? materials['Material.074'] : snap.items['Speakers'].material}
+          material={materials[snap.items['Speakers'].material]} // speaker left
+          material-color={snap.items['Speakers'].color}
+          name={'Speakers'}
           position={[-219.49, 85.34, 671.43]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[49.18, 29.28, 59.66]}
@@ -1493,6 +1518,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cylinder003_Material031_0.geometry}
           material={materials['Material.074_11']}
+          name={'Speaker RGB Left'}
           position={[-169.23, 114.41, 670.94]}
           rotation={[-1.57, 1.55, 0]}
           scale={[19.4, 19.4, 2.51]}
@@ -1500,6 +1526,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cylinder004_Material030_0.geometry}
           material={materials['Material.074_11']}
+          name={'Speaker RGB Left'}
           position={[-166.37, 70.65, 670.94]}
           rotation={[-Math.PI / 2, 1.54, 0]}
           scale={[10.3, 10.3, 1.33]}
@@ -1562,7 +1589,8 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube046_Material034_0.geometry}
           material={materials['Material.034']} // cpu
-          material-color={snap.items.cpu.color}
+          material-color={snap.items['CPU Fan'].color}
+          name={'CPU Fan'}
           position={[-188.16, 268.52, -368.19]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[9.28, 42.45, 42.45]}
@@ -1570,6 +1598,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube047_Material033_0.geometry}
           material={materials['Material.034']} // cpu
+          name={'CPU Fan'}
           position={[-134.66, 268.52, -368.19]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[9.28, 42.45, 42.45]}
@@ -1605,13 +1634,17 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cylinder005_Material041_0.geometry}
           material={materials['Material.074_17']}
+          material-color={snap.items['CPU RGB'].color}
+          name={'CPU RGB'}
           position={[-161.14, 268.66, -369.02]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[32.71, 32.71, 34.21]}
         />
         <mesh
           geometry={nodes.Cylinder011_Material045_0.geometry}
-          material={materials['Material.045']}
+          material={materials[snap.items['CPU Mount'].material]} // CPU mount
+          material-color={snap.items['CPU Mount'].color}
+          name={'CPU Mount'}
           position={[-173.93, 242.5, -421.74]}
           rotation={[0.47, 0, Math.PI]}
           scale={[2.05, 2.05, 16.97]}
@@ -1634,13 +1667,18 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube052_Material047_0.geometry}
-          material={materials['Material.025']} // case decal border
+          material={snap.items['Case Accent'].material} // case decal border
+          name={'Case Accent'}
           position={[83.51, 83.28, -355.6]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[5.75, 46.28, 28.87]}
         />
-        <mesh 
-          geometry={nodes['test-aorus-m2-souris-aorus-rgb2_test-aorus-m2-souris-aorus-rgb2_0'].geometry}
+        <mesh
+          geometry={
+            nodes[
+              'test-aorus-m2-souris-aorus-rgb2_test-aorus-m2-souris-aorus-rgb2_0'
+            ].geometry
+          }
           material={materials['Material.074_18']}
           position={[-115.85, 150.75, -435.22]}
           scale={35.19}
@@ -1662,7 +1700,8 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube055_Material054_0.geometry}
           material={materials['Material.054']} // gpu
-          material-color={snap.items.gpu.color}
+          name={'GPU'}
+          material-color={snap.items['GPU'].color}
           position={[-122.29, 185.08, -370.56]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[133.16, 54.53, 13.17]}
@@ -1698,14 +1737,16 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Plane_Material053_0.geometry}
           material={materials['Material.074_21']} // mousepad
-          material-color={snap.items.mousepad.color}
+          material-color={snap.items['Mousepad'].color}
+          name={'Mousepad'}
           position={[117.18, 25.6, -29.17]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[124.43, 154.11, 119.91]}
         />
         <mesh
           geometry={nodes.geforcertx_Material056_0.geometry}
-          material={snap.items.gpuRtx.material} // gpu rtx color
+          material={snap.items['Case Accent'].material} // gpu rtx color
+          name={'Case Accent'}
           position={[-229.27, 204.83, -315.96]}
           scale={[10.38, 10.38, 10.91]}
         />
@@ -1738,28 +1779,24 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.aorus_logotranspa_aorus_logotranspa_0.geometry}
-          material={materials['Material.074_24']}
+          material={materials['Material.074_24']} // gpu aorus logo
           position={[-182.43, 181.7, -315.85]}
           scale={[8.65, 8.65, 9.09]}
         />
         <mesh
           geometry={nodes.Cube061_Material064_0.geometry}
-          material={materials['Material.025']} // gpu plate
+          material={materials['Material.074_22']} // gpu plate
+          material-color={snap.items['Case Accent'].color}
+          name={'Case Accent'}
           position={[-122.29, 185.08, -370.56]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[133.16, 54.53, 13.17]}
         />
         <mesh
-          geometry={nodes.Cube062_Material065_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
-          position={[-165.45, 224.12, -440.84]}
-          rotation={[-Math.PI / 2, 0, -Math.PI]}
-          scale={[-89.37, 0.7, 106.43]}
-        />
-        <mesh
           geometry={nodes.Cube064_Material074_0.geometry}
-          material={materials['Material.074_25']} // mouse color
-          material-color={snap.items.mouse.color}
+          material={materials['Material.074_25']} // mouse side mesh
+          material-color={snap.items['Mouse'].color}
+          name={'Mouse'}
           position={[111.41, 32.45, -27.41]}
           rotation={[Math.PI / 2, 0, -Math.PI]}
           scale={[-42.89, 42.89, 22.9]}
@@ -1767,36 +1804,34 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube067_Material075_0.geometry}
           material={materials['Material.075']} // mouse back inside
+          name={'Mouse'}
           position={[111.41, 32.45, -27.41]}
           rotation={[Math.PI / 2, 0, -Math.PI]}
           scale={[-42.89, 42.89, 22.9]}
         />
         <mesh
           geometry={nodes.Cube063_Material074_0.geometry}
-          material={materials['Material.074_25']} // mouse main back // mouse color
+          material={materials['Material.074_25']} // mouse main back
+          name={'Mouse'}
           position={[111.41, 32.5, -27.41]}
           rotation={[Math.PI / 2, 0, -Math.PI]}
           scale={[-42.89, 42.89, 22.9]}
         />
         <mesh
           geometry={nodes.Cube065_Material074_0.geometry}
-          material={materials['Material.074_25']} // mouse main front // mouse color
+          material={materials['Material.074_25']} // mouse main front
+          name={'Mouse'}
           position={[111.41, 32.5, -27.41]}
           rotation={[Math.PI / 2, -0.01, Math.PI]}
           scale={[-42.89, 42.89, 22.9]}
         />
         <mesh
           geometry={nodes.Cube066_Material076_0.geometry}
-          material={materials['Material.076']} // mouse front inside
+          material={materials[snap.items['Mouse Inner'].material]} // mouse front inside
+          material-color={snap.items['Mouse Inner'].color}
+          name={'Mouse Inner'}
           position={[111.46, 32.29, -27.29]}
           rotation={[Math.PI / 2, -0.01, Math.PI]}
-          scale={[-42.89, 42.89, 22.9]}
-        />
-        <mesh
-          geometry={nodes.Cube072_Material078_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
-          position={[111.41, 32.45, -27.41]}
-          rotation={[Math.PI / 2, 0, -Math.PI]}
           scale={[-42.89, 42.89, 22.9]}
         />
         <mesh
@@ -1809,13 +1844,14 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube076_Material080_0.geometry}
           material={materials['Material.074_25']} // mouse color
+          name={'Mouse'}
           position={[65.93, 34.46, -27.35]}
           rotation={[Math.PI / 2, -0.23, -Math.PI]}
           scale={[-42.89, 42.89, 22.9]}
         />
         <mesh
           geometry={nodes.Cylinder009_Material081_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.074_25']} // mouse wheel accent
           position={[77.22, 34.52, -28.48]}
           scale={[11.57, 11.57, 2.5]}
         />
@@ -1834,14 +1870,18 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.BezierCurve001_Material085_0.geometry}
           material={materials['Material.085']} // gpu wires
-          material-color={snap.items.gpuWires.color}
+          material-color={snap.items['GPU Wires'].color}
+          name={'GPU Wires'}
           position={[-57.66, 118.32, -315.6]}
           rotation={[1.57, -1.23, 0]}
           scale={100}
         />
         <mesh
           geometry={nodes.Cube074_Material084_0.geometry}
-          material={snap.items.gpuClip.material} // gpu wire clip
+          material={materials[snap.items['Case Clips'].material]} // gpu wire clip
+          material-color={snap.items['Case Clips'].color}
+          material-metalness={0.4}
+          name={'Case Clips'}
           position={[-92.94, 206.72, -314.86]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[5.64, 5.4, 4.23]}
@@ -1856,64 +1896,76 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.BezierCurve002_Material087_0.geometry}
           material={materials['Material.087']} // motherboard wires
-          material-color={snap.items.motherboardWires.color}
+          material-color={snap.items['Motherboard Wires'].color}
+          name={'Motherboard Wires'}
           position={[-31.44, 183.79, -440.16]}
           rotation={[1.57, -1.23, 0]}
           scale={100}
         />
         <mesh
           geometry={nodes.Cube077_Material083_0.geometry}
-          material={snap.items.motherboardWireClip.material} // mb wire clip
+          material={materials[snap.items['Case Clips'].material]} // motherboard wire clip
+          name={'Case Clips'}
           position={[-81.68, 266.51, -437.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[2.85, 4.87, 17.38]}
         />
         <mesh
           geometry={nodes.Cube078_Material083_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials[snap.items['Case Clips'].material]} // case fan wire clip
+          name={'Case Clips'}
           position={[70.35, 334.37, -437.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[2.85, 4.87, 12.05]}
         />
         <mesh
           geometry={nodes.BezierCurve_Material088_0.geometry}
-          material={materials['Material.088']}
+          material={materials['Material.073']} // case fan wire
+          material-color={snap.items['Case Fans Wire'].color}
+          name={'Case Fans Wire'}
           position={[73.03, 238.2, -437.39]}
           rotation={[Math.PI, 0, Math.PI / 2]}
           scale={100}
         />
         <mesh
           geometry={nodes.Cube079_Material089_0.geometry}
-          material={materials['Material.025']} // case back wire clip 1
+          material={materials[snap.items['Wire Clips'].material]} // case back wire clip 1
+          material-color={snap.items['Wire Clips'].color}
+          name={'Wire Clips'}
           position={[-269.84, 182.61, -338.41]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[16.04, 9.16, 4.33]}
         />
         <mesh
           geometry={nodes.Cube080_Material089_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials[snap.items['Wire Clips'].material]} // monitor wire clip
+          name={'Wire Clips'}
           position={[-158.49, 199.97, 375.16]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[16.04, 9.16, 4.33]}
         />
         <mesh
           geometry={nodes.BezierCurve003_Material091_0.geometry}
-          material={snap.items.monitorWire.material} // monitor wire
+          material={materials[snap.items['Monitor Wire'].material]} // monitor wire
+          material-color={snap.items['Monitor Wire'].color} 
+          material-metalness={0.4}
+          material-roughness={0.2}
+          name={'Monitor Wire'}
           position={[-158.9, 127.66, 299.39]}
           rotation={[2.46, -Math.PI / 2, 0]}
           scale={100}
         />
         <mesh
           geometry={nodes.Cube081_Material090_0.geometry}
-          material={materials['Material.090']} // front fan wire
-          material-color={snap.items.caseFrontFansWire.color}
+          material={materials['Material.090']}
+          name={'Mouse'}
           position={[93.22, 47.66, -27.75]}
           rotation={[-1.54, -0.23, 0]}
           scale={[2.62, 1.33, 2.24]}
         />
         <mesh
           geometry={nodes.Cube068_Material092_0.geometry}
-          material={materials['Material.092']} // mouse decal
+          material={materials['Material.092']}
           position={[129.12, 44.5, -27.61]}
           rotation={[-Math.PI / 2, 0.28, 0]}
           scale={[5.96, 5.96, 2.08]}
@@ -1921,29 +1973,34 @@ export const Computer = (props) => {
         <mesh
           geometry={
             nodes['Color-PewDiePie-Logo_Color-PewDiePie-Logo_0'].geometry
-          }
+          } // mouse logo
           material={materials['Material.074_27']}
+          name={'Mouse Decal'}
           position={[129.54, 46.55, -27.48]}
           rotation={[-Math.PI / 2, 0.28, Math.PI / 2]}
           scale={12.41}
         />
         <mesh
           geometry={nodes.Cube069_Material093_0.geometry}
-          material={materials['Material.025']} // mouse inside
+          material={materials[snap.items['Mouse Inner'].material]} // mouse inner
+          name={'Mouse Inner'}
           position={[111.41, 32.45, -27.41]}
           rotation={[Math.PI / 2, 0, -Math.PI]}
           scale={[-42.89, 44.82, 22.9]}
         />
         <mesh
           geometry={nodes.Cylinder013_Material094_0.geometry}
-          material={materials['Material.094']}
+          material={materials['Material.088']} // 094
+          name={'Case Buttons'}
           position={[83.03, 308.23, -282.19]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[9.86, 9.86, 4.88]}
         />
         <mesh
           geometry={nodes.Cylinder014_Material095_0.geometry}
-          material={materials['Material.088']}
+          material={materials[snap.items['Case Buttons'].material]}
+          material-color={snap.items['Case Buttons'].color}
+          name={'Case Buttons'}
           position={[84.52, 280.42, -282.19]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[6.54, 6.54, 3.24]}
@@ -1951,91 +2008,117 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cylinder015_Material096_0.geometry}
           material={materials['Material.088']}
+          name={'Case Buttons'}
           position={[84.52, 254.31, -282.19]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[6.67, 6.67, 3.3]}
         />
         <mesh
           geometry={nodes.Text001_Material097_0.geometry}
-          material={materials['Material.025']} // case front text
+          material={snap.items['Case Accent'].material} // case front text
+          material-color={snap.items['Case Accent'].color}
+          name={'Case Accent'}
           position={[87.59, 202.48, -275.49]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[10.33, 8.38, 9.72]}
         />
         <mesh
           geometry={nodes.Cube088_Material098_0.geometry}
-          material={!toggle ? materials['Material.098'] : snap.items.mouseSideBtns.material} // mouse side btns
-          material-color={snap.items.mouseSideBtns.color}
+          material={snap.items['Mouse Side Buttons'].material} // mouse side btns
+          material-color={snap.items['Mouse Side Buttons'].color}
+          name={'Mouse Side Buttons'}
           position={[98.96, 38.35, -8.16]}
           rotation={[-Math.PI / 2, -0.13, 0]}
           scale={[5.45, 4.95, 1.91]}
         />
         <mesh
           geometry={nodes.BezierCurve004_Material099_0.geometry}
-          material={snap.items.mouseWire.material} // mouse wire
+          material={materials[snap.items['Mouse Wire'].material]} // mouse wire
+          material-color={snap.items['Mouse Wire'].color}
+          material-metalness={0.4}
+          material-roughness={0.2}
+          name={'Mouse Wire'}
           position={[-33.39, 29.83, -26.83]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={100}
         />
         <mesh
           geometry={nodes.Cube070_Material100_0.geometry}
-          material={materials['Material.025']} // case back wire clip 2
+          material={materials[snap.items['Wire Clips'].material]} // case back wire clip 2
+          name={'Wire Clips'}
           position={[-266.85, 260.34, -432.75]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[7.67, 2.32, 5.24]}
         />
         <mesh
           geometry={nodes.Cube071_Material101_0.geometry}
-          material={materials['Material.025']} // case back wire clip 3
+          material={materials[snap.items['Wire Clips'].material]} // case back wire clip 3
+          name={'Wire Clips'}
           position={[-266.85, 260.34, -426.84]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[7.67, 2.32, 5.24]}
         />
         <mesh
           geometry={nodes.Cube082_Material101_0.geometry}
-          material={materials['Material.025']} // case back wire clip 4
+          material={materials[snap.items['Wire Clips'].material]} // case back wire clip 4
+          name={'Wire Clips'}
           position={[-266.85, 274.04, -426.64]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[7.67, 2.32, 5.24]}
         />
         <mesh
           geometry={nodes.Cylinder016_Material102_0.geometry}
-          material={materials['Material.025']} // back clip 5
+          material={materials[snap.items['Wire Clips'].material]} // back clip 5
+          name={'Wire Clips'}
           position={[-263.63, 248.74, -421.76]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[3.07, 3.07, 5.45]}
         />
         <mesh
           geometry={nodes.BezierCircle_Material104_0.geometry}
-          material={snap.items.caseFrontBtns.material} // case front btn color
+          material={snap.items['Case Accent'].material} // case front btn color
+          name={'Case Accent'}
           position={[87.65, 308.19, -282.27]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={5.7}
         />
         <mesh
           geometry={nodes.BezierCurve005_Material103_0.geometry}
-          material={snap.items.keyboardWire.material} // keyboard wire
+          material={materials[snap.items['Keyboard Wire'].material]} // keyboard wire
+          material-color={snap.items['Keyboard Wire'].color}
+          name={'Keyboard Wire'}
+          material-metalness={0.4}
+          material-roughness={0.2}
           position={[83.41, 25.97, 360.7]}
           rotation={[-Math.PI / 2, 0, Math.PI / 2]}
           scale={100}
         />
         <mesh
           geometry={nodes.BezierCurve006_Material106_0.geometry}
-          material={snap.items.speakerWire.material} // left speaker wire 1
+          material={materials[snap.items['Speaker Wire 1'].material]} // left speaker wire 1
+          material-color={snap.items['Speaker Wire 1'].color} // left speaker wire 1
+          material-metalness={0.4}
+          material-roughness={0.2}
+          name={'Speaker Wire 1'}
           position={[-275.73, 25.97, 569.75]}
           rotation={[-Math.PI / 2, 0, Math.PI / 2]}
           scale={100}
         />
         <mesh
           geometry={nodes.BezierCurve007_Material105_0.geometry}
-          material={snap.items.speakerWire.material} // left speaker wire 2
+          material={materials[snap.items['Speaker Wire 1'].material]} // left speaker wire 2
+          name={'Speaker Wire 1'}
           position={[-271.34, 25.97, 569.75]}
           rotation={[-Math.PI / 2, 0, Math.PI / 2]}
           scale={100}
         />
         <mesh
           geometry={nodes.BezierCurve008_Material107_0.geometry}
-          material={snap.items.speakerWire.material} // speaker 2 speaker wire
+          material={materials[snap.items['Speaker Wire 2'].material]} // speaker 2 speaker wire
+          material-color={snap.items['Speaker Wire 2'].color}
+          material-metalness={0.4}
+          material-roughness={0.2}
+          name={'Speaker Wire 2'}
           position={[-280.43, 25.97, 28.5]}
           rotation={[Math.PI / 2, 0, Math.PI / 2]}
           scale={100}
@@ -2043,7 +2126,8 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube001_Material055_0.geometry}
           material={materials['Material.055']} // monitor front
-          material-color={snap.items.monitorFront.color}
+          material-color={snap.items['Monitor Main'].color}
+          name={'Monitor Main'}
           position={[-138.59, 295.65, 300.41]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
           scale={[325.34, 4.05, 184.09]}
@@ -2051,7 +2135,8 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube002_Material044_0.geometry}
           material={materials['Material.044']} // monitor back bottom
-          material-color={snap.items.monitorBackBottom.color}
+          material-color={snap.items['Monitor Main'].color}
+          name={'Monitor Main'}
           position={[-146.71, 263.68, 300.41]}
           rotation={[-Math.PI / 2, -0.12, Math.PI / 2]}
           scale={[-325.34, 14.75, 152.85]}
@@ -2059,15 +2144,17 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.gallerymodel_gallerymodel_0.geometry}
           material={materials['Material.074_28']} // monitor back decal right
-          material-color={snap.items.monitorBackDecalR.color}
+          material-color={snap.items['Monitor Back Decal R'].color}
+          name={'Monitor Back Decal Right'}
           position={[-142.04, 164.81, 596.08]}
           rotation={[0.44, -1.28, 0.44]}
           scale={80.69}
         />
         <mesh
           geometry={nodes.Cube003_Material001_0.geometry}
-          material={snap.items.monitorBackPlate1.material} // monitor back plate
-          material-color={snap.items.monitorBackPlate1.color}
+          material={snap.items['Monitor Backplate 1'].material} // monitor backplate 1
+          material-color={snap.items['Monitor Backplate 1'].color}
+          name={'Monitor Backplate 1'}
           position={[-157.13, 447.65, 300.41]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
           scale={[325.34, 4.05, 31.03]}
@@ -2075,22 +2162,25 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.bg2_bg2_0.geometry}
           material={materials['Material.074_29']} // monitor back decal left
-          material-color={snap.items.monitorBackDecalL.color}
+          material-color={snap.items['Monitor Power Button'].color}
+          name={'Monitor Power Button'}
           position={[-153.71, 194.92, 83.03]}
           rotation={[1.57, -1.44, 1.57]}
           scale={113.03}
         />
         <mesh
           geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry}
-          material={materials['Material.074_30']}
+          material={materials[snap.items['Monitor Screen'].material]}
+          name={'Monitor Screen'}
           position={[-136.18, 300.13, 300.41]}
           rotation={[-Math.PI / 2, 1.5, Math.PI / 2]}
           scale={[331.62, 348.07, 331.62]}
         />
         <mesh
           geometry={nodes['gigabyte-logo_gigabyte-logo_0'].geometry}
-          material={materials['Material.074_31']} // monitor front decal
-          material-color={snap.items.monitorFrontDecal.color}
+          material={materials['Material.074_31']} // monitor back decal
+          material-color={snap.items['Monitor Front Decal'].color}
+          name={'Monitor Back GigaByte'}
           position={[-161.54, 449.45, 82.08]}
           rotation={[1.57, -1.5, 1.57]}
           scale={23.69}
@@ -2098,21 +2188,26 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes['gigabyte-logo001_gigabyte-logo_0'].geometry}
           material={materials['Material.074_31']} // monitor front decal
+          name={'Monitor Front GigaByte'}
           position={[-122.06, 122.82, 301.6]}
           rotation={[-Math.PI / 2, 1.5, Math.PI / 2]}
           scale={17.84}
         />
         <mesh
           geometry={nodes.Cube004_Material002_0.geometry}
-          material={snap.items.monitorBackPlate1.material} // monitor backplate 1
+          material={snap.items['Monitor Backplate 2'].material} // monitor backplate 2
+          material-color={snap.items['Monitor Backplate 2'].color}
+          name={'Monitor Backplate 2'}
           position={[-148.74, 180.97, 299.25]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
           scale={[167.6, 17.79, 193.5]}
         />
         <mesh
           geometry={nodes.Cube005_Material003_0.geometry}
-          material={materials['Material.003']} // monitor back plate 2
-          material-color={snap.items.monitorBackPlate2.color}
+          material={materials['Material.003']} // monitor back mount
+          material-color={snap.items['Monitor Mount'].color}
+          material-metalness={0.5}
+          name={'Monitor Mount'}
           position={[-186.53, 291.56, 297.43]}
           rotation={[-Math.PI / 2, 0, Math.PI / 2]}
           scale={[16.32, 28.81, 12.94]}
@@ -2120,7 +2215,9 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube006_Material043_0.geometry}
           material={materials['Material.043']} // montitor arm
-          material-color={snap.items.monitorArm.color}
+          material-color={snap.items['Monitor Stand'].color}
+          material-metalness={0.5}
+          name={'Monitor Stand'}
           position={[-202.96, -64.82, 300.41]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
           scale={[40.59, 16.64, 531.61]}
@@ -2128,31 +2225,38 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Cube007_Material037_0.geometry}
           material={materials['Material.037']} // monitor base back
-          material-color={snap.items.monitorBaseBack.color}
+          material-color={snap.items['Monitor Base Back'].color}
+          material-metalness={0.5}
+          name={'Monitor Base Back'}
           position={[-213.02, 35.33, 296.06]}
           rotation={[-Math.PI / 2, 0, Math.PI / 2]}
           scale={[-193.85, 54.12, 9.32]}
         />
         <mesh
           geometry={nodes.Cube008_Material036_0.geometry}
-          material={snap.items.monitorBaseFront.material} // monitor base front left
-          material-color={snap.items.monitorBaseFront.color}
+          material={materials[snap.items['Monitor Base Front'].material]} // monitor base front left
+          material-color={snap.items['Monitor Base Front'].color}
+          material-metalness={0.4}
+          material-roughness={0.2}
+          name={'Monitor Base Front'}
           position={[-80.2, 31.65, 453.15]}
           rotation={[-Math.PI / 2, 0, 1.25]}
           scale={[49.07, 108.78, 5.65]}
         />
         <mesh
           geometry={nodes.Cube009_Material039_0.geometry}
-          material={snap.items.monitorBaseFront.material} // monitor base front right
-          material-color={snap.items.monitorBaseFront.color}
+          material={materials[snap.items['Monitor Base Front'].material]} // monitor base front right
+          name={'Monitor Base Front'}
           position={[-80.2, 31.65, 163.79]}
           rotation={[-Math.PI / 2, 0, 1.86]}
           scale={[49.07, 108.78, 5.65]}
         />
         <mesh
           geometry={nodes.Cube010_Material006_0.geometry}
-          material={materials['Material.006']} // monitor base front inner
-          material-color={snap.items.monitorBaseFrontInner.color}
+          material={materials['Material.006']} // monitor base inner
+          material-color={snap.items['Monitor Base Inner'].color}
+          material-metalness={0.5}
+          name={'Monitor Base Inner'}
           position={[-181.15, 31.64, 295.8]}
           rotation={[-Math.PI / 2, 0, 3.14]}
           scale={[43.41, 96.24, 5]}
@@ -2160,15 +2264,17 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Object_8_Tastatur_Seite_0.geometry}
           material={materials.Tastatur_Seite} // keyboard bottom
-          material-color={snap.items.keyboardBottom.color}
+          material-color={snap.items['Keyboard Bottom'].color}
+          name={'Keyboard Bottom 1'}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_10_Tastatur_Unterseite_0.geometry}
-          material={materials.Tastatur_Unterseite} // keyboard main
-          material-color={snap.items.keyboardMain.color}
+          material={materials[snap.items['Keyboard Base'].material]} // keyboard main
+          material-color={snap.items['Keyboard Base'].color}
+          name={'Keyboard Base'}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
@@ -2176,41 +2282,42 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Object_12_Tastatur_Unterseite_0.geometry}
           material={materials.Tastatur_Unterseite} // keyboard main
+          name={'Keyboard Main 2'}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_14_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials[snap.items['Keyboard Base'].material]}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_16_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials[snap.items['Keyboard Base'].material]}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_18_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_20_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_22_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
@@ -2218,41 +2325,42 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Object_24_Tastatur_Seite_0.geometry}
           material={materials.Tastatur_Seite} // keyboard bottom
+          name={'Keyboard Bottom 2'}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_26_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_28_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_30_Material007_0.geometry}
-          material={materials['Material.007']}
+          material={materials[snap.items['Keyboard Base'].material]}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_32_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_34_Material004_0.geometry}
-          material={materials['Material.004']}
+          material={materials['Material.025']}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
           scale={91.41}
@@ -3590,6 +3698,9 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Object_418_Tasten_0.geometry}
           material={materials['Material.025']} // keyboard esc
+          material-color={snap.items['Keyboard Keys'].color}
+          material-metalness={0.3}
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
@@ -3597,1266 +3708,1447 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.Object_420_Tasten_0.geometry}
           material={materials['Material.025']} // keyboard shift
+          name={'Keyboard Keys'}
           position={[164.92, 31.11, 386.96]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={[67.57, 91.41, 91.41]}
         />
         <mesh
           geometry={nodes.Object_422_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_424_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_426_Tasten_0.geometry}
-          material={materials['Material.025']} // ent // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // ent // keyboard keys
+          name={'Keyboard Keys'}
           position={[130.24, 34.6, 390.58]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={[72.77, 91.41, 91.41]}
         />
         <mesh
           geometry={nodes.Object_428_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_430_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_432_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_434_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_436_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_438_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 402.93]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_440_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_442_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_444_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_446_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_448_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_450_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_452_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_454_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_456_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_458_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_460_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_462_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_464_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_466_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_468_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_470_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_472_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_474_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_476_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_478_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_480_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_482_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_484_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_486_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_488_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_490_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_492_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_494_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_496_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_498_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_500_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_502_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_504_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_506_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_508_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_510_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_512_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_514_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_516_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_518_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_520_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_522_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_524_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_526_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_528_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 385.86]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_530_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_532_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_534_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_536_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_538_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_540_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_542_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_544_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_546_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_548_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_550_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_552_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_554_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_556_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_558_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_560_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_562_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_564_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_566_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_568_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_570_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_572_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_574_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_576_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_578_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_580_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_582_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_584_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_586_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_588_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_590_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_592_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_594_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_596_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_598_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_600_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_602_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_604_Material071_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.58, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_606_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.3, 259.27]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={[157.9, 91.41, 91.41]}
         />
         <mesh
           geometry={nodes.Object_608_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_610_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_612_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_614_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_616_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_618_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_620_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_622_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_624_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_626_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_628_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_630_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_632_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_634_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_636_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_638_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_640_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_642_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_644_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_646_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_648_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_650_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_652_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_654_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_656_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_658_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_660_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_662_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_664_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_666_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_668_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_670_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_672_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_674_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_676_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_678_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_680_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_682_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_684_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_686_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_688_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_690_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_692_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_694_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_696_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_698_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_700_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_702_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_704_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_706_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_708_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_710_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_712_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_714_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_716_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_718_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_720_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_722_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_724_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_726_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_728_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_730_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_732_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_734_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_736_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_738_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_740_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_742_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_744_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_746_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_748_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_750_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_752_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_754_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_756_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_758_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_760_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_762_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_764_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_766_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_768_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_770_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_772_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_774_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_776_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_778_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}
         />
         <mesh
           geometry={nodes.Object_780_Tasten_0.geometry}
-          material={materials['Material.025']} // wires / speakers / keyboard keys / wifi / monitor top
+          material={materials['Material.025']} // keyboard keys
+          name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}
           rotation={[-Math.PI / 2, -1.48, Math.PI / 2]}
           scale={91.41}

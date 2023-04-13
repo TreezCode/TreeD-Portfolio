@@ -4,5 +4,6 @@ import PrimaryButton from './PrimaryButton/PrimaryButton'
 import GlowButton from './GlowButton/GlowButton';
 import MenuIcon from './MenuIcon/MenuIcon';
 import ContactForm from './ContactForm/ContactForm';
+import ColorPicker from './ColorPicker/ColorPicker';
 
-export { CanvasLoader, CustomScroll, PrimaryButton, GlowButton, MenuIcon, ContactForm };
+export { CanvasLoader, CustomScroll, PrimaryButton, GlowButton, MenuIcon, ContactForm, ColorPicker };

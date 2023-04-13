@@ -1,10 +1,11 @@
 // external imports
 import { motion } from 'framer-motion';
 // internal imports
-import { ComputersCanvas } from '../../components/canvas';
-import { useTyped } from '../../utils/useTyped';
+import { ComputerCanvas } from '../../components';
 import { heroContent } from '../../common/constants';
+import { useTyped } from '../../utils/useTyped';
 import { styles } from '../../styles';
+import { ColorPicker } from '../../components/global';
 
 const Hero = () => {
   const { headTextRef, subTextRef } = useTyped(heroContent);
@@ -28,17 +29,18 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={`${styles.paddingX} absolute xs:top-[300px] top-[270px] w-full xs:h-[60%] h-[40%]`}>
-          <ComputersCanvas />
+        <div className={`${styles.paddingX} absolute top-[300px] w-full xs:h-[60%] h-[55%]`}>
+          <div className='max-w-7xl h-full mx-auto '>
+            <ColorPicker />
+            <ComputerCanvas />
+          </div>
         </div>
 
-        <div className='absolute xs:bottom-6 bottom-24 w-full flex justify-center items-center hero-mouse'>
+        <div className='absolute bottom-1 left-[50%] hero-mouse z-20'>
           <a href='#about'>
             <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
               <motion.div
-                animate={{
-                  y: [0, 24, 0],
-                }}
+                animate={{y: [0, 24, 0]}}
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,

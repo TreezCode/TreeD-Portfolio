@@ -1,16 +1,7 @@
+// external imports
 import { Decal, Float, useTexture } from '@react-three/drei';
-import * as THREE from 'three';
-
-// If you create a material or color in global space - outside of React Three Fiber's Canvas context
-THREE.ColorManagement.enabled = true;
-// Create geometries and materials in a global space only ONCE
-const geometry = new THREE.IcosahedronGeometry(1, 1);
-const material = new THREE.MeshStandardMaterial({
-  color: '#95a1f1',
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: true,
-});
+// internal imports
+import { ballGeometry, ballMaterial } from '../../utils/threeMaterialEdit';
 
 export const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
@@ -20,8 +11,8 @@ export const Ball = (props) => {
         scale={2}
         dispose={null}
         position={[0, 0.75, 0]}
-        geometry={geometry}
-        material={material}
+        geometry={ballGeometry}
+        material={ballMaterial}
       >
         <Decal
           position={[0, 0, 1]}

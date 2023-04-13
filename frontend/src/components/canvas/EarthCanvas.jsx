@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Preload } from '@react-three/drei';
 // internal imports
 import { CanvasLoader } from '../global';
-import { Earth } from './models/Earth';
+import { Earth } from '../models/Earth';
 
 const EarthCanvas = ({ frameloop, autoRotate }) => (
   <Canvas

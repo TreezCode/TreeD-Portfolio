@@ -1,22 +1,18 @@
-import {
-  Navbar,
-  Footer,
-  Layout,
-} from './layout';
+import { Navbar, Footer, Layout } from './layout';
 
 import {
   BallCanvas,
   StarsCanvas,
   EarthCanvas,
-  ComputersCanvas,
+  ComputerCanvas,
 } from './canvas';
 
-import { 
+import {
   ContactForm,
   MenuIcon,
-  GlowButton, 
+  GlowButton,
   CanvasLoader,
-  CustomScroll, 
+  CustomScroll,
 } from './global';
 
 export {
@@ -31,5 +27,5 @@ export {
   StarsCanvas,
   CanvasLoader,
   CustomScroll,
-  ComputersCanvas,
+  ComputerCanvas,
 };
