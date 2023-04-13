@@ -2,15 +2,15 @@
 import { proxy } from 'valtio';
 // internal imports
 import {
-  deskMaterial,
   caseMaterial,
-  wifiMaterial_1,
-  wifiMaterial_2,
+  caseAccentMaterial,
+  deskMaterial,
   monitorBackplate_1,
   monitorBackplate_2,
   mouseBtnsMaterial,
   powersupplyMaterial,
-  caseAccentMaterial,
+  wifiMaterial_2,
+  wifiMaterial_1,
 } from '../utils/threeMaterialEdit';
 import { styles } from '../styles';
 
