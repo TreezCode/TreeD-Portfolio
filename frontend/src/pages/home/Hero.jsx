@@ -29,14 +29,14 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={`${styles.paddingX} absolute top-[300px] w-full xs:h-[60%] h-[45%]`}>
+        <div className={`${styles.paddingX} absolute xs:top[300px] top-[280px] w-full xs:h-[60%] h-[45%]`}>
           <div className='max-w-7xl h-full mx-auto '>
             <ColorPicker />
             <ComputerCanvas />
           </div>
         </div>
 
-        <div className='absolute bottom-1 left-[50%] hero-mouse z-20'>
+        <div className='absolute xs:bottom-10 bottom-1 left-[50%] hero-mouse z-20'>
           <a href='#about'>
             <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
               <motion.div
