@@ -29,7 +29,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={`${styles.paddingX} absolute xs:top[300px] top-[280px] w-full xs:h-[60%] h-[50%]`}>
+        <div className={`${styles.paddingX} absolute xs:top[300px] top-[250px] w-full xs:h-[60%] h-[50%]`}>
           <div className='max-w-7xl h-full mx-auto '>
             <ColorPicker />
             <ComputerCanvas />
