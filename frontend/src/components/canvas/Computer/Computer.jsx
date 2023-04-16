@@ -29,7 +29,7 @@ export const Computer = ({
 
   return (
     <group
-      position={isMobile ? [0, -0.75, -0.9] : [0, -0.5, -1.2]}
+      position={isMobile ? [0, -0.75, -0.95] : [0, -0.5, -1.2]}
       scale={isMobile ? 0.6 : 0.8}
       rotation={[0, 0.2, -0.04]}
       dispose={null}
