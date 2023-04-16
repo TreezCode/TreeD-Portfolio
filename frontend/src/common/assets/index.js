@@ -25,14 +25,14 @@ import git from './tech/git.png';
 import vscode from './tech/vscode.png';
 
 import github from './company/github.png';
-import ncc from './company/ncc.png';
+import ncc from './company/ncc.webp';
 import du from './company/du.png';
 import lyft from './company/lyft.png';
 import strainwise from './company/strainwise.jpg';
 
-import treecommerce from './projects/treecommerce.png'
-import vanilla from './projects/vanilla.png'
-import clickgame from './projects/clickgame.png'
+import treecommerce from './projects/treecommerce.webp'
+import vanilla from './projects/vanilla.webp'
+import clickgame from './projects/clickgame.webp'
 
 import resume from './documents/Resume2023.pdf'
 

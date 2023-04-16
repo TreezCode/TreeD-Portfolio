@@ -38,7 +38,7 @@ const ComputerCanvas = () => {
   // Return a Canvas component with orbit controls and the Computers component inside a Suspense component for loading
   return (
     <Canvas
-      frameloop='always'
+      frameloop='demand'
       gl={{ preserveDrawingBuffer: true }}
       camera={{ fov: 40, position: [15, 2, 5], rotation: [0, 0, 0] }}
       shadows
