@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { Canvas} from '@react-three/fiber';
 import { Preload } from '@react-three/drei';
 // internal imports
-import { Stars } from '../models/Stars';
+import { Stars } from './Stars';
 
 const StarsCanvas = () => {
   return (

@@ -8,7 +8,7 @@ import {
   Preload,
 } from '@react-three/drei';
 // internal imports
-import { Ball } from '../models/Ball';
+import { Ball } from './Ball';
 
 const BallCanvas = ({
   frameloop,

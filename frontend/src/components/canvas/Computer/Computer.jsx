@@ -1,20 +1,36 @@
 // external imports
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useSnapshot } from 'valtio';
 // internal imports
-import { state } from '../../store/store';
+import { state } from '../../../store/store';
 
-export const Computer = (props) => {
+export const Computer = ({
+  isMobile,
+  colorMap,
+  displacementMap,
+  metalnessMap,
+  normalMap,
+  normalDxMap,
+  roughnessMap,
+}) => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF('../desktop_pc/scene-transformed.glb');
   const [hovered, setHovered] = useState(null);
-  let toggle = false;
+
+  useLayoutEffect(() => {
+    Object.assign(materials[snap.items['Desk'].material], {
+      map: colorMap,
+      metalnessMap: metalnessMap,
+      normalMap: normalMap || normalDxMap,
+      roughnessMap: roughnessMap,
+    });
+  }, [nodes, materials, colorMap, metalnessMap, normalMap, roughnessMap]);
+
   return (
     <group
-      {...props}
-      position={props.isMobile ? [-1, -3, -1.2] : [-1, -2, -1.2]}
-      scale={props.isMobile ? 0.75 : 0.9}
+      position={isMobile ? [0, -0.75, -0.9] : [0, -0.5, -1.2]}
+      scale={isMobile ? 0.6 : 0.8}
       rotation={[0, 0.2, -0.04]}
       dispose={null}
       onPointerOver={(e) => {
@@ -25,7 +41,7 @@ export const Computer = (props) => {
       }}
       onPointerDown={(e) => {
         e.stopPropagation();
-        console.log(e.object.material);
+        console.log(e.object);
         state.current = {
           name: e.object.name,
           material: e.object.material.name,
@@ -34,6 +50,7 @@ export const Computer = (props) => {
       onPointerMissed={(e) => {
         state.current = null;
       }}
+      // {...props}
     >
       <group scale={0.01}>
         <mesh
@@ -1011,10 +1028,10 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube_Material_0.geometry}
-          material={
-            !toggle ? materials['Material'] : snap.items['Desk'].material
-          } // Desk
+          material={materials[snap.items['Desk'].material]} // Desk
           material-color={snap.items['Desk'].color}
+          material-metalness={snap.items['Desk'].metalness}
+          material-roughness={snap.items['Desk'].roughness}
           name={'Desk'}
           position={[-61.02, -0.56, 156.09]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
@@ -1022,9 +1039,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube011_Material010_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case main
+          material={materials[snap.items['Case'].material]} // case main
           material-color={snap.items['Case'].color}
           name={'Case'}
           position={[-85.94, 199.7, -353.72]}
@@ -1033,9 +1048,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube012_Material011_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case border
+          material={materials[snap.items['Case'].material]} // case border
           material-color={snap.items['Case'].color}
           name={'Case'}
           position={[-85.94, 199.7, -353.72]}
@@ -1044,9 +1057,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube013_Material015_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case front base
+          material={materials[snap.items['Case'].material]} // case front base
           material-color={snap.items['Case'].color}
           name={'Case'}
           position={[82.77, 33.23, -353.61]}
@@ -1055,9 +1066,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube014_Material014_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case back base
+          material={materials[snap.items['Case'].material]} // case back base
           material-color={snap.items['Case'].color}
           name={'Case'}
           position={[-253.45, 33.23, -353.61]}
@@ -1066,9 +1075,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cylinder_Material009_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case screws
+          material={materials[snap.items['Case'].material]} // case screws
           name={'Case Screws'}
           material-color={snap.items['Case'].color}
           position={[74.21, 51.22, -262.89]}
@@ -1184,12 +1191,8 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube020_Material020_0.geometry}
-          material={
-            !toggle
-              ? materials['Material.074_2']
-              : snap.items['Powersupply'].material
-          } // power supply
-          material-color={!toggle ? 'indigo' : snap.items['Powersupply'].color}
+          material={materials[snap.items['Powersupply'].material]} // power supply
+          material-color={snap.items['Powersupply'].color}
           name={'Powersupply'}
           position={[-96.11, 78.83, -363.4]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1197,9 +1200,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube021_Material018_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case top fan border
+          material={materials[snap.items['Case'].material]} // case top fan border
           material-color={snap.items['Case'].color}
           name={'Case'}
           position={[-108.06, 346.35, -354.98]}
@@ -1257,9 +1258,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube023_Material021_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case front fan border
+          material={materials[snap.items['Case'].material]} // case front fan border
           material-color={snap.items['Case'].color}
           name={'Case Front Fan Border'}
           position={[93.78, 228.59, -355.28]}
@@ -1268,9 +1267,7 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube024_Material022_0.geometry}
-          material={
-            !toggle ? materials['Material.074'] : snap.items['Case'].material
-          } // case back fan border
+          material={materials[snap.items['Case'].material]} // case back fan border
           material-color={snap.items['Case'].color}
           name={'Case Back Fan Border'}
           position={[-265.1, 291.7, -335.09]}
@@ -1456,7 +1453,6 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube043_Material012_0.geometry}
-          // material={!toggle ? materials['Material.074'] : snap.items['Speakers'].material}
           material={materials[snap.items['Speakers'].material]} // speaker right
           material-color={snap.items['Speakers'].color}
           material-metalness={0.4}
@@ -1507,7 +1503,6 @@ export const Computer = (props) => {
         />
         <mesh
           geometry={nodes.Cube044_Material012_0.geometry}
-          // material={!toggle ? materials['Material.074'] : snap.items['Speakers'].material}
           material={materials[snap.items['Speakers'].material]} // speaker left
           material-color={snap.items['Speakers'].color}
           name={'Speakers'}
@@ -1947,7 +1942,7 @@ export const Computer = (props) => {
         <mesh
           geometry={nodes.BezierCurve003_Material091_0.geometry}
           material={materials[snap.items['Monitor Wire'].material]} // monitor wire
-          material-color={snap.items['Monitor Wire'].color} 
+          material-color={snap.items['Monitor Wire'].color}
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Monitor Wire'}

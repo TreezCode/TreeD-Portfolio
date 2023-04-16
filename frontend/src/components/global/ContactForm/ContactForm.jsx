@@ -178,7 +178,7 @@ const ContactForm = () => {
               text={<>Reset<span style={{color: styles.accent}}><HiOutlineRefresh /></span></>}
               color={styles.accent}
               bgColor='transparent'
-              onClick={resetForm}
+              handleClick={resetForm}
             />
           </div>
         </div>

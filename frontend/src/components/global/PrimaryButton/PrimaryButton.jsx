@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
 import './PrimaryButton.css';
 
-const PrimaryButton = ({ type, text, href, color, bgColor, onClick }) => {
+const PrimaryButton = ({ type, text, href, color, bgColor, handleClick, className }) => {
   const btnRef = useRef();
   const [animation, setAnimation] = useState(false);
   const isMobile = useMediaQuery();
@@ -44,12 +44,12 @@ const PrimaryButton = ({ type, text, href, color, bgColor, onClick }) => {
     <>
       <button
         ref={btnRef}
-        className='primary-btn'
+        className={`primary-btn ${className ? className : ''}`}
         type={type || 'button'}
         href={`#${href}`}
         style={{ '--clr': color, '--bgClr': bgColor }}
         onPointerDown={handlePointerEvent}
-        onClick={onClick}
+        onClick={handleClick}
       >
         <span className='flex items-center justify-center'>{text}</span>
       </button>

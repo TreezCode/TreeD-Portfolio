@@ -5,7 +5,7 @@ import { ComputerCanvas } from '../../components';
 import { heroContent } from '../../common/constants';
 import { useTyped } from '../../utils/useTyped';
 import { styles } from '../../styles';
-import { ColorPicker } from '../../components/global';
+import { ComputerMenu, PrimaryButton } from '../../components/global';
 
 const Hero = () => {
   const { headTextRef, subTextRef } = useTyped(heroContent);
@@ -19,7 +19,7 @@ const Hero = () => {
             <div className='w-5 h-5 rounded-full bg-[#915eff]' />
             <div className='w-1 sm:h-80 h-60 violet-gradient' />
           </div>
-          <div className='z-40 w-full'>
+          <div className='z-40 w-full flex flex-col gap-2'>
             <div className='typed-container'>
               <span className={`${styles.heroHeadText} text-white`} ref={headTextRef} />
             </div>
@@ -29,14 +29,22 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={`${styles.paddingX} absolute top-[300px] w-full xs:h-[60%] h-[45%]`}>
-          <div className='max-w-7xl h-full mx-auto '>
-            <ColorPicker />
+        <div className={`${styles.paddingX} absolute xs:top-[280px] top-[240px] w-full xs:h-[70%] h-[65%]`}>
+          <div className='max-w-7xl h-full mx-auto'>
             <ComputerCanvas />
           </div>
         </div>
 
-        <div className='absolute xs:bottom-1 bottom-16 left-[50%] hero-mouse z-20'>
+        <div className={`${styles.paddingX} absolute bottom-24 w-full flex justify-center`}>
+          <PrimaryButton 
+            type={'button'}
+            text={'Customize'} 
+            color={styles.accent}
+            className={'lg:w-[calc((40%-30px)/2)] sm:w-[calc((100%-30px)/2)] w-full'}
+          />
+        </div>
+
+        <div className='absolute w-full flex justify-center bottom-1 hero-mouse z-20'>
           <a href='#about'>
             <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
               <motion.div

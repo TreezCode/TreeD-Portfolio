@@ -1,77 +1,95 @@
-import * as THREE from 'three';
+// external imports
+import {
+  MeshStandardMaterial,
+  IcosahedronGeometry,
+  PointsMaterial,
+  ColorManagement,
+} from 'three';
 // When creating a material or color in global space - outside of React Three Fiber's Canvas context
-THREE.ColorManagement.enabled = true;
-
-// Computer materials/geometries
-//==================================================================
-export const caseAccentMaterial = new THREE.MeshStandardMaterial({
+ColorManagement.enabled = true;
+  
+// Computer model materials/geometries
+//````````````````````````````````````````````````````````````````````````````````````````````````
+export const caseAccentMaterial = new MeshStandardMaterial({
   polygonOffset: false,
   polygonOffsetFactor: '-5',
   flatShading: false,
-  metalness: 0.1
+  metalness: 0.1,
 });
-export const monitorBackplate_1 = new THREE.MeshStandardMaterial({
+export const monitorBackplate_1 = new MeshStandardMaterial({
   polygonOffset: false,
   polygonOffsetFactor: '-5',
   flatShading: false,
-  metalness: 0.1
+  metalness: 0.1,
 });
-export const monitorBackplate_2 = new THREE.MeshStandardMaterial({
+export const monitorBackplate_2 = new MeshStandardMaterial({
   polygonOffset: false,
   polygonOffsetFactor: '-5',
   flatShading: false,
-  metalness: 0.1
+  metalness: 0.1,
 });
-export const wifiMaterial_1 = new THREE.MeshStandardMaterial({
+export const wifiMaterial_1 = new MeshStandardMaterial({
   polygonOffset: false,
   polygonOffsetFactor: '-5',
   flatShading: false,
-  metalness: 0.1
+  metalness: 0.1,
 });
-export const wifiMaterial_2 = new THREE.MeshStandardMaterial({
+export const wifiMaterial_2 = new MeshStandardMaterial({
   polygonOffset: false,
   polygonOffsetFactor: '-5',
   flatShading: false,
-  metalness: 0.1
+  metalness: 0.1,
 });
-export const deskMaterial = new THREE.MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  roughness: 0.2,
-  metalness: 0.4,
-});
-export const caseMaterial = new THREE.MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  roughness: 0.2,
-  metalness: 0.3,
-});
-export const mouseBtnsMaterial = new THREE.MeshStandardMaterial({
+export const mouseBtnsMaterial = new MeshStandardMaterial({
   roughness: 0.3,
 });
-export const powersupplyMaterial = new THREE.MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  roughness: 0.3,
-  metalness: 0.4,
-});
+// Computer model textures
+//````````````````````````````````````````````````````````````````````````````````````````````````
+export const textures = {
+  marble: [
+    '../../../assets/textures/whitemarble/Marble012_1K_Color.jpg',
+    '../../../assets/textures/whitemarble/Marble012_1K_Displacement.jpg',
+    '../../../assets/textures/whitemarble/Marble012_1K_NormalGL.jpg',
+    '../../../assets/textures/whitemarble/Marble012_1K_NormalDX.jpg',
+    '../../../assets/textures/whitemarble/Marble012_1K_Roughness.jpg',
+  ],
+  darkwood: [
+    '../../../assets/textures/darkwood/Wood067_1K_Color.jpg',
+    '../../../assets/textures/darkwood/Wood067_1K_Displacement.jpg',
+    '../../../assets/textures/darkwood/Wood067_1K_NormalGL.jpg',
+    '../../../assets/textures/darkwood/Wood067_1K_NormalDX.jpg',
+    '../../../assets/textures/darkwood/Wood067_1K_Roughness.jpg',
+  ],
+  lightwood: [
+    '../../../assets/textures/lightwood/Wood048_1K_Color.jpg',
+    '../../../assets/textures/lightwood/Wood048_1K_Displacement.jpg',
+    '../../../assets/textures/lightwood/Wood048_1K_NormalGL.jpg',
+    '../../../assets/textures/lightwood/Wood048_1K_NormalDX.jpg',
+    '../../../assets/textures/lightwood/Wood048_1K_Roughness.jpg',
+  ],
+  shinymetal: [
+    '../../../assets/textures/shinymetal/Metal034_1K_Color.jpg',
+    '../../../assets/textures/shinymetal/Metal034_1K_Displacement.jpg',
+    '../../../assets/textures/shinymetal/Metal034_1K_Metalness.jpg',
+    '../../../assets/textures/shinymetal/Metal034_1K_NormalGL.jpg',
+    '../../../assets/textures/shinymetal/Metal034_1K_NormalDX.jpg',
+    '../../../assets/textures/shinymetal/Metal034_1K_Roughness.jpg',
+  ],
+}
 
-// Ball materials/geometries
-//==================================================================
-export const ballGeometry = new THREE.IcosahedronGeometry(1, 1);
-export const ballMaterial = new THREE.MeshStandardMaterial({
+// Ball model materials/geometries
+//````````````````````````````````````````````````````````````````````````````````````````````````
+export const ballGeometry = new IcosahedronGeometry(1, 1);
+export const ballMaterial = new MeshStandardMaterial({
   color: '#95a1f1',
   polygonOffset: false,
   polygonOffsetFactor: '-5',
   flatShading: true,
 });
 
-// Stars materials/geometries
-//==================================================================
-export const starMaterial = new THREE.PointsMaterial({
+// Stars canvas materials/geometries
+//````````````````````````````````````````````````````````````````````````````````````````````````
+export const starMaterial = new PointsMaterial({
   transparent: true,
   color: '#aaa6c3',
   size: 0.002,

@@ -6,12 +6,10 @@ import { styles } from '../../../styles';
 
 const ColorPicker = () => {
   const snap = useSnapshot(state);
-  console.log('State: ',state.items[snap.current && snap.current.name]);
-  // console.log(snap.current && snap.current);
   const colors = ["#915eff", "#00ffff", "#2196f3", "#F652A0", "#ff0000","#ffffff", "#333333", "#030303"]
   return (
-    <div className='picker relative flex flex-col items-end -mb-20 z-10'>
-      <h1 className={`${styles.smallHeadText} text-secondary select-none pb-1`}>&nbsp;{snap.current && snap.current.name}</h1>
+    <div className='color-picker flex flex-col justify-center items-center text-center'>
+      <h1 className={`${styles.heroSubText} text-secondary select-none pb-1`}>&nbsp;{snap.current && snap.current.name}</h1>
       <CirclePicker
         width=''
         color={snap.items[snap.current && snap.current.material]}
@@ -21,6 +19,7 @@ const ColorPicker = () => {
         colors={colors}
         circleSize={20}
         circleSpacing={8}
+        className='justify-center items-center text-center'
       />
     </div>
   )

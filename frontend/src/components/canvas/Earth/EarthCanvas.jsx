@@ -3,8 +3,8 @@ import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Preload } from '@react-three/drei';
 // internal imports
-import { CanvasLoader } from '../global';
-import { Earth } from '../models/Earth';
+import { CanvasLoader } from '../../global';
+import { Earth } from './Earth';
 
 const EarthCanvas = ({ frameloop, autoRotate }) => (
   <Canvas
