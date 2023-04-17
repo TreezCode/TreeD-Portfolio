@@ -74,7 +74,6 @@ const ComputerCanvas = () => {
           roughnessMap={roughnessMap}
         />
       </Suspense>
-      <Preload all />
     </Canvas>
   );
 };

@@ -1,6 +1,6 @@
 const styles = {
-  primary: '#050816',
-  primaryFade: '#05081540',
+  primary: '#050716',
+  primaryFade: '#05071540',
   secondary: '#aaa6c3',
   tertiary: '#151030',
   accent: '#915eff',

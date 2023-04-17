@@ -13,6 +13,7 @@ import { styles } from '../styles';
 
 export const state = proxy({
   current: null,
+  customizer: false,
   items: {
     // standard materials
     ['Case Buttons']: { color: '', material: ['Material.088'] },

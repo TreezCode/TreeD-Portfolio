@@ -4,10 +4,9 @@ import { FaPaperPlane } from 'react-icons/fa';
 import { HiOutlineRefresh } from 'react-icons/hi';
 // internal imports
 import { useValidateField,useValidationRules } from '../../../utils/formValidation';
+import { GlowButton, PrimaryButton } from '../../../components'
 import { sendEmail } from '../../../utils/email';
 import { styles } from '../../../styles';
-import GlowButton from '../GlowButton/GlowButton';
-import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import './ContactForm.css';
 
 const ContactForm = () => {
@@ -169,6 +168,7 @@ const ContactForm = () => {
               type='submit' 
               text={loading ? ('Sending...') : (<>Send<span style={{color: styles.accent}}><FaPaperPlane /></span></>)} 
               color={styles.accent} 
+              className={'w-full'}
               bgColor='transparent' 
             />
           </div>
@@ -177,6 +177,7 @@ const ContactForm = () => {
               type='button' 
               text={<>Reset<span style={{color: styles.accent}}><HiOutlineRefresh /></span></>}
               color={styles.accent}
+              className={'w-full'}
               bgColor='transparent'
               handleClick={resetForm}
             />

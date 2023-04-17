@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 // internal imports
 import { navLinks, navLinksSecondary, socials } from '../../../common/constants';
-import { logo } from '../../../common/assets';
-import { styles } from '../../../styles';
-import { MenuIcon } from '../../global';
 import { useActiveSection } from '../../../utils/useActiveSection';
+import { logo } from '../../../common/assets';
+import { MenuIcon } from '../../../components';
+import { styles } from '../../../styles';
 import './Navbar.css';
 
 const Navbar = () => {

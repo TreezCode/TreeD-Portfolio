@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
 import './GlowButton.css';
 
-const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
+const GlowButton = ({ type, text, href, color, bgColor, onClick, className }) => {
   const btnRef = useRef();
   const iRef = useRef();
   const [animation, setAnimation] = useState(false);
@@ -48,7 +48,7 @@ const GlowButton = ({ type, text, href, color, bgColor, onClick }) => {
     <>
       <button
         ref={btnRef}
-        className='glow-btn'
+        className={`glow-btn ${className ? className : ''}`}
         type={type || 'button'}
         href={`#${href}`}
         style={{'--clr': color, '--bgClr': bgColor}}

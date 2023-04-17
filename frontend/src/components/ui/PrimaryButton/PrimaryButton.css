@@ -13,7 +13,6 @@
   transition: 0.5s;
   border-radius: 10px;
   box-shadow: 0 0 10px var(--clr);
-  width: 100%;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -37,10 +36,11 @@
     letter-spacing: 0.25rem;
     color: var(--clr);
     box-shadow: 0 0 30px var(--clr);
+    transform: scaleX(1.02);
   }
   .desktop-primary-btn:active {
     letter-spacing: 0.1rem;
-    transform: scale(0.95);
+    transform: scaleX(0.97);
     box-shadow: 0 0 15px var(--clr);
   }
 }
@@ -59,7 +59,7 @@
 @keyframes activeBtn {
   50% {
     letter-spacing: 0.1rem;
-    transform: scale(0.95);
+    transform: scaleX(0.97);
     box-shadow: 0 0 5px var(--clr);
   }
 }

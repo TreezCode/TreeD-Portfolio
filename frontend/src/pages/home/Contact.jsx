@@ -5,8 +5,7 @@ import { styles } from '../../styles';
 import { SectionWrapper } from '../../hoc';
 import { slideIn, textVariant } from '../../utils/motion';
 import { useActiveSection } from '../../utils/useActiveSection';
-import { ContactForm } from '../../components/global';
-import { EarthCanvas } from '../../components/canvas';
+import { ContactForm, EarthCanvas } from '../../components';
 
 const Contact = () => {
   const activeSection = useActiveSection();
@@ -29,8 +28,8 @@ const Contact = () => {
         <div>
           <motion.div
             variants={slideIn('left', 'tween', 0.2, 1)}
-            className='flex-[0.75] bg-primaryFade md:p-16 sm:p-10 xs:p-8 p-6 mt-2 rounded-2xl border border-accentFade100 border-l-accent'
-            style={{ backdropFilter: 'blur(5px)' }}
+            className='flex-[0.75] bg-primaryFade md:p-16 sm:p-10 xs:p-8 p-6 mt-2 rounded-2xl border border-accentFade100 border-l-accent backdrop-blur-sm'
+            // style={{ backdropFilter: 'blur(5px)' }}
           >
             <p className={styles.sectionHeadText}>Let's chat<span style={{color:'#915eff'}}>.</span></p>
             <p className={styles.sectionSubText}>Send a message</p>

@@ -1,3 +1,4 @@
+// external imports
 import { useSnapshot } from 'valtio';
 import { CirclePicker } from 'react-color';
 // internal imports
