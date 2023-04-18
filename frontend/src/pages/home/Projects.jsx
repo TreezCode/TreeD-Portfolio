@@ -30,6 +30,7 @@ const ProjectCard = ({
         tiltMaxAngleY={20}
         perspective={800}
         transitionSpeed={1500}
+        tiltReverse={true}
       >
         <div className='relative w-full h-[230px] inner-element'>
           <img

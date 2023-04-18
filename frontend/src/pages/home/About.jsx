@@ -15,6 +15,7 @@ const ServiceCard = ({ index, title, icon }) => {
       tiltMaxAngleY={30}
       perspective={800}
       transitionSpeed={1500}
+      gyroscope={true}
     >
       <motion.div
         variants={fadeIn('right', 'spring', 0.5 * index, 0.75)}
