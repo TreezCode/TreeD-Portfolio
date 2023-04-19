@@ -21,7 +21,7 @@ const HeroContent = () => {
           <div className='typed-container'>
             <span className={`${styles.heroHeadText} text-white`} ref={headTextRef}/>
           </div>
-          <div className='typed-container backdrop-blur-sm bg-primaryFade rounded-lg px-1'>
+          <div className='typed-container'>
             <span className={`${styles.heroSubText} mt-2`} ref={subTextRef} />
           </div>
         </div>

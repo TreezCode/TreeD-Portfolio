@@ -25,5 +25,3 @@ export const Earth = (props) => {
     </group>
   );
 };
-
-useGLTF.preload('./planet/scene-transformed.glb');

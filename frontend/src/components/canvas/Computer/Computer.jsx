@@ -28,16 +28,10 @@ export const Computer = ({
 
   return (
     <group
-      position={isMobile ? [0, -1.25, -0.61] : [0, -1.75, -0.96]}
       scale={isMobile ? 0.4 : 0.6}
-      rotation={[0, 0.2, -0.04]}
       dispose={null}
-      onPointerOver={(e) => {
-        e.stopPropagation(), setHovered(e.object.material.name);
-      }}
-      onPointerOut={(e) => {
-        e.intersections.length === 0 && setHovered(null);
-      }}
+      onPointerOver={(e) => {e.stopPropagation(), setHovered(e.object.material.name);}}
+      onPointerOut={(e) => {e.intersections.length === 0 && setHovered(null);}}
       onPointerDown={(e) => {
         e.stopPropagation();
         console.log(e.object);
@@ -46,9 +40,7 @@ export const Computer = ({
           material: e.object.material.name,
         };
       }}
-      onPointerMissed={(e) => {
-        state.current = null;
-      }}
+      onPointerMissed={(e) => {state.current = null;}}
       // {...props}
     >
       <group scale={0.01}>
@@ -5214,5 +5206,3 @@ export const Computer = ({
     </group>
   );
 };
-
-useGLTF.preload('./desktop_pc/scene-transformed.glb');

@@ -12,15 +12,13 @@ const Hero = () => {
     <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
       <section className='relative w-full h-screen mx-auto' data-section='hero'>
         <AnimatePresence mode={'wait'}>
-          <>
           {!snap.customizer ? <HeroContent key={'heroContent'} /> : <Customizer key={'customizer'} />}
-          <motion.div {...fadeAnimation} className={`absolute top-[0px] w-full h-[100%]`}>
-            <div className='max-w-7xl h-full mx-auto'>
-              <ComputerCanvas />
-            </div>
-          </motion.div>
-          </>
         </AnimatePresence>
+        <motion.div {...fadeAnimation} className={`absolute top-[0px] w-full h-[100%]`}>
+          <div className='max-w-full h-full mx-auto'>
+            <ComputerCanvas />
+          </div>
+        </motion.div>
       </section>
     </div>
   );

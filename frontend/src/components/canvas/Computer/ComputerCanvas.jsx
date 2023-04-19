@@ -1,34 +1,28 @@
 // external imports
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
+import { useSnapshot } from 'valtio';
 import { Canvas, useLoader } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
+import { OrbitControls, Environment, Center } from '@react-three/drei';
 import { TextureLoader } from 'three';
 // internal imports
 import { Computer } from './Computer';
 import { CanvasLoader } from '../../global';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
 import { textures } from '../../../utils/threeMaterialEdit';
-import { styles } from '../../../styles';
-import { useSnapshot } from 'valtio';
 import { state } from '../../../store/store';
+import { styles } from '../../../styles';
 
 const ComputerCanvas = () => {
   const isMobile = useMediaQuery();
   const snap = useSnapshot(state);
-  let currentTexture;
-  // !snap.current 
-  //   ? currentTexture = textures.whitemarble 
-  //   : !state.items[snap.current.name].currentTexture 
+  // let currentTexture;
+  // !snap.current
+  //   ? currentTexture = textures.whitemarble
+  //   : !state.items[snap.current.name].currentTexture
   //     ? currentTexture = textures.whitemarble
   //     : currentTexture = state.items[snap.current.name].currentTexture;
 
-  const [
-    colorMap,
-    metalnessMap,
-    normalGlMap,
-    normalDxMap,
-    roughnessMap,
-  ] = useLoader(TextureLoader, textures.whitemarble);
+  const [colorMap, metalnessMap, normalGlMap, normalDxMap, roughnessMap] = useLoader(TextureLoader, textures.whitemarble);
 
   return (
     <Canvas
@@ -58,14 +52,16 @@ const ComputerCanvas = () => {
           // maxPolarAngle={Math.PI / 2}
           // minPolarAngle={Math.PI / 2}
         />
-        <Computer
-          isMobile={isMobile}
-          colorMap={colorMap}
-          metalnessMap={metalnessMap}
-          normalMap={normalGlMap}
-          normalDxMap={normalDxMap}
-          roughnessMap={roughnessMap}
-        />
+        <Center position={isMobile ? [0, -0.4, 0] : [0, -0.25, 0]}>
+          <Computer
+            isMobile={isMobile}
+            colorMap={colorMap}
+            metalnessMap={metalnessMap}
+            normalMap={normalGlMap}
+            normalDxMap={normalDxMap}
+            roughnessMap={roughnessMap}
+          />
+        </Center>
       </Suspense>
     </Canvas>
   );
