@@ -46,7 +46,7 @@ export const mouseBtnsMaterial = new MeshStandardMaterial({
 // Computer model textures
 //````````````````````````````````````````````````````````````````````````````````````````````````
 export const textures = {
-  marble: [
+  whitemarble: [
     '../../../assets/textures/whitemarble/Marble012_1K_Color.jpg',
     '../../../assets/textures/whitemarble/Marble012_1K_Displacement.jpg',
     '../../../assets/textures/whitemarble/Marble012_1K_NormalGL.jpg',

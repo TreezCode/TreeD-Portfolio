@@ -1,9 +1,10 @@
 // external imports
 import { useSnapshot } from 'valtio';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 // internal imports
-import { Customizer, HeroContent } from '../../components';
+import { ComputerCanvas, Customizer, HeroContent } from '../../components';
 import { state } from '../../store/store';
+import { fadeAnimation } from '../../utils/motion';
 
 const Hero = () => {
   const snap = useSnapshot(state);
@@ -11,7 +12,14 @@ const Hero = () => {
     <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
       <section className='relative w-full h-screen mx-auto' data-section='hero'>
         <AnimatePresence mode={'wait'}>
+          <>
           {!snap.customizer ? <HeroContent key={'heroContent'} /> : <Customizer key={'customizer'} />}
+          <motion.div {...fadeAnimation} className={`absolute top-[0px] w-full h-[100%]`}>
+            <div className='max-w-7xl h-full mx-auto'>
+              <ComputerCanvas />
+            </div>
+          </motion.div>
+          </>
         </AnimatePresence>
       </section>
     </div>

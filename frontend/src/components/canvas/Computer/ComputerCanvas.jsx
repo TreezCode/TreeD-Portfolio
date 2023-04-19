@@ -1,7 +1,7 @@
 // external imports
 import { Suspense, useState } from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
-import { OrbitControls, Environment, Preload } from '@react-three/drei';
+import { OrbitControls, Environment } from '@react-three/drei';
 import { TextureLoader } from 'three';
 // internal imports
 import { Computer } from './Computer';
@@ -9,33 +9,27 @@ import { CanvasLoader } from '../../global';
 import { useMediaQuery } from '../../../utils/useMediaQuery';
 import { textures } from '../../../utils/threeMaterialEdit';
 import { styles } from '../../../styles';
+import { useSnapshot } from 'valtio';
+import { state } from '../../../store/store';
 
-// Define the ComputerCanvas component, which displays the 3D model in a canvas with orbit controls
 const ComputerCanvas = () => {
   const isMobile = useMediaQuery();
-  const [currentTexture, setCurrentTexture] = useState(textures.marble);
+  const snap = useSnapshot(state);
+  let currentTexture;
+  // !snap.current 
+  //   ? currentTexture = textures.whitemarble 
+  //   : !state.items[snap.current.name].currentTexture 
+  //     ? currentTexture = textures.whitemarble
+  //     : currentTexture = state.items[snap.current.name].currentTexture;
+
   const [
     colorMap,
-    displacementMap,
     metalnessMap,
     normalGlMap,
     normalDxMap,
     roughnessMap,
-  ] = useLoader(TextureLoader, currentTexture);
+  ] = useLoader(TextureLoader, textures.whitemarble);
 
-  // const handleTextureChange = (texture) => {
-  //   if (texture === 'darkwood') {
-  //     setCurrentTexture(textures.darkwood);
-  //   } else if (texture === 'lightwood') {
-  //     setCurrentTexture(textures.lightwood);
-  //   } else if (texture === 'shinymetal') {
-  //     setCurrentTexture(textures.shinymetal);
-  //   } else if (texture === 'marble') {
-  //     setCurrentTexture(textures.marble);
-  //   }
-  // };
-
-  // Return a Canvas component with orbit controls and the Computers component inside a Suspense component for loading
   return (
     <Canvas
       frameloop='demand'
@@ -67,7 +61,6 @@ const ComputerCanvas = () => {
         <Computer
           isMobile={isMobile}
           colorMap={colorMap}
-          displacementMap={displacementMap}
           metalnessMap={metalnessMap}
           normalMap={normalGlMap}
           normalDxMap={normalDxMap}

@@ -24,7 +24,7 @@ const styles = {
     'sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider',
 
   smallHeadText:
-    'text-white font-black md:text-[40px] sm:text-[32px] xs:text-[26px] text-[20px]',
+    'text-white font-black md:text-[45px] sm:text-[36px] xs:text-[32px] text-[24px]',
 
   errorText: 'text-red-700',
   successText: 'text-green-500',

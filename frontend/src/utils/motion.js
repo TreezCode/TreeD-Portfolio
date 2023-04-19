@@ -101,7 +101,9 @@ export const slideAnimation = (direction) => {
       x: 0,
       y: 0,
       opacity: 1,
-      transition: { ...transition, delay: 0 },
+      zIndex: 10,
+      transition: { ...transition, delay: 0, },
+      transitionEnd: { zIndex: 'auto' }
     },
     exit: {
       x: direction === 'left' ? -100 : direction === 'right' ? 100 : 0,
