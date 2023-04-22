@@ -1,0 +1,66 @@
+// external imports
+import { proxy } from 'valtio';
+// internal imports
+import { styles } from '../styles';
+
+export const state = proxy({
+  current: null,
+  customizer: false,
+  items: {
+    // standard materials
+    'Case Buttons': { color: '', material: ['Material.088'] },
+    'Case Decal': { color: '', material: ['Material.074_10'] },
+    'Case Fans': { color: '', material: ['Material.017'] },
+    'Case Fans RGB': { color: '', material: ['Material.074_0'] },
+    'Case Fans Wire': { color: '#000', material: ['Material.073'] },
+    'CPU Fan': { color: '', material: ['Material.034'] },
+    'CPU Mount': { color: '', material: ['Material.045'] },
+    'CPU RGB': { color: '', material: ['Material.034'] },
+    'GPU': { color: '', material: ['Material.054'] },
+    'GPU Wires': { color: '#000', material: ['Material.085'] },
+    'Keyboard Base': { color: '', material: ['Tastatur_Unterseite'] },
+    'Keyboard Bottom': { color: '', material: ['Tastatur_Seite'] },
+    'Keyboard Keys': { color: '', material: ['Material.025'] },
+    'Monitor Back Decal': { color: '', material: ['Material.074_28'] },
+    'Monitor Base Back': { color: '#000', material: ['Material.037'] },
+    'Monitor Base Inner': { color: '#000', material: ['Material.006'] },
+    'Monitor Gigabyte Decal': { color: '', material: ['Material.074_31'] },
+    'Monitor Main': { color: '#000', material: ['Material.055'] },
+    'Monitor Mount': { color: '#000', material: ['Material.003'] },
+    'Monitor Power Button': { color: '', material: ['Material.074_29'] }, 
+    'Monitor Stand': { color: '#000', material: ['Material.043'] },
+    'Motherboard Wires': { color: '#000', material: ['Material.087'] },
+    'Mousepad': { color: '', material: ['Material.074_21'] },
+    'Mouse': { color: '#000', material: ['Material.074_25'] },
+    'RAM': { color: '#000', material: ['Material.074_7'] },
+    'Speakers': { color: '#000', material: ['Material.039'] },
+    'Wire Clips': { color: '', material: ['Material.058'] },
+    // textured materials
+    'Case': { color: '', material: ['Material.074'] },
+    'Desk': { color: '', material: ['Material'] },
+    'GPU Top': { color: '', material: ['Material.074_23'] },
+    'Monitor Screen': { color: '', material: ['Material.074_30'] },
+    'Motherboard': { color: '', material: ['Material.074_1'] },
+    'Powersupply': { color: '#000', material: ['Material.074_2'] } ,
+    'Powersupply Decal 1': { color: '', material: ['Material.074_8'] } ,
+    'Powersupply Decal 2': { color: '', material: ['Material.074_9'] } ,
+    'Powersupply Decal 3': { color: '', material: ['Material.074_12'] } ,
+    'Psu Backplate': { color: '', material: ['Material.074_13'] } ,
+    // accent materials
+    'Case Clips': { color: styles.accent, material: ['Material.094'] },
+    'Keyboard Wire': { color: styles.accent, material: ['Material.048'] },
+    'Monitor Base Front': { color: styles.accent, material: ['Material.042'] },
+    'Monitor Wire': { color: styles.accent, material: ['Material.061'] },
+    'Mouse Wire': { color: styles.accent, material: ['Material.046'] },
+    'Mouse Inner': { color: styles.accent, material: ['Material.007'] },
+    'Speaker Wire 1': { color: styles.accent, material: ['Material.004'] },
+    'Speaker Wire 2': { color: styles.accent, material: ['Material.090'] },
+    // custom matertials    
+    'Case Accent': { color: styles.accent, material: ['Custom.caseAccentMaterial'] },
+    'Monitor Backplate 1': { color: styles.accent, material: ['Custom.monitorBackplate_01'] },
+    'Monitor Backplate 2': { color: styles.accent, material: ['Custom.monitorBackplate_02'] },
+    'Wifi Antenna 1': { color: styles.accent, material: ['Custom.wifiMaterial_01'] },
+    'Wifi Antenna 2': { color: styles.accent, material: ['Custom.wifiMaterial_02'] },
+    'Mouse Side Buttons': { color: styles.accent, material: ['Custom.mouseBtnsMaterial'] },
+  },
+});

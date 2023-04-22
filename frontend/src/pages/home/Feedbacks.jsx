@@ -1,10 +1,10 @@
 // external imports
 import { motion } from 'framer-motion';
 // internal imports
-import { styles } from '../../styles';
-import { SectionWrapper } from '../../hoc';
-import { fadeIn, textVariant } from '../../utils/motion';
+import { fadeIn, textVariant } from '../../utils/helpers/motion';
 import { testimonials } from '../../common/constants';
+import { SectionWrapper } from '../../hoc';
+import { styles } from '../../styles';
 
 const FeedbackCard = ({
   index,

@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { Points } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
 // internal imports
-import { starMaterial } from '../../../utils/threeMaterialEdit';
+import { starMaterial } from '../../../utils/helpers/threeMaterialEdit';
 
 export const Stars = (props) => {
   const ref = useRef();

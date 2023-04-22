@@ -1,33 +1,43 @@
 // external imports
 import { useSnapshot } from 'valtio';
-import { Hud, Environment, OrthographicCamera } from '@react-three/drei';
+import { Hud, Environment, OrthographicCamera, useTexture } from '@react-three/drei';
+import { useLoader, useFrame } from '@react-three/fiber';
+import { TextureLoader, MathUtils } from 'three';
+import { useRef, useState } from 'react'
 // internal imports
-import { state } from '../../../store/store';
-import { textures } from '../../../utils/threeMaterialEdit';
+import { state } from '../../../store';
 import { styles } from '../../../styles';
 
 const TexturePicker = () => {
   const snap = useSnapshot(state);
   const handleTextureChange = (texture) => {
-    if (texture === 'darkwood') {
-      state.items[snap.current && snap.current.name].metalness = 0.5;
-      state.items[snap.current && snap.current.name].roughness = 1;
-      state.items[snap.current && snap.current.name].currentTexture = textures.darkwood;
-    } else if (texture === 'lightwood') {
-      state.items[snap.current && snap.current.name].metalness = 0.25;
-      state.items[snap.current && snap.current.name].roughness = 1;
-      state.items[snap.current && snap.current.name].currentTexture = textures.lightwood;
-    } else if (texture === 'shinymetal') {
-      state.items[snap.current && snap.current.name].metalness = 1;
-      state.items[snap.current && snap.current.name].roughness = 0;
-      state.items[snap.current && snap.current.name].currentTexture = textures.shinymetal;
-    } else if (texture === 'whitemarble') {
-      state.items[snap.current && snap.current.name].metalness = 0.5;
-      state.items[snap.current && snap.current.name].roughness = 0;
-      state.items[snap.current && snap.current.name].currentTexture = textures.whitemarble;
+    if (snap.current) {
+      switch (texture) {
+        case 'smoothmetal':
+          state.items[snap.current.name].currentTexture = 'smoothmetal';
+          state.current.currentTexture = 'smoothmetal';
+          break;
+        case 'whitemarble':
+          state.items[snap.current.name].currentTexture = 'whitemarble';
+          state.current.currentTexture = 'whitemarble';
+          break;
+        case 'darkwood':
+          state.items[snap.current.name].currentTexture = 'darkwood';
+          state.current.currentTexture = 'darkwood';
+          break;
+        case 'lightwood':
+          state.items[snap.current.name].currentTexture = 'lightwood';
+          state.current.currentTexture = 'lightwood';
+          break;
+        case 'reset':
+          state.items[snap.current.name].currentTexture = 'reset';
+          state.current.currentTexture = 'reset';
+          break;
+        default:
+          state.current.currentTexture = null;
+          break;
+      }
     }
-    console.log(snap.current);
-    console.log(state);
   };
 
   return (
@@ -36,26 +46,43 @@ const TexturePicker = () => {
       <div className='flex items-center justify-center gap-4'>
         <button onClick={() => handleTextureChange('darkwood')}>Dark Wood</button>
         <button onClick={() => handleTextureChange('lightwood')}>Light Wood</button>
-        <button onClick={() => handleTextureChange('shinymetal')}>Shiny Metal</button>
+        <button onClick={() => handleTextureChange('smoothmetal')}>Smooth Metal</button>
         <button onClick={() => handleTextureChange('whitemarble')}>White Marble</button>
+        <button onClick={() => handleTextureChange('reset')}>Original Material</button>
       </div>
     </div>
   );
 };
 
-const Button = () => {
+// export const MaterialMenu = ({ onTextureChange }) => {
+//   return (
+//   <Hud>
+//     <OrthographicCamera makeDefault position={[1.25, 0, 2]} zoom={40} />
+//     <Environment preset="night" />
+//     <Button id={0} position={[-2.5, -6, 0]} onTextureChange={onTextureChange} />
+//     <Button id={1} position={[0, -6, 0]} onTextureChange={onTextureChange} />
+//     <Button id={2} position={[2.5, -6, 0]} onTextureChange={onTextureChange} />
+//     <Button id={3} position={[5, -6, 0]} onTextureChange={onTextureChange} />
+//   </Hud>
+//   );
+// };
+
+
+// const Button = ({ id, position, onTextureChange, map, normalMap, roughnessMap, metalnessMap }) => {
+//   const ref = useRef()
+//   const [hovered, setHovered] = useState(false);
+
+//   useFrame((_, delta) => {
+//     ref.current.scale.y = ref.current.scale.x = ref.current.scale.z = MathUtils.lerp(ref.current.scale.y, hovered ? 1.5 : 1, 0.25)
+//     hovered && ref.current.rotateY(delta * 5)
+//   })
   
-  return (
-  <Hud>
-    {/* <OrthographicCamera makeDefault position={[0, 0, 2]} zoom={50} />
-    <Environment preset="forest" />
-    <Button id={0} texture={texture[0]} position={[-5, -4.5, 0]} setSelected={setSelected} />
-    <Button id={1} texture={texture[1]} position={[-2.5, -4.5, 0]} roughness={0.2} setSelected={setSelected} />
-    <Button id={2} texture={texture[2]} position={[-0, -4.5, 0]} setSelected={setSelected} />
-    <Button id={3} texture={texture[3]} position={[2.5, -4.5, 0]} roughness={0.5} setSelected={setSelected} />
-    <Button id={4} texture={texture[4]} position={[5, -4.5, 0]} setSelected={setSelected} /> */}
-  </Hud>
-  );
-};
+//   return (
+//     <mesh ref={ref} position={position} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} onPointerDown={() => setSelected(id)}>
+//       <sphereGeometry />
+//       <meshStandardMaterial map={map} metalnessMap={metalnessMap} normalMap={normalMap} roughnessMap={roughnessMap} envMapIntensity={1.5} />
+//     </mesh>
+//   )
+// };
 
 export default TexturePicker;

@@ -1,7 +1,7 @@
 // external imports
 import { useRef, useState, useEffect } from 'react';
 // internal imports
-import { useMediaQuery } from '../../../utils/useMediaQuery';
+import { useMediaQuery } from '../../../utils/hooks/useMediaQuery';
 import './GlowButton.css';
 
 const GlowButton = ({ type, text, href, color, bgColor, onClick, className }) => {

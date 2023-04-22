@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 import { styles } from '../styles';
-import { staggerContainer } from '../utils/motion';
+import { staggerContainer } from '../utils/helpers/motion';
 
 // Considered HOC because it is a function that will be returning another function
 const SectionWrapper = (Component, idName, viewport, extra, className) =>

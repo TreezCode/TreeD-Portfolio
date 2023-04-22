@@ -1,7 +1,7 @@
 // external imports
 import { Decal, Float, useTexture } from '@react-three/drei';
 // internal imports
-import { ballGeometry, ballMaterial } from '../../../utils/threeMaterialEdit';
+import { ballGeometry, ballMaterial } from '../../../utils/helpers/threeMaterialEdit';
 
 export const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);

@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 // internal imports
 import { styles } from '../../styles';
 import { SectionWrapper } from '../../hoc';
-import { slideIn, textVariant } from '../../utils/motion';
-import { useActiveSection } from '../../utils/useActiveSection';
+import { slideIn, textVariant } from '../../utils/helpers/motion';
+import { useActiveSection } from '../../utils/hooks/useActiveSection';
 import { ContactForm, EarthCanvas } from '../../components';
 
 const Contact = () => {

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import 'react-vertical-timeline-component/style.min.css';
 // internal imports
 import { experiences } from '../../common/constants';
-import { textVariant } from '../../utils/motion';
+import { textVariant } from '../../utils/helpers/motion';
 import { SectionWrapper } from '../../hoc';
 import { styles } from '../../styles';
 

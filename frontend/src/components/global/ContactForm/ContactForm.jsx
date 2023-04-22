@@ -3,9 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { HiOutlineRefresh } from 'react-icons/hi';
 // internal imports
-import { useValidateField,useValidationRules } from '../../../utils/formValidation';
+import { useValidateField, useValidationRules } from '../../../utils/helpers/formValidation';
+import { sendEmail } from '../../../utils/helpers/email';
 import { GlowButton, PrimaryButton } from '../../../components'
-import { sendEmail } from '../../../utils/email';
 import { styles } from '../../../styles';
 import './ContactForm.css';
 

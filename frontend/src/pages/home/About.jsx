@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 
 import { styles } from '../../styles';
 import { services } from '../../common/constants';
-import { fadeIn, textVariant } from '../../utils/motion';
-// fadeIn : direction > type > delay > duration
+import { fadeIn, textVariant } from '../../utils/helpers/motion';
 import { SectionWrapper } from '../../hoc';
+// fadeIn : direction > type > delay > duration
 
 const ServiceCard = ({ index, title, icon }) => {
   return (

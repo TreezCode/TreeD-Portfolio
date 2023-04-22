@@ -2,7 +2,7 @@
 import { useSnapshot } from 'valtio';
 import { CirclePicker } from 'react-color';
 // internal imports
-import { state } from '../../../store/store';
+import { state } from '../../../store';
 import { styles } from '../../../styles';
 
 const ColorPicker = () => {
@@ -13,7 +13,7 @@ const ColorPicker = () => {
       <h1 className={`${styles.heroSubText} text-secondary`}>Choose a color</h1>
       <CirclePicker
         width=''
-        color={snap.items[snap.current && snap.current.material]}
+        color={snap.items[snap.current && snap.current.materialName]}
         onChangeComplete={(color) => {
           (state.items[snap.current && snap.current.name].color=color.hex)
         }}

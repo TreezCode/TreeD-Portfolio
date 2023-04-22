@@ -1,10 +1,10 @@
 // external imports
 import { motion } from 'framer-motion';
 // internal imports
-import { state } from '../../../store/store';
+import { state } from '../../../store';
 import { heroContent } from '../../../common/constants';
-import { useTyped } from '../../../utils/useTyped';
-import { slideAnimation } from '../../../utils/motion';
+import { useTyped } from '../../../utils/hooks/useTyped';
+import { slideAnimation } from '../../../utils/helpers/motion';
 import { PrimaryButton } from '../../ui';
 import { styles } from '../../../styles';
 

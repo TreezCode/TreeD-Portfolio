@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 // Internal imports
 import { BallCanvas } from '../../components/canvas';
 import { technologies } from '../../common/constants';
-import { textVariant } from '../../utils/motion';
-import { useActiveSection } from '../../utils/useActiveSection';
+import { textVariant } from '../../utils/helpers/motion';
+import { useActiveSection } from '../../utils/hooks/useActiveSection';
 import { SectionWrapper } from '../../hoc';
 import { styles } from '../../styles';
 

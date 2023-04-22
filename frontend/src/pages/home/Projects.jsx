@@ -2,7 +2,7 @@
 import Tilt from 'react-parallax-tilt';
 import { motion } from 'framer-motion';
 // internal imports
-import { fadeIn, textVariant } from '../../utils/motion';
+import { fadeIn, textVariant } from '../../utils/helpers/motion';
 import { github, logo } from '../../common/assets';
 import { projects } from '../../common/constants';
 import { SectionWrapper } from '../../hoc';

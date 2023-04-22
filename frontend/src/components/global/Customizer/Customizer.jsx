@@ -1,10 +1,11 @@
+// external imports
 import { useSnapshot } from 'valtio';
 import { motion } from 'framer-motion';
 // internal imports
+import { slideAnimation } from '../../../utils/helpers/motion';
 import { ColorPicker, TexturePicker } from '..';
-import { slideAnimation } from '../../../utils/motion';
 import { PrimaryButton } from '../../ui';
-import { state } from '../../../store/store';
+import { state } from '../../../store';
 import { styles } from '../../../styles';
 
 const Customizer = () => {

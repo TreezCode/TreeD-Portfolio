@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 // internal imports
 import { navLinks, navLinksSecondary, socials } from '../../../common/constants';
-import { useActiveSection } from '../../../utils/useActiveSection';
 import { logo } from '../../../common/assets';
 import { MenuIcon } from '../../../components';
+import { useActiveSection } from '../../../utils/hooks/useActiveSection';
 import { styles } from '../../../styles';
 import './Navbar.css';
 

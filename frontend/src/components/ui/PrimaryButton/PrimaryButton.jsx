@@ -1,7 +1,7 @@
 // external imports
 import { useRef, useState, useEffect } from 'react';
 // internal imports
-import { useMediaQuery } from '../../../utils/useMediaQuery';
+import { useMediaQuery } from '../../../utils/hooks/useMediaQuery';
 import './PrimaryButton.css';
 
 const PrimaryButton = ({ type, text, href, color, bgColor, handleClick, className }) => {

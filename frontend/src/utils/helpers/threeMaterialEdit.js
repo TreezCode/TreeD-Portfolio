@@ -1,81 +1,82 @@
-// external imports
 import {
   MeshStandardMaterial,
   IcosahedronGeometry,
   PointsMaterial,
   ColorManagement,
 } from 'three';
+
 // When creating a material or color in global space - outside of React Three Fiber's Canvas context
 ColorManagement.enabled = true;
   
 // Computer model materials/geometries
 //````````````````````````````````````````````````````````````````````````````````````````````````
-export const caseAccentMaterial = new MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  metalness: 0.1,
-});
-export const monitorBackplate_1 = new MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  metalness: 0.1,
-});
-export const monitorBackplate_2 = new MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  metalness: 0.1,
-});
-export const wifiMaterial_1 = new MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  metalness: 0.1,
-});
-export const wifiMaterial_2 = new MeshStandardMaterial({
-  polygonOffset: false,
-  polygonOffsetFactor: '-5',
-  flatShading: false,
-  metalness: 0.1,
-});
-export const mouseBtnsMaterial = new MeshStandardMaterial({
-  roughness: 0.3,
-});
+export const customMaterials = {
+  'Custom.caseAccentMaterial' : new MeshStandardMaterial({
+    name: 'Custom.caseAccentMaterial',
+    polygonOffset: false,
+    polygonOffsetFactor: '-5',
+    flatShading: false,
+    metalness: 0.1,
+  }),
+  'Custom.monitorBackplate_01' : new MeshStandardMaterial({
+    name: 'Custom.monitorBackplate_01',
+    polygonOffset: false,
+    polygonOffsetFactor: '-5',
+    flatShading: false,
+    metalness: 0.1,
+  }),
+  'Custom.monitorBackplate_02' : new MeshStandardMaterial({
+    name: 'Custom.monitorBackplate_02',
+    polygonOffset: false,
+    polygonOffsetFactor: '-5',
+    flatShading: false,
+    metalness: 0.1,
+  }),
+  'Custom.wifiMaterial_01' : new MeshStandardMaterial({
+    name: 'Custom.wifiMaterial_01',
+    polygonOffset: false,
+    polygonOffsetFactor: '-5',
+    flatShading: false,
+    metalness: 0.1,
+  }),
+  'Custom.wifiMaterial_02' : new MeshStandardMaterial({
+    name: 'Custom.wifiMaterial_02',
+    polygonOffset: false,
+    polygonOffsetFactor: '-5',
+    flatShading: false,
+    metalness: 0.1,
+  }),
+  'Custom.mouseBtnsMaterial' : new MeshStandardMaterial({
+    name: 'Custom.mouseBtnsMaterial',
+    roughness: 0.3,
+  }),
+}
 // Computer model textures
 //````````````````````````````````````````````````````````````````````````````````````````````````
 export const textures = {
   whitemarble: [
     '../../../assets/textures/whitemarble/Marble012_1K_Color.jpg',
-    '../../../assets/textures/whitemarble/Marble012_1K_Displacement.jpg',
     '../../../assets/textures/whitemarble/Marble012_1K_NormalGL.jpg',
-    '../../../assets/textures/whitemarble/Marble012_1K_NormalDX.jpg',
     '../../../assets/textures/whitemarble/Marble012_1K_Roughness.jpg',
   ],
   darkwood: [
     '../../../assets/textures/darkwood/Wood067_1K_Color.jpg',
-    '../../../assets/textures/darkwood/Wood067_1K_Displacement.jpg',
     '../../../assets/textures/darkwood/Wood067_1K_NormalGL.jpg',
-    '../../../assets/textures/darkwood/Wood067_1K_NormalDX.jpg',
     '../../../assets/textures/darkwood/Wood067_1K_Roughness.jpg',
   ],
   lightwood: [
     '../../../assets/textures/lightwood/Wood048_1K_Color.jpg',
-    '../../../assets/textures/lightwood/Wood048_1K_Displacement.jpg',
     '../../../assets/textures/lightwood/Wood048_1K_NormalGL.jpg',
-    '../../../assets/textures/lightwood/Wood048_1K_NormalDX.jpg',
     '../../../assets/textures/lightwood/Wood048_1K_Roughness.jpg',
   ],
-  shinymetal: [
-    '../../../assets/textures/shinymetal/Metal034_1K_Color.jpg',
-    '../../../assets/textures/shinymetal/Metal034_1K_Displacement.jpg',
-    '../../../assets/textures/shinymetal/Metal034_1K_Metalness.jpg',
-    '../../../assets/textures/shinymetal/Metal034_1K_NormalGL.jpg',
-    '../../../assets/textures/shinymetal/Metal034_1K_NormalDX.jpg',
-    '../../../assets/textures/shinymetal/Metal034_1K_Roughness.jpg',
+  smoothmetal: [
+    '../../../assets/textures/smoothmetal/Metal030_1K_Color.jpg',
+    '../../../assets/textures/smoothmetal/Metal030_1K_NormalGL.jpg',
+    '../../../assets/textures/smoothmetal/Metal030_1K_Roughness.jpg',
+    '../../../assets/textures/smoothmetal/Metal030_1K_Metalness.jpg',
   ],
 }
+
 
 // Ball model materials/geometries
 //````````````````````````````````````````````````````````````````````````````````````````````````

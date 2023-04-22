@@ -3,8 +3,8 @@ import { useSnapshot } from 'valtio';
 import { motion, AnimatePresence } from 'framer-motion';
 // internal imports
 import { ComputerCanvas, Customizer, HeroContent } from '../../components';
-import { state } from '../../store/store';
-import { fadeAnimation } from '../../utils/motion';
+import { fadeAnimation } from '../../utils/helpers/motion';
+import { state } from '../../store';
 
 const Hero = () => {
   const snap = useSnapshot(state);
