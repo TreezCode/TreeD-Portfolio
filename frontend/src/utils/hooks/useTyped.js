@@ -9,7 +9,6 @@ export const useTyped = (heroContent) => {
   const typedHeadText = useRef(null);
   const typedSubText = useRef(null);
 
-  // Customizer state variable as a dependency so it will re-run whenever customizer changes
   useEffect(() => {
       const headTextOptions = {
         strings: heroContent.headText,

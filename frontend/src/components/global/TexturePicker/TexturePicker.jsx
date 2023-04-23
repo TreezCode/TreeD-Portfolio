@@ -1,9 +1,5 @@
 // external imports
 import { useSnapshot } from 'valtio';
-import { Hud, Environment, OrthographicCamera, useTexture } from '@react-three/drei';
-import { useLoader, useFrame } from '@react-three/fiber';
-import { TextureLoader, MathUtils } from 'three';
-import { useRef, useState } from 'react'
 // internal imports
 import { state } from '../../../store';
 import { styles } from '../../../styles';
@@ -54,6 +50,11 @@ const TexturePicker = () => {
   );
 };
 
+
+// import { Hud, Environment, OrthographicCamera, useTexture } from '@react-three/drei';
+// import { useLoader, useFrame } from '@react-three/fiber';
+// import { TextureLoader, MathUtils } from 'three';
+// import { useRef, useState } from 'react'
 // export const MaterialMenu = ({ onTextureChange }) => {
 //   return (
 //   <Hud>

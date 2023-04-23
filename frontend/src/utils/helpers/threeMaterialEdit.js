@@ -17,6 +17,15 @@ export const customMaterials = {
     polygonOffsetFactor: '-5',
     flatShading: false,
     metalness: 0.1,
+    color: '#915eff'
+  }),
+  'Custom.rtxAccentMaterial' : new MeshStandardMaterial({
+    name: 'Custom.rtxAccentMaterial',
+    polygonOffset: false,
+    polygonOffsetFactor: '-5',
+    flatShading: false,
+    metalness: 0.1,
+    color: '#915eff'
   }),
   'Custom.monitorBackplate_01' : new MeshStandardMaterial({
     name: 'Custom.monitorBackplate_01',
@@ -24,6 +33,7 @@ export const customMaterials = {
     polygonOffsetFactor: '-5',
     flatShading: false,
     metalness: 0.1,
+    color: '#915eff'
   }),
   'Custom.monitorBackplate_02' : new MeshStandardMaterial({
     name: 'Custom.monitorBackplate_02',
@@ -31,6 +41,7 @@ export const customMaterials = {
     polygonOffsetFactor: '-5',
     flatShading: false,
     metalness: 0.1,
+    color: '#915eff'
   }),
   'Custom.wifiMaterial_01' : new MeshStandardMaterial({
     name: 'Custom.wifiMaterial_01',
@@ -38,6 +49,7 @@ export const customMaterials = {
     polygonOffsetFactor: '-5',
     flatShading: false,
     metalness: 0.1,
+    color: '#915eff',
   }),
   'Custom.wifiMaterial_02' : new MeshStandardMaterial({
     name: 'Custom.wifiMaterial_02',
@@ -45,10 +57,12 @@ export const customMaterials = {
     polygonOffsetFactor: '-5',
     flatShading: false,
     metalness: 0.1,
+    color: '#915eff'
   }),
   'Custom.mouseBtnsMaterial' : new MeshStandardMaterial({
     name: 'Custom.mouseBtnsMaterial',
     roughness: 0.3,
+    color: '#915eff'
   }),
 }
 // Computer model textures

@@ -6,17 +6,34 @@ import { useSnapshot } from 'valtio';
 import { state } from '../../../store';
 import { customMaterials, textures } from '../../../utils/helpers/threeMaterialEdit';
 import { useTextureEditor } from '../../../utils/hooks/useTextureEditor';
+import { useColorEditor } from '../../../utils/hooks/useColorEditor';
+import { useFrame } from '@react-three/fiber';
+import { easing } from 'maath';
+import { styles } from '../../../styles';
 
-export const Computer = ({ isMobile }) => {
+export const Computer = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF('../desktop_pc/scene-transformed.glb');
   const [hovered, setHovered] = useState(null);
   const { handleTextureChange } = useTextureEditor(materials, customMaterials, textures);
+  const { color, handleColorChange } = useColorEditor(materials, customMaterials);
 
-  useLayoutEffect(() => {
+  useFrame((state, delta) => {
+    if (!snap.current || !snap.customizer) {
+      return;
+    }
+    const meshMaterial = snap.current.materialName.includes('Custom')
+      ? customMaterials[snap.current.materialName]
+      : materials[snap.current.materialName];
+
+    const colorName = snap.current.color;
+    if (snap.current.color) {
+      easing.dampC(meshMaterial.color, colorName, 0.25, delta);
+    }
+    handleColorChange(snap, snap.items)
     handleTextureChange(snap, snap.items);
-  }, [snap.current]);
-  
+  })
+
   useEffect(() => {
     document.body.style.cursor = !hovered ? 'auto' : 'pointer';
   }, [hovered]);
@@ -37,13 +54,10 @@ export const Computer = ({ isMobile }) => {
     }
   };
 
-  const handlePointerOut = (e) => {
-    e.intersections.length === 0 && setHovered(null);
-  };
+  const handlePointerOut = (e) => e.intersections.length === 0 && setHovered(null);
 
   return (
     <group
-      scale={isMobile ? 0.4 : 0.6}
       dispose={null}
       onPointerOver={(e) => handlePointerOver(e)}
       onPointerOut={(e) => handlePointerOut(e)}
@@ -1027,7 +1041,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube_Material_0.geometry}
           material={materials[snap.items['Desk'].material]} // Desk
-          material-color={snap.items['Desk'].color}
           name={'Desk'}
           position={[-61.02, -0.56, 156.09]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
@@ -1036,7 +1049,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube011_Material010_0.geometry}
           material={materials[snap.items['Case'].material]} // case main
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           material-metalness={0.2}
           name={'Case'}
           position={[-85.94, 199.7, -353.72]}
@@ -1046,7 +1059,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube012_Material011_0.geometry}
           material={materials[snap.items['Case'].material]} // case border
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           name={'Case'}
           position={[-85.94, 199.7, -353.72]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1055,7 +1068,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube013_Material015_0.geometry}
           material={materials[snap.items['Case'].material]} // case front base
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           name={'Case'}
           position={[82.77, 33.23, -353.61]}
           rotation={[-Math.PI / 2, -0.24, Math.PI]}
@@ -1064,7 +1077,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube014_Material014_0.geometry}
           material={materials[snap.items['Case'].material]} // case back base
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           name={'Case'}
           position={[-253.45, 33.23, -353.61]}
           rotation={[-Math.PI / 2, 0.14, -Math.PI]}
@@ -1073,15 +1086,14 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder_Material009_0.geometry}
           material={materials[snap.items['Case'].material]} // case screws
-          material-color={snap.items['Case'].color}
-          name={'Case Screws'}
+          material-color={'#030303'}
+          name={'Case'}
           position={[74.21, 51.22, -262.89]}
           scale={[6.08, 6.27, 2.28]}
         />
         <mesh
           geometry={nodes.Cube018_Material017_0.geometry}
           material={materials['Material.017']} // fans outer
-          material-color={snap.items['Case Fans'].color}
           name={'Case Fans'}
           position={[79.29, 288.43, -355.56]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -1106,7 +1118,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube015_Material016_0.geometry}
           material={materials[snap.items['Motherboard'].material]}
-          material-color={snap.items['Motherboard'].color}
           name={'Motherboard'}
           position={[-165.45, 224.12, -440.84]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
@@ -1187,7 +1198,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube020_Material020_0.geometry}
           material={materials[snap.items['Powersupply'].material]} // power supply
-          material-color={snap.items['Powersupply'].color}
+          material-color={'#030303'}
           name={'Powersupply'}
           position={[-96.11, 78.83, -363.4]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1196,7 +1207,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube021_Material018_0.geometry}
           material={materials[snap.items['Case'].material]} // case top fan border
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           name={'Case'}
           position={[-108.06, 346.35, -354.98]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1213,7 +1224,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.aorus_case_fans008_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
-          name={'Case Top Fans RGB'}
+          // name={'Case Top Fans RGB'}
           position={[-44.29, 333.89, -355.29]}
           rotation={[Math.PI / 2, 0, -Math.PI / 2]}
           scale={110.31}
@@ -1221,7 +1232,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.aorus_case_fans009_aorus_case_fans_0.geometry}
           material={materials['Material.074_0']}
-          name={'Case Top Fans RGB'}
+          // name={'Case Top Fans RGB'}
           position={[-44.29, 354.81, -355.29]}
           rotation={[Math.PI / 2, 0, -Math.PI / 2]}
           scale={110.31}
@@ -1229,7 +1240,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Sphere_Material019_0.geometry}
           material={customMaterials[snap.items['Wifi Antenna 1'].material]} // wifi 1
-          material-color={snap.items['Wifi Antenna 1'].color}
           name={'Wifi Antenna 1'}
           position={[-277.54, 457.86, -407.85]}
           rotation={[-1.51, 0, 0]}
@@ -1238,7 +1248,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Sphere001_Material019_0.geometry}
           material={customMaterials[snap.items['Wifi Antenna 2'].material]} // wifi 2
-          material-color={snap.items['Wifi Antenna 2'].color}
           name={'Wifi Antenna 2'}
           position={[-277.54, 457.86, -439.73]}
           rotation={[-1.62, 0, 0]}
@@ -1254,7 +1263,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube023_Material021_0.geometry}
           material={materials[snap.items['Case'].material]} // case front border
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           name={'Case'}
           position={[93.78, 228.59, -355.28]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}
@@ -1263,7 +1272,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube024_Material022_0.geometry}
           material={materials[snap.items['Case'].material]} // case back fan border
-          material-color={snap.items['Case'].color}
+          material-color={'#030303'}
           name={'Case'}
           position={[-265.1, 291.7, -335.09]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1326,7 +1335,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube028_Material026_0.geometry}
           material={materials['Material.074_7']} // ram
-          material-color={snap.items['RAM'].color}
+          material-color={'#030303'}
           name={'RAM'}
           position={[-95.71, 270.96, -432.41]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1449,7 +1458,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube043_Material012_0.geometry}
           material={materials[snap.items['Speakers'].material]} // speaker right
-          material-color={snap.items['Speakers'].color}
+          material-color={'#030303'}
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Speakers'}
@@ -1460,7 +1469,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube045_Material027_0.geometry}
           material={materials['Material.074_8']} // powersupply decal 1
-          name={'Powersupply Decal 1'}
+          // name={'Powersupply Decal 1'}
           position={[-212.14, 79.4, -298.23]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[35.48, 5.17, 20.57]}
@@ -1470,15 +1479,14 @@ export const Computer = ({ isMobile }) => {
             nodes['rgb-hdd-cover-aorus-v1_rgb-hdd-cover-aorus-v1_0'].geometry
           }
           material={materials['Material.074_9']} // powersupply decal 2
-          name={'Powersupply Decal 2'}
+          // name={'Powersupply Decal 2'}
           position={[-93.48, 83.17, -288.8]}
           scale={36.94}
         />
         <mesh
           geometry={nodes['maxresdefault_(1)_maxresdefault_(1)_0'].geometry}
           material={materials[snap.items['Case Decal'].material]} // case decal front
-          material-color={snap.items['Case Decal'].color}
-          name={'Case Decal'}
+          // name={'Case Decal'}
           position={[87.71, 83.61, -355.31]}
           rotation={[0, Math.PI / 2, 0]}
           scale={39.41}
@@ -1486,7 +1494,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder001_Material028_0.geometry}
           material={materials['Material.074_11']}
-          name={'Speaker RGB Right'}
+          // name={'Speaker RGB Right'}
           position={[-169.23, 114.41, -71.64]}
           rotation={[-1.57, 1.55, 0]}
           scale={[19.4, 19.4, 2.51]}
@@ -1494,7 +1502,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder002_Material029_0.geometry}
           material={materials['Material.074_11']}
-          name={'Speaker RGB Right'}
+          // name={'Speaker RGB Right'}
           position={[-166.37, 70.65, -71.64]}
           rotation={[-Math.PI / 2, 1.54, 0]}
           scale={[10.3, 10.3, 1.33]}
@@ -1502,7 +1510,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube044_Material012_0.geometry}
           material={materials[snap.items['Speakers'].material]} // speaker left
-          material-color={snap.items['Speakers'].color}
+          material-color={'#030303'}
           name={'Speakers'}
           position={[-219.49, 85.34, 671.43]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1511,7 +1519,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder003_Material031_0.geometry}
           material={materials['Material.074_11']}
-          name={'Speaker RGB Left'}
+          // name={'Speaker RGB Left'}
           position={[-169.23, 114.41, 670.94]}
           rotation={[-1.57, 1.55, 0]}
           scale={[19.4, 19.4, 2.51]}
@@ -1519,7 +1527,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder004_Material030_0.geometry}
           material={materials['Material.074_11']}
-          name={'Speaker RGB Left'}
+          // name={'Speaker RGB Left'}
           position={[-166.37, 70.65, 670.94]}
           rotation={[-Math.PI / 2, 1.54, 0]}
           scale={[10.3, 10.3, 1.33]}
@@ -1527,15 +1535,14 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.NVIDIA_LOGO_NVIDIA_LOGO_0.geometry}
           material={materials['Material.074_12']} // powersupply decal 3
-          name={'Powersupply Decal 3'}
+          // name={'Powersupply Decal 3'}
           position={[0.59, 70.43, -289.07]}
           scale={45.19}
         />
         <mesh
           geometry={nodes.psuback_psuback_0.geometry}
           material={materials[snap.items['Psu Backplate'].material]} // case psu backplate
-          material-color={snap.items['Psu Backplate'].color}
-          name={'Psu Backplate'}
+          // name={'Psu Backplate'}
           position={[-260.27, 77.97, -352.75]}
           rotation={[0, Math.PI / 2, 0]}
           scale={59.49}
@@ -1585,7 +1592,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube046_Material034_0.geometry}
           material={materials['Material.034']} // cpu
-          material-color={snap.items['CPU Fan'].color}
+          material-color={'#030303'}
           name={'CPU Fan'}
           position={[-188.16, 268.52, -368.19]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1602,7 +1609,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube048_Material035_0.geometry}
           material={materials['Material.074_15']} // cpu logo
-          name={'CPU RGB'}
+          // name={'CPU RGB'}
           position={[-161.35, 268.24, -368.17]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[17.44, 39.41, 40.07]}
@@ -1631,8 +1638,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder005_Material041_0.geometry}
           material={materials['Material.074_17']}
-          material-color={snap.items['CPU RGB'].color}
-          name={'CPU RGB'}
+          // name={'CPU RGB'}
           position={[-161.14, 268.66, -369.02]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
           scale={[32.71, 32.71, 34.21]}
@@ -1640,7 +1646,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder011_Material045_0.geometry}
           material={materials[snap.items['CPU Mount'].material]} // CPU mount
-          material-color={snap.items['CPU Mount'].color}
+          material-color={styles.accent}
           name={'CPU Mount'}
           position={[-173.93, 242.5, -421.74]}
           rotation={[0.47, 0, Math.PI]}
@@ -1665,7 +1671,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube052_Material047_0.geometry}
           material={customMaterials[snap.items['Case Accent'].material]} // case decal border
-          material-color={snap.items['Case Accent'].color}
           name={'Case Accent'}
           position={[83.51, 83.28, -355.6]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1699,7 +1704,7 @@ export const Computer = ({ isMobile }) => {
           geometry={nodes.Cube055_Material054_0.geometry}
           material={materials['Material.054']} // gpu
           name={'GPU'}
-          material-color={snap.items['GPU'].color}
+          material-color={'#030303'}
           position={[-122.29, 185.08, -370.56]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[133.16, 54.53, 13.17]}
@@ -1735,7 +1740,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Plane_Material053_0.geometry}
           material={materials['Material.074_21']} // mousepad
-          material-color={snap.items['Mousepad'].color}
           name={'Mousepad'}
           position={[117.18, 25.6, -29.17]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1743,16 +1747,16 @@ export const Computer = ({ isMobile }) => {
         />
         <mesh
           geometry={nodes.geforcertx_Material056_0.geometry}
-          material={customMaterials[snap.items['Case Accent'].material]} // gpu rtx color
-          name={'Case Accent'}
+          material={customMaterials[snap.items['RTX Accent'].material]} // gpu rtx color
+          name={'RTX Accent'}
           position={[-229.27, 204.83, -315.96]}
           scale={[10.38, 10.38, 10.91]}
         />
         <mesh
           geometry={nodes.Cube057_Material059_0.geometry}
           material={materials['Material.074_22']} // gpu plate
-          material-color={snap.items['Case Accent'].color}
-          name={'Case Accent'}
+          material-color={styles.accent}
+          name={'GPU Accent'}
           position={[-127.22, 200.08, -370.56]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[128.06, 52.44, 12.67]}
@@ -1773,7 +1777,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube058_Material063_0.geometry}
           material={materials[snap.items['GPU Top'].material]} // gpu top plate
-          material-color={snap.items['GPU Top'].color}
           name={'GPU Top'}
           position={[-122.59, 213.71, -370.43]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1782,16 +1785,14 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.aorus_logotranspa_aorus_logotranspa_0.geometry}
           material={materials['Material.074_24']} // gpu aorus logo
-          material-color={snap.items['Case Accent'].color}
-          name={'Case Accent'}
+          // name={'Case Accent'}
           position={[-182.43, 181.7, -315.85]}
           scale={[8.65, 8.65, 9.09]}
         />
         <mesh
           geometry={nodes.Cube061_Material064_0.geometry}
-          material={materials['Material.074_22']} // gpu plate
-          material-color={snap.items['Case Accent'].color}
-          name={'Case Accent'}
+          material={materials[snap.items['GPU Accent'].material]} // gpu accent
+          name={'GPU Accent'}
           position={[-122.29, 185.08, -370.56]}
           rotation={[-Math.PI / 2, 0, 0]}
           scale={[133.16, 54.53, 13.17]}
@@ -1799,7 +1800,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube064_Material074_0.geometry}
           material={materials['Material.074_25']} // mouse side mesh
-          material-color={snap.items['Mouse'].color}
+          material-color={'#030303'}
           name={'Mouse'}
           position={[111.41, 32.45, -27.41]}
           rotation={[Math.PI / 2, 0, -Math.PI]}
@@ -1832,7 +1833,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube066_Material076_0.geometry}
           material={materials[snap.items['Mouse Inner'].material]} // mouse front inside
-          material-color={snap.items['Mouse Inner'].color}
+          material-color={styles.accent}
           name={'Mouse Inner'}
           position={[111.46, 32.29, -27.29]}
           rotation={[Math.PI / 2, -0.01, Math.PI]}
@@ -1874,7 +1875,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve001_Material085_0.geometry}
           material={materials['Material.085']} // gpu wires
-          material-color={snap.items['GPU Wires'].color}
+          material-color={'#030303'}
           name={'GPU Wires'}
           position={[-57.66, 118.32, -315.6]}
           rotation={[1.57, -1.23, 0]}
@@ -1883,7 +1884,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube074_Material084_0.geometry}
           material={materials[snap.items['Case Clips'].material]} // gpu wire clip
-          material-color={snap.items['Case Clips'].color}
+          material-color={styles.accent}
           material-metalness={0.4}
           name={'Case Clips'}
           position={[-92.94, 206.72, -314.86]}
@@ -1900,7 +1901,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve002_Material087_0.geometry}
           material={materials['Material.087']} // motherboard wires
-          material-color={snap.items['Motherboard Wires'].color}
+          material-color={'#030303'}
           name={'Motherboard Wires'}
           position={[-31.44, 183.79, -440.16]}
           rotation={[1.57, -1.23, 0]}
@@ -1925,7 +1926,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve_Material088_0.geometry}
           material={materials['Material.073']} // case fan wire
-          material-color={snap.items['Case Fans Wire'].color}
+          material-color={'#030303'}
           name={'Case Fans Wire'}
           position={[73.03, 238.2, -437.39]}
           rotation={[Math.PI, 0, Math.PI / 2]}
@@ -1934,7 +1935,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube079_Material089_0.geometry}
           material={materials[snap.items['Wire Clips'].material]} // case back wire clip 1
-          material-color={snap.items['Wire Clips'].color}
+          material-color={styles.accent}
           name={'Wire Clips'}
           position={[-269.84, 182.61, -338.41]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -1951,7 +1952,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve003_Material091_0.geometry}
           material={materials[snap.items['Monitor Wire'].material]} // monitor wire
-          material-color={snap.items['Monitor Wire'].color}
+          material-color={styles.accent}
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Monitor Wire'}
@@ -1975,11 +1976,9 @@ export const Computer = ({ isMobile }) => {
           scale={[5.96, 5.96, 2.08]}
         />
         <mesh
-          geometry={
-            nodes['Color-PewDiePie-Logo_Color-PewDiePie-Logo_0'].geometry
-          } // mouse logo
+          geometry={nodes['Color-PewDiePie-Logo_Color-PewDiePie-Logo_0'].geometry} // mouse logo
           material={materials['Material.074_27']}
-          name={'Mouse Decal'}
+          // name={'Mouse Decal'}
           position={[129.54, 46.55, -27.48]}
           rotation={[-Math.PI / 2, 0.28, Math.PI / 2]}
           scale={12.41}
@@ -2003,7 +2002,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cylinder014_Material095_0.geometry}
           material={materials[snap.items['Case Buttons'].material]}
-          material-color={snap.items['Case Buttons'].color}
           name={'Case Buttons'}
           position={[84.52, 280.42, -282.19]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -2028,7 +2026,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube088_Material098_0.geometry}
           material={customMaterials[snap.items['Mouse Side Buttons'].material]} // mouse side btns
-          material-color={snap.items['Mouse Side Buttons'].color}
+          material-color={styles.accent}
           name={'Mouse Side Buttons'}
           position={[98.96, 38.35, -8.16]}
           rotation={[-Math.PI / 2, -0.13, 0]}
@@ -2037,7 +2035,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve004_Material099_0.geometry}
           material={materials[snap.items['Mouse Wire'].material]} // mouse wire
-          material-color={snap.items['Mouse Wire'].color}
+          material-color={styles.accent}
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Mouse Wire'}
@@ -2088,7 +2086,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve005_Material103_0.geometry}
           material={materials[snap.items['Keyboard Wire'].material]} // keyboard wire
-          material-color={snap.items['Keyboard Wire'].color}
+          material-color={styles.accent}
           name={'Keyboard Wire'}
           material-metalness={0.4}
           material-roughness={0.2}
@@ -2099,7 +2097,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve006_Material106_0.geometry}
           material={materials[snap.items['Speaker Wire 1'].material]} // left speaker wire 1
-          material-color={snap.items['Speaker Wire 1'].color} // left speaker wire 1
+          material-color={styles.accent} // left speaker wire 1
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Speaker Wire 1'}
@@ -2118,7 +2116,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.BezierCurve008_Material107_0.geometry}
           material={materials[snap.items['Speaker Wire 2'].material]} // speaker 2 speaker wire
-          material-color={snap.items['Speaker Wire 2'].color}
+          material-color={styles.accent}
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Speaker Wire 2'}
@@ -2129,7 +2127,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube001_Material055_0.geometry}
           material={materials['Material.055']} // monitor front
-          material-color={snap.items['Monitor Main'].color}
+          material-color={'#030303'}
           name={'Monitor Main'}
           position={[-138.59, 295.65, 300.41]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
@@ -2138,7 +2136,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube002_Material044_0.geometry}
           material={materials['Material.044']} // monitor back bottom
-          material-color={snap.items['Monitor Main'].color}
+          material-color={'#030303'}
           name={'Monitor Main'}
           position={[-146.71, 263.68, 300.41]}
           rotation={[-Math.PI / 2, -0.12, Math.PI / 2]}
@@ -2155,7 +2153,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube003_Material001_0.geometry}
           material={customMaterials[snap.items['Monitor Backplate 1'].material]} // monitor backplate 1
-          material-color={snap.items['Monitor Backplate 1'].color}
           name={'Monitor Backplate 1'}
           position={[-157.13, 447.65, 300.41]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
@@ -2172,7 +2169,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.MY_SCREEN_MY_SCREEN_0.geometry}
           material={materials[snap.items['Monitor Screen'].material]}
-          name={'Monitor Screen'}
+          // name={'Monitor Screen'}
           position={[-136.18, 300.13, 300.41]}
           rotation={[-Math.PI / 2, 1.5, Math.PI / 2]}
           scale={[331.62, 348.07, 331.62]}
@@ -2180,8 +2177,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes['gigabyte-logo_gigabyte-logo_0'].geometry}
           material={materials['Material.074_31']} // monitor back gigabyte
-          material-color={snap.items['Monitor Gigabyte Decal'].color}
-          name={'Monitor Gigabyte Decal'}
+          // name={'Gigabyte Decal'}
           position={[-161.54, 449.45, 82.08]}
           rotation={[1.57, -1.5, 1.57]}
           scale={23.69}
@@ -2189,8 +2185,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes['gigabyte-logo001_gigabyte-logo_0'].geometry}
           material={materials['Material.074_31']} // monitor front decal
-          material-color={snap.items['Monitor Gigabyte Decal'].color}
-          name={'Monitor Gigabyte Decal'}
+          // name={'Gigabyte Decal'}
           position={[-122.06, 122.82, 301.6]}
           rotation={[-Math.PI / 2, 1.5, Math.PI / 2]}
           scale={17.84}
@@ -2198,7 +2193,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube004_Material002_0.geometry}
           material={customMaterials[snap.items['Monitor Backplate 2'].material]} // monitor backplate 2
-          material-color={snap.items['Monitor Backplate 2'].color}
           name={'Monitor Backplate 2'}
           position={[-148.74, 180.97, 299.25]}
           rotation={[-Math.PI / 2, -0.07, Math.PI / 2]}
@@ -2207,7 +2201,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube005_Material003_0.geometry}
           material={materials[snap.items['Monitor Mount'].material]} // monitor mount
-          material-color={snap.items['Monitor Mount'].color}
+          material-color={'#030303'}
           material-metalness={0.5}
           name={'Monitor Mount'}
           position={[-186.53, 291.56, 297.43]}
@@ -2217,7 +2211,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube006_Material043_0.geometry}
           material={materials[snap.items['Monitor Stand'].material]} // montitor stand
-          material-color={snap.items['Monitor Stand'].color}
+          material-color={'#030303'}
           material-metalness={0.5}
           name={'Monitor Stand'}
           position={[-202.96, -64.82, 300.41]}
@@ -2227,7 +2221,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube007_Material037_0.geometry}
           material={materials[snap.items['Monitor Base Back'].material]} // monitor base back
-          material-color={snap.items['Monitor Base Back'].color}
+          material-color={'#030303'}
           material-metalness={0.5}
           name={'Monitor Base Back'}
           position={[-213.02, 35.33, 296.06]}
@@ -2237,7 +2231,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube008_Material036_0.geometry}
           material={materials[snap.items['Monitor Base Front'].material]} // monitor base front left
-          material-color={snap.items['Monitor Base Front'].color}
+          material-color={styles.accent}
           material-metalness={0.4}
           material-roughness={0.2}
           name={'Monitor Base Front'}
@@ -2256,7 +2250,7 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Cube010_Material006_0.geometry}
           material={materials['Material.006']} // monitor base inner
-          material-color={snap.items['Monitor Base Inner'].color}
+          material-color={'#030303'}
           material-metalness={0.5}
           name={'Monitor Base Inner'}
           position={[-181.15, 31.64, 295.8]}
@@ -2266,7 +2260,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Object_8_Tastatur_Seite_0.geometry}
           material={materials.Tastatur_Seite} // keyboard bottom
-          material-color={snap.items['Keyboard Bottom'].color}
           name={'Keyboard Bottom 1'}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
@@ -2275,7 +2268,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Object_10_Tastatur_Unterseite_0.geometry}
           material={materials[snap.items['Keyboard Base'].material]} // keyboard main
-          material-color={snap.items['Keyboard Base'].color}
           name={'Keyboard Base'}
           position={[147.71, 33.24, 403.09]}
           rotation={[-Math.PI, -Math.PI / 2, 0]}
@@ -3700,7 +3692,6 @@ export const Computer = ({ isMobile }) => {
         <mesh
           geometry={nodes.Object_418_Tasten_0.geometry}
           material={materials['Material.025']} // keyboard esc
-          material-color={snap.items['Keyboard Keys'].color}
           material-metalness={0.3}
           name={'Keyboard Keys'}
           position={[147.71, 34.6, 403.09]}

@@ -34,7 +34,6 @@ export const useTextureEditor = (materials, customMaterials, textures) => {
     if (!meshMaterial.originalMaterial) {
       meshMaterial.originalMaterial = meshMaterial.clone();
     }
-
     meshMaterial.map = materialProps[textureName].map;
     meshMaterial.normalMap = materialProps[textureName].normalMap;
     meshMaterial.roughnessMap = materialProps[textureName].roughnessMap;
@@ -50,7 +49,7 @@ export const useTextureEditor = (materials, customMaterials, textures) => {
   };
 
   const handleTextureChange = (snap, snapItems) => {
-    if (!snap.current) {
+    if (!snap.current || !snap.customizer) {
       return;
     }
 
@@ -59,12 +58,9 @@ export const useTextureEditor = (materials, customMaterials, textures) => {
       : materials[snap.current.materialName];
 
     const textureName = snapItems[snap.current.name]?.currentTexture;
-
-    if (!textureName || textureName === 'reset') {
-      resetMaterial(meshMaterial);
-    } else {
-      updateMaterial(meshMaterial, textureName);
-    }
+    !textureName || textureName === 'reset'
+      ? resetMaterial(meshMaterial)
+      : updateMaterial(meshMaterial, textureName);
   };
 
   return {
