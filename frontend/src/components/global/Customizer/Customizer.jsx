@@ -14,7 +14,7 @@ const Customizer = () => {
     <div className={`${styles.padding} flex flex-col justify-evenly items-center h-screen z-20`}>
 
       <motion.div {...slideAnimation('down')} className={`${styles.paddingX} absolute inset-0 top-[100px] max-w-7xl mx-auto`}>
-        <h1 className={`${styles.smallHeadText} text-secondary text-center pb-1 z-1`}>{snap.current && snap.current.name ? snap.current.name : 'Select a PC part'}</h1>
+        <h1 className={`${styles.smallHeadText} ${!snap.current ? 'text-white' : 'text-accent'} text-center pb-2 z-1`}>{snap.current && snap.current.name ? snap.current.name : 'Select a PC part'}<span className={`${!snap.current ? 'text-accent' : 'text-white'}`}>.</span></h1>
         <div className=' xs:grid xs:grid-cols-2 flex flex-col xs:gap-2 gap-3'>
           <ColorPicker />
           <TexturePicker />

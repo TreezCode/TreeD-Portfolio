@@ -13,31 +13,31 @@ export const ComputerScene = ({ children }) => {
   const isMobile = useMediaQuery();
 
   useFrame((state, delta) => {
-    // init model position
-    let targetPosition = [15, 2, 5];
+    let targetPosition; 
+    let targetScale;
+
     if (!snap.customizer) {
       isMobile 
-        ? targetPosition = [15, 2, 5]
-        : targetPosition = targetPosition        
+        ? (targetPosition = [0, 0, 0], targetScale = 0.4)
+        : (targetPosition = [0, 0, 0], targetScale = 0.6);
     } else {
       isMobile
-        ? targetPosition = [10, 1, 5]
-        : targetPosition = [10, 1, 5]
-    };
+        ? (targetPosition = [0, -0.15, 0], targetScale = 0.8)
+        : (targetPosition = [0, -0.25, 0], targetScale = 1);
+    }
 
     // set camera position
-    // easing.damp3(state.camera.position, targetPosition, 0.25, delta);
+    easing.damp3(group.current.position, targetPosition, 0.25, delta);
+
+    // set camera scale
+    easing.damp3(group.current.scale, targetScale, 0.25, delta);
 
     // set model rotation on pointer move
-    easing.dampE(group.current.rotation, [/* state.pointer.y */ 0, state.pointer.x / 5, 0], 0.25, delta);
+    easing.dampE(group.current.rotation, [/* state.pointer.y / 10 */ 0, state.pointer.x / 5, 0], 0.25, delta);
   });
 
   return (
-    <group
-      ref={group}
-      scale={isMobile ? 0.4 : 0.6}
-      position={isMobile ? [0, -0.4, 0] : [0, -0.25, 0]}
-    >
+    <group scale={0.6} ref={group}>
       {children}
     </group>
   );

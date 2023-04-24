@@ -37,7 +37,7 @@ const TexturePicker = () => {
   };
 
   return (
-    <div className='flex flex-col items-center texture-picker xs:gap-4 gap-2 z-20'>
+    <div className='texture-picker flex flex-col items-center texture-picker xs:gap-4 gap-2 z-20'>
       <h1 className={`${styles.heroSubText} text-secondary`}>Choose a material</h1>
       <div className='flex items-center justify-center gap-4'>
         <button onClick={() => handleTextureChange('darkwood')}>Dark Wood</button>

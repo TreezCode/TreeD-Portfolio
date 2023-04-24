@@ -38,7 +38,7 @@ const ComputerCanvas = () => {
           // minPolarAngle={Math.PI / 2}
         />
         <ComputerScene>
-          <Center>
+          <Center position={[0, -0.25, 0]}>
             <Computer />
           </Center>
         </ComputerScene>  

@@ -1,5 +1,5 @@
 // external imports
-import { useState, useLayoutEffect, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useSnapshot } from 'valtio';
 // internal imports
@@ -16,7 +16,7 @@ export const Computer = () => {
   const { nodes, materials } = useGLTF('../desktop_pc/scene-transformed.glb');
   const [hovered, setHovered] = useState(null);
   const { handleTextureChange } = useTextureEditor(materials, customMaterials, textures);
-  const { color, handleColorChange } = useColorEditor(materials, customMaterials);
+  const { handleColorChange } = useColorEditor(materials, customMaterials);
 
   useFrame((state, delta) => {
     if (!snap.current || !snap.customizer) {

@@ -48,7 +48,9 @@ body {
 
 a,
 button,
-.view {
+.view, 
+.color-picker,
+.texture-picker {
   -webkit-tap-highlight-color: transparent;
 }
 
