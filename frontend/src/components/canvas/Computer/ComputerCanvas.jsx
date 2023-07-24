@@ -8,15 +8,15 @@ import { ComputerScene } from './ComputerScene';
 import { CanvasLoader } from '../../global';
 import { styles } from '../../../styles';
 
-const ComputerCanvas = () => {
+const ComputerCanvas = ({ frameloop, enableZoom, minPolarAngle, maxPolarAngle }) => {
   return (
     <Canvas
-      frameloop='always'
+      frameloop={frameloop}
       gl={{ preserveDrawingBuffer: true }}
-      camera={{ fov: 40, position: [15, 2, 5], rotation: [0, 0, 0] }}
+      camera={{ fov: 40 }}
       shadows
     >
-      <Suspense fallback={<CanvasLoader />}>
+      <Suspense fallback={null}>
         <Environment preset='night' />
         <ambientLight intensity={0.1} />
         <hemisphereLight intensity={0.25} groundColor='black' />
@@ -30,15 +30,15 @@ const ComputerCanvas = () => {
           shadow-mapSize={1024}
         />
         <OrbitControls
-          enableZoom={true}
+          enableZoom={enableZoom}
           enablePan={false}
-          maxDistance={30}
+          maxDistance={10}
           minDistance={1}
-          // maxPolarAngle={Math.PI / 2}
-          // minPolarAngle={Math.PI / 2}
+          maxPolarAngle={maxPolarAngle}
+          minPolarAngle={minPolarAngle}
         />
         <ComputerScene>
-          <Center position={[0, -0.25, 0]}>
+          <Center position={[0, -0.25, 0]} scale={0.3} rotation={[0, 4.75, 0]}>
             <Computer />
           </Center>
         </ComputerScene>  

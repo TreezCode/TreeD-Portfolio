@@ -24,7 +24,7 @@ export const useColorEditor = (materials, customMaterials) => {
       ? customMaterials[snap.current.materialName]
       : materials[snap.current.materialName];
 
-    const colorName = snapItems[snap.current.name]?.currentColor;
+    const colorName = snapItems[snap.current.name]?.currentColor; // TODO: color not defined
     !colorName || colorName === 'reset'
       ? resetMaterial(meshMaterial)
       : updateMaterial(meshMaterial, colorName);

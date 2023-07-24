@@ -3,11 +3,13 @@ import { useSnapshot } from 'valtio';
 import { motion, AnimatePresence } from 'framer-motion';
 // internal imports
 import { ComputerCanvas, Customizer, HeroContent } from '../../components';
+import { useActiveSection } from '../../utils/hooks/useActiveSection';
 import { fadeAnimation } from '../../utils/helpers/motion';
 import { state } from '../../store';
 
 const Hero = () => {
   const snap = useSnapshot(state);
+  const activeSection = useActiveSection();
   return (
     <div className='bg-hero-pattern bg-cover bg-no-repeat bg-center'>
       <section className='relative w-full h-screen mx-auto' data-section='hero'>
@@ -16,7 +18,12 @@ const Hero = () => {
         </AnimatePresence>
         <motion.div {...fadeAnimation} className={`absolute top-[0px] w-full h-[100%]`}>
           <div className='max-w-full h-full mx-auto'>
-            <ComputerCanvas />
+            <ComputerCanvas 
+              frameloop={activeSection && activeSection === 'hero' ? 'always' : 'demand'}
+              enableZoom={snap.customizer ? true : false}
+              minPolarAngle={snap.customizer ? Math.PI / 6 : Math.PI / 2}
+              maxPolarAngle={snap.customizer ? Math.PI - Math.PI / 6 : Math.PI / 2}
+            />
           </div>
         </motion.div>
       </section>

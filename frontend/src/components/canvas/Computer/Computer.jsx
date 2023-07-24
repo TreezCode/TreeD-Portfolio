@@ -27,15 +27,18 @@ export const Computer = () => {
       : materials[snap.current.materialName];
 
     const colorName = snap.current.color;
-    if (snap.current.color) {
+    if (colorName) {
       easing.dampC(meshMaterial.color, colorName, 0.25, delta);
+      handleColorChange(snap, snap.items);
     }
-    handleColorChange(snap, snap.items)
-    handleTextureChange(snap, snap.items);
+
+    // handleTextureChange(snap, snap.items);
   })
 
   useEffect(() => {
-    document.body.style.cursor = !hovered ? 'auto' : 'pointer';
+    if (snap.customizer) {
+      document.body.style.cursor = !hovered ? 'auto' : 'pointer';
+    }
   }, [hovered]);
 
   const handlePointerOver = (e) => {
