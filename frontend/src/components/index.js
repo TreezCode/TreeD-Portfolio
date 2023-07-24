@@ -7,9 +7,6 @@ import { BallCanvas, StarsCanvas, EarthCanvas, ComputerCanvas } from './canvas';
 import {
   ContactForm,
   CanvasLoader,
-  ColorPicker,
-  TexturePicker,
-  Customizer,
   HeroContent,
 } from './global';
 
@@ -23,9 +20,6 @@ export {
   StarsCanvas,
   CanvasLoader,
   ComputerCanvas,
-  ColorPicker,
-  TexturePicker,
-  Customizer,
   HeroContent,
   CustomScroll,
   GlowButton,

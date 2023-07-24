@@ -19,7 +19,6 @@ export const Ball = (props) => {
           rotation={[2 * Math.PI, 0, 6.25]} // mirror icons
           flatShading
           map={decal}
-          opacity={0.65}
         />
       </mesh>
     </Float>

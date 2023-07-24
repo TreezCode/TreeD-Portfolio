@@ -11,7 +11,6 @@ import {
 import { Ball } from './Ball';
 
 const BallCanvas = ({
-  frameloop,
   eventSource,
   views,
   technologies,
@@ -31,11 +30,6 @@ const BallCanvas = ({
               <Common />
               <PresentationControls
                 global
-                // snap
-                // zoom={0.7}
-                // rotation={[0, -Math.PI / 50, 0]}
-                // polar={[0, Math.PI / 2]}
-                // azimuth={[-Math.PI / 2, Math.PI / 2]}
                 config={{ mass: 2, tension: 500 }}
                 snap={{ mass: 4, tension: 1500 }}
                 rotation={[0, 0, 0]}

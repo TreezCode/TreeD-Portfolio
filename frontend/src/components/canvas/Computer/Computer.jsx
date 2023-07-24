@@ -4,41 +4,16 @@ import { useGLTF } from '@react-three/drei';
 import { useSnapshot } from 'valtio';
 // internal imports
 import { state } from '../../../store';
-import { customMaterials, textures } from '../../../utils/helpers/threeMaterialEdit';
-import { useTextureEditor } from '../../../utils/hooks/useTextureEditor';
-import { useColorEditor } from '../../../utils/hooks/useColorEditor';
-import { useFrame } from '@react-three/fiber';
-import { easing } from 'maath';
+import { customMaterials } from '../../../utils/helpers/threeMaterialEdit';
 import { styles } from '../../../styles';
 
 export const Computer = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF('../desktop_pc/scene-transformed.glb');
   const [hovered, setHovered] = useState(null);
-  const { handleTextureChange } = useTextureEditor(materials, customMaterials, textures);
-  const { handleColorChange } = useColorEditor(materials, customMaterials);
-
-  useFrame((state, delta) => {
-    if (!snap.current || !snap.customizer) {
-      return;
-    }
-    const meshMaterial = snap.current.materialName.includes('Custom')
-      ? customMaterials[snap.current.materialName]
-      : materials[snap.current.materialName];
-
-    const colorName = snap.current.color;
-    if (colorName) {
-      easing.dampC(meshMaterial.color, colorName, 0.25, delta);
-      handleColorChange(snap, snap.items);
-    }
-
-    // handleTextureChange(snap, snap.items);
-  })
 
   useEffect(() => {
-    if (snap.customizer) {
       document.body.style.cursor = !hovered ? 'auto' : 'pointer';
-    }
   }, [hovered]);
 
   const handlePointerOver = (e) => {

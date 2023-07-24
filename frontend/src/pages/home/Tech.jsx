@@ -51,7 +51,6 @@ const Tech = () => {
         </div>
         {/* Render BallCanvas with Suspense component and fallback loader */}
         <BallCanvas
-          frameloop={activeSection && activeSection === 'tech' ? 'always' : 'demand'}
           eventSource={ref}
           views={views}
           technologies={technologies}

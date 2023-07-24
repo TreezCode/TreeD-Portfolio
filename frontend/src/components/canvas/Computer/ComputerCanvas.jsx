@@ -16,7 +16,7 @@ const ComputerCanvas = ({ frameloop, enableZoom, minPolarAngle, maxPolarAngle })
       camera={{ fov: 40 }}
       shadows
     >
-      <Suspense fallback={null}>
+      <Suspense fallback={<CanvasLoader />}>
         <Environment preset='night' />
         <ambientLight intensity={0.1} />
         <hemisphereLight intensity={0.25} groundColor='black' />
@@ -32,13 +32,13 @@ const ComputerCanvas = ({ frameloop, enableZoom, minPolarAngle, maxPolarAngle })
         <OrbitControls
           enableZoom={enableZoom}
           enablePan={false}
-          maxDistance={10}
-          minDistance={1}
+          maxDistance={5}
+          minDistance={3}
           maxPolarAngle={maxPolarAngle}
           minPolarAngle={minPolarAngle}
         />
         <ComputerScene>
-          <Center position={[0, -0.25, 0]} scale={0.3} rotation={[0, 4.75, 0]}>
+          <Center position={[0, -0.5, 0]} scale={0.3} rotation={[0, 4.75, 0]}>
             <Computer />
           </Center>
         </ComputerScene>  

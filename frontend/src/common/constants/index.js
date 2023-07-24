@@ -274,7 +274,7 @@ const testimonials = [
     designation: 'Senior Software Engineer',
     company: 'Unified an iHeartMedia Company',
     image:
-      'https://media.licdn.com/dms/image/C4E03AQF2XlgXvJtvxg/profile-displayphoto-shrink_200_200/0/1568088484690?e=1684368000&v=beta&t=bRjFeg6O2Mw27btboOnvckYAqVI4kEcr5XmOLeZuMLU',
+      'https://media.licdn.com/dms/image/C4E03AQF2XlgXvJtvxg/profile-displayphoto-shrink_800_800/0/1568088484690?e=1695859200&v=beta&t=503gl6m0nFmUU7tE_uYkRqlRxZsBHBC_LSs-fjHjYec',
   },
   // {
   //   testimonial:

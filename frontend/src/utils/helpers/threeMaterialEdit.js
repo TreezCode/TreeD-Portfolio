@@ -65,31 +65,6 @@ export const customMaterials = {
     color: '#915eff'
   }),
 }
-// Computer model textures
-//````````````````````````````````````````````````````````````````````````````````````````````````
-export const textures = {
-  whitemarble: [
-    '../../../assets/textures/whitemarble/Marble012_1K_Color.jpg',
-    '../../../assets/textures/whitemarble/Marble012_1K_NormalGL.jpg',
-    '../../../assets/textures/whitemarble/Marble012_1K_Roughness.jpg',
-  ],
-  darkwood: [
-    '../../../assets/textures/darkwood/Wood067_1K_Color.jpg',
-    '../../../assets/textures/darkwood/Wood067_1K_NormalGL.jpg',
-    '../../../assets/textures/darkwood/Wood067_1K_Roughness.jpg',
-  ],
-  lightwood: [
-    '../../../assets/textures/lightwood/Wood048_1K_Color.jpg',
-    '../../../assets/textures/lightwood/Wood048_1K_NormalGL.jpg',
-    '../../../assets/textures/lightwood/Wood048_1K_Roughness.jpg',
-  ],
-  smoothmetal: [
-    '../../../assets/textures/smoothmetal/Metal030_1K_Color.jpg',
-    '../../../assets/textures/smoothmetal/Metal030_1K_NormalGL.jpg',
-    '../../../assets/textures/smoothmetal/Metal030_1K_Roughness.jpg',
-    '../../../assets/textures/smoothmetal/Metal030_1K_Metalness.jpg',
-  ],
-}
 
 
 // Ball model materials/geometries

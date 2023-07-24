@@ -1,11 +1,9 @@
 // external imports
 import { motion } from 'framer-motion';
 // internal imports
-import { state } from '../../../store';
 import { heroContent } from '../../../common/constants';
 import { useTyped } from '../../../utils/hooks/useTyped';
 import { slideAnimation } from '../../../utils/helpers/motion';
-import { PrimaryButton } from '../../ui';
 import { styles } from '../../../styles';
 
 const HeroContent = () => {
@@ -27,18 +25,7 @@ const HeroContent = () => {
         </div>
       </motion.div>
 
-      <motion.div {...slideAnimation('up')} className={`${styles.paddingX} absolute sm:bottom-24 bottom-5 w-full flex justify-center`}>
-        <PrimaryButton
-          type={'button'}
-          text={'Customize It'}
-          color={styles.accent}
-          bgColor={styles.primaryFade}
-          className={'lg:w-[calc((60%-30px)/2)] sm:w-[calc((100%-0px)/2)] w-full backdrop-blur-sm z-20'}
-          handleClick={() => (state.customizer = true)}
-        />
-      </motion.div>
-
-      <motion.div {...slideAnimation('up')} className='absolute w-full flex justify-center sm:bottom-0 bottom-24 hero-mouse'>
+      <motion.div {...slideAnimation('up')} className='absolute w-full flex justify-center sm:bottom-0 bottom-0 hero-mouse'>
         <a href='#about' className='w-full flex justify-center backdrop-blur-sm bg-primaryFade py-1 z-20'>
           <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center p-2'>
             <motion.div

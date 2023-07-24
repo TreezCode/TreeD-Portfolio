@@ -14,7 +14,7 @@ const Footer = () => {
             </Link>
           ))}
         </p>
-        <p className='text-secondary py-2'>2023 ©TreezCode All rights reserved</p>
+        <p className='text-secondary py-2'>Copyright @ 2023 - TreezCode. All rights reserved.</p>
       </div>
     </footer>
   );
