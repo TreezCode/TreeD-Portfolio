@@ -10,7 +10,7 @@ const HeroContent = () => {
   const { headTextRef, subTextRef } = useTyped(heroContent);
   return (
     <>
-      <motion.div {...slideAnimation('left')} className={`${styles.paddingX} absolute inset-0 top-[120px] max-w-7xl mx-auto flex flex-row items-start justify-center gap-4`}>
+      <motion.div {...slideAnimation('left')} className={`${styles.paddingX} absolute inset-0 top-[100px] sm:top-[120px] max-w-7xl mx-auto flex flex-row items-start justify-center gap-4`}>
         <div className='flex flex-col justify-center items-center mt-2 z-20'>
           <div className='w-5 h-5 rounded-full bg-[#915eff]' />
           <div className='w-1 sm:h-80 h-60 violet-gradient' />
@@ -25,8 +25,8 @@ const HeroContent = () => {
         </div>
       </motion.div>
 
-      <motion.div {...slideAnimation('up')} className='absolute w-full flex justify-center sm:bottom-0 bottom-0 hero-mouse'>
-        <a href='#about' className='w-full flex justify-center backdrop-blur-sm bg-primaryFade py-1 z-20'>
+      <motion.div {...slideAnimation('up')} className='absolute w-full flex justify-center sm:bottom-0 bottom-10 hero-mouse'>
+        <a href='#about' className='w-full flex justify-center backdrop-blur-sm bg-primaryFade py-4 z-20'>
           <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center p-2'>
             <motion.div
               animate={{ y: [0, 24, 0] }}

@@ -79,7 +79,7 @@ nav .navbar-active {
     display: none;
   }
   nav .nav-content {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 @media screen and (max-width: 450px) {

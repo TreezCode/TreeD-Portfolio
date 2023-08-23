@@ -63,14 +63,9 @@ export const navLinks = [
 
 export const navLinksSecondary = [
   {
-    id: 'new', // valid element id
-    title: 'Whats New', // UI title
+    id: 'gallery', // valid element id
+    title: 'Gallery', // UI title
     url: false, // website url/relative path/import
-  },
-  {
-    id: 'gallery',
-    title: 'Gallery',
-    url: false,
   },
   {
     id: 'articles',

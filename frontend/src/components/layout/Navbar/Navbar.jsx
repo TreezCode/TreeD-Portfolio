@@ -50,17 +50,17 @@ const Navbar = () => {
   return (
     <header>
       <nav className='fixed top-0 left-0 w-full z-50 text-white overflow-y-hidden'>
-        <div ref={navRef} className='nav-container relative w-full z-50 p-6'>
+        <div ref={navRef} className='nav-container relative w-full z-50 p-5'>
           <div className='nav-content max-w-[1350px] relative grid justify-between items-center gap-6 mx-auto'>
             <Link
               to={'/'}
-              className='brand text-[1.75rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
+              className='brand text-[1.25rem] text-[#915eff] xs:hover:opacity-60 active:opacity-60 transition duration-300'
               onClick={handleLogoClick}
             >
-              TreezCode
+              TreezTechVisions
             </Link>
             <div className='nav-container-inner my-0 mx-auto w-full max-w-[1000px] flex justify-between items-center'>
-              <ul className='navlinks flex gap-4 w-full'>
+              <ul className='navlinks flex gap-4 self-end w-full'>
                 {navLinks.map((link) => (
                   <li
                     key={link.id}
@@ -99,7 +99,7 @@ const Navbar = () => {
           className='menu bg-primary fixed top-0 left-0 w-full text-center text-[1.3rem] h-full -translate-y-full opacity-0 menu-nonactive'
           style={{ transition: '0.7s cubic-bezier(0.74, -0.03, 0.83, 0.67)' }}
         >
-          <div className='flex justify-center flex-col p-1 pt-[5rem] h-full xs:w-80 w-60 m-auto overflow-hidden'>
+          <div className='flex justify-center flex-col p-1 pt-[10rem] h-full xs:w-80 w-60 m-auto overflow-scroll'>
             <Link
               to={'/'}
               onClick={handleLogoClick}
